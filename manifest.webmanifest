@@ -1,0 +1,10 @@
+{
+  "name": "Ngọc OS",
+  "short_name": "Ngọc OS",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fff9f6",
+  "theme_color": "#f8d8df",
+  "description": "Personal dashboard for tasks, money, daily logs and notes.",
+  "icons": []
+}
