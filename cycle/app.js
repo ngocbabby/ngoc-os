@@ -68,7 +68,7 @@ function render(){
 }
 function guardianWarnings(){
  const active=currentPeriod(),ls=lengths(),s=db.symptoms.filter(x=>diffDays(todayKey,x.date)>=0&&diffDays(todayKey,x.date)<=7);
- if(s.some(x=>x.bleeding==="soaking"||x.dizziness==="yes"&&x.pain==="severe"))return{severity:"urgent",title:"🚨 Cần được đánh giá y tế sớm",message:"Bạn đã ghi dấu hiệu có thể đáng lo. Nếu băng thấm đẫm mỗi giờ trong ít nhất 2 giờ, đặc biệt kèm chóng mặt, ngất, khó thở hoặc đau dữ dội, hãy đi cấp cứu."};
+ if(s.some(x=>x.flow==="soaking"||x.dizziness==="yes"&&x.pain==="severe"))return{severity:"urgent",title:"🚨 Cần được đánh giá y tế sớm",message:"Bạn đã ghi dấu hiệu có thể đáng lo. Nếu băng thấm đẫm mỗi giờ trong ít nhất 2 giờ, đặc biệt kèm chóng mặt, ngất, khó thở hoặc đau dữ dội, hãy đi cấp cứu."};
  if(active&&diffDays(todayKey,active.start)+1>8)return{severity:"notice",title:"⚠️ Chưa xác nhận hết kinh",message:"Kỳ kinh bắt đầu "+fmt(active.start,true)+" và vẫn đang để mở. Nếu đã hết, hãy xác nhận đúng ngày; nếu thực sự ra máu hơn 7 ngày, nên trao đổi với bác sĩ."};
  if(ls.some(x=>x>35)||typicalCycle()>35)return{severity:"notice",title:"🩺 Chu kỳ dài hơn thường gặp",message:"Chu kỳ gần nhất "+(ls.at(-1)||"--")+" ngày. Nếu thường kéo dài trên 35 ngày, nhất là kèm tăng cân hoặc kinh thay đổi, nên khám phụ khoa để tìm nguyên nhân. Không tự kết luận PCOS."};
  return {severity:"ok",title:"🌿 Theo dõi đúng cách",message:"Bạn không cần nhập dữ liệu mỗi ngày. App chỉ phân tích những gì đã ghi; dữ liệu thiếu sẽ được đánh dấu chưa xác nhận."}
