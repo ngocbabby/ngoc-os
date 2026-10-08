@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffe1ec">
+  <meta name="description" content="Nhật ký chu kỳ riêng tư, ghi nhận nhanh và theo dõi sức khỏe.">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="icon" href="../assets/app-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <title>Chu kỳ của tôi · Ngọc OS</title>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+<div class="app-shell">
+  <header class="app-header">
+    <a class="back-link" href="../" aria-label="Quay về Ngọc OS"><span aria-hidden="true">‹</span> Ngọc OS</a>
+    <div class="app-brand">Chu kỳ của tôi <span aria-hidden="true">✿</span></div>
+    <button id="settingsBtn" class="icon-button" type="button" aria-label="Cài đặt, sao lưu và nhập dữ liệu">⚙</button>
+  </header>
+
+  <main class="main-content">
+    <section class="tab active" id="tab-today" aria-label="Hôm nay">
+      <div class="hero">
+        <div class="sparkle sparkle-one">✧</div><div class="sparkle sparkle-two">✦</div><div class="sparkle sparkle-three">✧</div>
+        <div class="hero-eyebrow">🌷 NHẬT KÝ CỦA BẠN</div>
+        <h1 id="todayTitle">Chào bạn 🌸</h1>
+        <p class="hero-subtitle" id="todaySubtitle">Theo dõi chu kỳ thật nhẹ nhàng</p>
+        <div class="cycle-orbit" aria-hidden="true">
+          <div class="orbit-inner"><span id="orbitEmoji">🐱</span><strong id="orbitDay">♡</strong><small id="orbitLabel">Ngày chu kỳ</small></div>
+        </div>
+        <div class="hero-bottom" id="heroBottom">Mỗi ghi nhận nhỏ đều hữu ích 💗</div>
+      </div>
+
+      <div class="section-pad">
+        <div class="quick-actions">
+          <button id="startPeriodBtn" type="button" class="btn primary">🩸 Bắt đầu kỳ kinh</button>
+          <button id="endPeriodBtn" type="button" class="btn primary" hidden>✓ Xác nhận hết kinh</button>
+          <button id="quickLogBtn" type="button" class="btn soft">＋ Ghi nhận nhanh</button>
+        </div>
+        <div id="setupNudge" class="setup-nudge card" hidden>
+          <span class="nudge-emoji">🌼</span>
+          <div><h3>Thiết lập trong 15 giây</h3><p>Nhập ngày bắt đầu kỳ kinh gần nhất để bắt đầu theo dõi.</p></div>
+          <button id="setupBtn" class="link-button" type="button">Bắt đầu →</button>
+        </div>
+
+        <div class="eyebrow-heading"><span>Hôm nay của bạn</span><span class="tiny-star">✦</span></div>
+        <div class="stat-grid">
+          <article class="stat-card lilac">
+            <span class="stat-icon">📅</span><div class="stat-kicker">Kỳ kinh tiếp theo</div>
+            <strong id="nextPeriodDate">Chưa có</strong>
+            <small id="nextPeriodHint">Cần thêm dữ liệu</small>
+          </article>
+          <article class="stat-card butter">
+            <span class="stat-icon">🩷</span><div class="stat-kicker">Chu kỳ gần nhất</div>
+            <strong id="lastCycleLength">-- ngày</strong>
+            <small id="avgCycleHint">Từ lịch sử đã lưu</small>
+          </article>
+        </div>
+
+        <div class="eyebrow-heading"><span>Health Guardian</span><span class="tag">Bảo vệ sức khỏe</span></div>
+        <div id="todayAlert" class="guardian-card" role="status" aria-live="polite"></div>
+
+        <div class="card mindful-card">
+          <div class="cat-bubble" aria-hidden="true">🐱</div>
+          <div><h3 id="coachTitle">Mình đồng hành cùng bạn 💗</h3>
+          <p id="coachText">Không cần ghi chép mỗi ngày. Chỉ cần nhập ngày bắt đầu, kết thúc và những thay đổi đáng chú ý.</p></div>
+        </div>
+        <p class="disclaimer">Dự báo chỉ để tham khảo, không dùng để tránh thai hoặc xác định chính xác ngày rụng trứng.</p>
+      </div>
+    </section>
+
+    <section class="tab" id="tab-calendar" aria-label="Lịch chu kỳ">
+      <div class="page-heading"><span class="page-icon">🗓️</span><div><h1>Lịch chu kỳ</h1><p>Nhìn lại lịch sử và ngày dự kiến</p></div></div>
+      <div class="card calendar-card">
+        <div class="month-nav"><button id="prevMonth" class="round-arrow" type="button" aria-label="Tháng trước">‹</button>
+          <h2 id="monthLabel">Tháng</h2><button id="nextMonth" class="round-arrow" type="button" aria-label="Tháng sau">›</button></div>
+        <div class="weekdays" aria-hidden="true"><span>CN</span><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span></div>
+        <div class="calendar-grid" id="calendarGrid" aria-label="Các ngày trong tháng"></div>
+        <div class="legend"><span><i class="legend-dot confirmed"></i>Kinh đã ghi</span><span><i class="legend-dot ongoing"></i>Chưa xác nhận</span><span><i class="legend-dot expected"></i>Dự kiến</span><span><i class="legend-dot noted"></i>Có nhật ký</span></div>
+        <p class="forecast-caption">Với chu kỳ chưa đều, app chỉ dự đoán khoảng ngày bắt đầu — không dự đoán ngày an toàn.</p>
+      </div>
+      <div class="card selected-day"><div class="card-title"><h3 id="selectedDayLabel">Chi tiết ngày</h3><button id="addDayLogBtn" class="text-action" type="button">＋ Ghi nhanh</button></div>
+        <div id="selectedDayContent" class="detail-text">Chưa có ghi nhận.</div>
+      </div>
+      <div class="card">
+        <div class="card-title"><h3>🩸 Lịch sử kỳ kinh</h3><button id="addPeriodBtn" class="text-action" type="button">＋ Thêm kỳ</button></div>
+        <div id="periodHistory" class="history-list"></div>
+      </div>
+    </section>
+
+    <section class="tab" id="tab-care" aria-label="Chăm sóc sức khỏe">
+      <div class="page-heading"><span class="page-icon">💗</span><div><h1>Chăm sóc bản thân</h1><p>Những cách hỗ trợ cơ thể an toàn</p></div></div>
+      <article class="sos-card">
+        <div class="sos-top"><span>🌸 PERIOD SOS</span><span class="sos-heart">♡</span></div>
+        <h2>Hôm nay bạn không khỏe?</h2><p>Đau lưng, ê háng hoặc mệt trong ngày hành kinh?</p>
+        <button id="sosLogBtn" type="button" class="btn white">Ghi mức đau trong 10 giây →</button>
+      </article>
+      <div class="care-grid">
+        <article class="care-card"><span class="care-emoji">🔥</span><h3>Chườm ấm</h3><p>Dùng túi chườm ấm có lớp khăn bảo vệ da, nghỉ ngơi khi cần.</p></article>
+        <article class="care-card"><span class="care-emoji">🚶</span><h3>Vận động nhẹ</h3><p>Đi bộ 10–15 phút nếu thấy thoải mái. Không cố tập khi đau nhiều.</p></article>
+        <article class="care-card"><span class="care-emoji">🥗</span><h3>Ăn đủ chất</h3><p>Duy trì bữa ăn cân bằng, chú ý thực phẩm giàu sắt nếu ra máu nhiều.</p></article>
+        <article class="care-card"><span class="care-emoji">😴</span><h3>Ngủ và giảm stress</h3><p>Ưu tiên giấc ngủ đều và thời gian nghỉ; không ăn kiêng cực đoan.</p></article>
+      </div>
+      <div class="card advice-card">
+        <h3>🩺 Khi nào cần đi khám?</h3>
+        <p>Chu kỳ thường xuyên trên 35 ngày, hành kinh kéo dài trên 7 ngày, cục máu đông lớn hoặc đau tăng dần đều đáng trao đổi với bác sĩ phụ khoa.</p>
+        <button id="careReportBtn" class="btn outline full" type="button">📋 Xem báo cáo cho bác sĩ tại Nhật</button>
+      </div>
+      <div class="emergency-card"><h3>🚨 Khi nào cần trợ giúp khẩn cấp?</h3>
+        <p>Nếu thấm đẫm ít nhất 1 băng mỗi giờ trong 2 giờ liên tiếp, nhất là kèm chóng mặt, ngất, khó thở; hoặc đau dữ dội, cần được đánh giá y tế ngay. Nếu có khả năng mang thai và ra máu/đau bất thường, cần kiểm tra sớm.</p>
+      </div>
+      <p class="disclaimer">Nội dung này là thông tin chăm sóc sức khỏe chung, không thay thế khám và tư vấn chuyên môn.</p>
+    </section>
+
+    <section class="tab" id="tab-analysis" aria-label="Phân tích chu kỳ và cân nặng">
+      <div class="page-heading"><span class="page-icon">📊</span><div><h1>Sức khỏe của tôi</h1><p>Xu hướng thực tế, không đoán bệnh</p></div></div>
+      <div class="analysis-stats">
+        <div class="analysis-stat pink"><span>Chu kỳ gần nhất</span><strong id="anLastCycle">--</strong><small>Ngày giữa 2 lần bắt đầu</small></div>
+        <div class="analysis-stat lilac"><span>Khoảng trung bình</span><strong id="anAvgCycle">--</strong><small id="anAverageSource">Chưa đủ dữ liệu</small></div>
+        <div class="analysis-stat cream"><span>Thời gian hành kinh</span><strong id="anPeriodDays">--</strong><small>Dựa trên các kỳ đã xác nhận</small></div>
+        <div class="analysis-stat green"><span>Số kỳ đã ghi</span><strong id="anHistoryCount">0</strong><small>Đã lưu trên thiết bị</small></div>
+      </div>
+      <div class="card analytics-card">
+        <div class="card-title"><h3>⚖️ Theo dõi cân nặng</h3><button id="addWeightBtn" type="button" class="text-action">＋ Cân hôm nay</button></div>
+        <div class="weight-current"><strong id="weightLatest">-- kg</strong><span id="bmiLabel">Chưa có dữ liệu chiều cao</span></div>
+        <div id="weightGraph" class="weight-graph"></div>
+        <p id="weightContext" class="detail-text">Nhập cân nặng mỗi tuần để xem xu hướng, đừng đánh giá chỉ một ngày.</p>
+      </div>
+      <div class="card analytics-card">
+        <div class="card-title"><h3>🔎 Điểm cần chú ý</h3></div>
+        <div id="analysisAlerts"></div>
+      </div>
+      <div class="card analytics-card">
+        <h3>🇯🇵 Đi khám ở Nhật dễ hơn</h3><p class="detail-text">Tạo bản tóm tắt tiếng Việt và tiếng Nhật từ những gì bạn đã ghi nhận.</p>
+        <button id="analysisReportBtn" class="btn primary full" type="button">Tạo báo cáo cho bác sĩ →</button>
+      </div>
+      <p class="disclaimer">Chỉ số và dự đoán không phải chẩn đoán. Nếu kinh thưa kéo dài kèm tăng cân, hãy trao đổi với bác sĩ về các nguyên nhân có thể gặp như rối loạn phóng noãn, tuyến giáp hoặc PCOS.</p>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Điều hướng chu kỳ">
+    <button type="button" class="nav-item active" data-tab="today"><span class="nav-icon">✿</span><span>Hôm nay</span></button>
+    <button type="button" class="nav-item" data-tab="calendar"><span class="nav-icon">▦</span><span>Lịch</span></button>
+    <button type="button" class="nav-add" id="navLogBtn" aria-label="Ghi nhận nhanh">＋</button>
+    <button type="button" class="nav-item" data-tab="care"><span class="nav-icon">♡</span><span>Chăm sóc</span></button>
+    <button type="button" class="nav-item" data-tab="analysis"><span class="nav-icon">▥</span><span>Phân tích</span></button>
+  </nav>
+</div>
+<div id="sheetBackdrop" class="sheet-backdrop" hidden>
+  <div id="sheet" class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <div class="sheet-heading"><h2 id="sheetTitle"></h2><button id="closeSheetBtn" type="button" class="sheet-close" aria-label="Đóng">×</button></div>
+    <div id="sheetBody" class="sheet-body"></div>
+  </div>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="printReport" class="print-report" aria-hidden="true"></div>
+</body>
+</html>
