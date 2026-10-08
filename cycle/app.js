@@ -14,7 +14,7 @@ function between(day,start,end){return Boolean(start&&end&&day>=start&&day<=end)
 const initialData={
  version:1,
  periods:[
-  {id:"p-2026-08-23",start:"2026-08-23",end:"2026-08-29",source:"Ảnh tham khảo người dùng cung cấp"},
+  {id:"p-2026-08-23",start:"2026-08-23",end:null,source:"Ngày bắt đầu trên ảnh; chưa xác nhận kết thúc"},
   {id:"p-2026-10-08",start:"2026-10-08",end:null,source:"Ảnh tham khảo: cần xác nhận ngày hết kinh"}
  ],
  symptoms:[],
@@ -81,7 +81,7 @@ function renderCalendar(){
  let html="";
  for(let i=0;i<first;i++)html+='<span aria-hidden="true"></span>';
  for(let d=1;d<=count;d++){
- const key=localKey(new Date(y,m,d)),confirmed=periods().some(p=>between(key,p.start,p.end||(p.start===todayKey?todayKey:p.start))),expected=next&&between(key,next.start,next.end)&&!confirmed,noted=db.symptoms.some(x=>x.date===key);
+ const key=localKey(new Date(y,m,d)),confirmed=periods().some(p=>between(key,p.start,p.end||(p.start<=todayKey?todayKey:p.start))),expected=next&&between(key,next.start,next.end)&&!confirmed,noted=db.symptoms.some(x=>x.date===key);
  html+='<button type="button" class="calendar-day '+(confirmed?"confirmed ":"")+(expected?"expected ":"")+(key===todayKey?"today ":"")+(key===selectedDay?"selected":"")+'" data-day="'+key+'" aria-label="'+fmt(key,true)+(confirmed?", ngày hành kinh đã ghi":"")+(expected?", ngày dự kiến":"")+'">'+d+(noted?"<i></i>":"")+"</button>";
  }
  grid.innerHTML=html;
