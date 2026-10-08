@@ -5,6 +5,13 @@
   "display": "standalone",
   "background_color": "#fff9f6",
   "theme_color": "#f8d8df",
-  "description": "Personal dashboard for tasks, money, daily logs and notes.",
-  "icons": []
+  "description": "Ngọc OS – công việc, chi tiêu và chu kỳ kinh nguyệt",
+  "icons": [
+    {
+      "src": "./assets/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
 }
