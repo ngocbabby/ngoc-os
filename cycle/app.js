@@ -81,8 +81,8 @@ function renderCalendar(){
  let html="";
  for(let i=0;i<first;i++)html+='<span aria-hidden="true"></span>';
  for(let d=1;d<=count;d++){
- const key=localKey(new Date(y,m,d)),confirmed=periods().some(p=>between(key,p.start,p.end||(p.start<=todayKey?todayKey:p.start))),expected=next&&between(key,next.start,next.end)&&!confirmed,noted=db.symptoms.some(x=>x.date===key);
- html+='<button type="button" class="calendar-day '+(confirmed?"confirmed ":"")+(expected?"expected ":"")+(key===todayKey?"today ":"")+(key===selectedDay?"selected":"")+'" data-day="'+key+'" aria-label="'+fmt(key,true)+(confirmed?", ngày hành kinh đã ghi":"")+(expected?", ngày dự kiến":"")+'">'+d+(noted?"<i></i>":"")+"</button>";
+ const key=localKey(new Date(y,m,d)),confirmed=periods().some(p=>between(key,p.start,p.end||p.start)),ongoing=Boolean(currentPeriod()&&between(key,currentPeriod().start,todayKey)&&key!==currentPeriod().start),expected=next&&between(key,next.start,next.end)&&!confirmed&&!ongoing,noted=db.symptoms.some(x=>x.date===key);
+ html+='<button type="button" class="calendar-day '+(confirmed?"confirmed ":"")+(ongoing?"ongoing ":"")+(expected?"expected ":"")+(key===todayKey?"today ":"")+(key===selectedDay?"selected":"")+'" data-day="'+key+'" aria-label="'+fmt(key,true)+(confirmed?", ngày bắt đầu hoặc ngày kinh đã xác nhận":"")+(ongoing?", đang theo dõi, chưa xác nhận hết kinh":"")+(expected?", ngày dự kiến":"")+'">'+d+(noted?"<i></i>":"")+"</button>";
  }
  grid.innerHTML=html;
  grid.querySelectorAll("button[data-day]").forEach(b=>b.addEventListener("click",()=>{selectedDay=b.dataset.day;renderCalendar()}));
