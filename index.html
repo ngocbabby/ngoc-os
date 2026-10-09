@@ -108,6 +108,7 @@ body{background:#fffafc}
  .modal-bg{z-index:60}
 }
 
+.note-app-link{display:inline-block;margin-top:10px;text-decoration:none;font-size:12px;font-weight:700;color:#be4684}
 </style>
 </head>
 <body>
@@ -119,7 +120,7 @@ body{background:#fffafc}
     <button data-view="tasks"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m8 12 2.5 2.5L16 9"/></svg><span>Tasks</span></button>
     <button data-view="money"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7.5v9M14.5 9.5c-.6-1-1.4-1.5-2.7-1.5-1.5 0-2.5.7-2.5 1.8 0 3 5.7 1.5 5.7 4.2 0 1.2-1.1 2-2.7 2-1.4 0-2.4-.5-3.1-1.5"/></svg><span>Money</span></button>
     <button id="cycleSideNav" type="button" onclick="location.href='./cycle/'"><svg viewBox="0 0 24 24"><path d="M12 21s-8-4.7-8-10.2a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3C20 16.3 12 21 12 21Z"/></svg><span>Chu kỳ kinh nguyệt</span></button>
-    <button data-view="notes"><svg viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></svg><span>Notes</span></button>
+    <button type="button" onclick="location.href='./notes/'"><svg viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></svg><span>Ghi chú</span></button>
     <div class="sep"></div>
     <button data-view="photos"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="m5 17 4.5-4 3 2.5 2.5-2 4 3.5"/></svg><span>Ảnh của tui</span></button>
     <button data-view="photos"><svg viewBox="0 0 24 24"><path d="M20.5 9.8c0 5-8.5 9.2-8.5 9.2S3.5 14.8 3.5 9.8A4.4 4.4 0 0 1 12 7.9a4.4 4.4 0 0 1 8.5 1.9Z"/></svg><span>Mood Board</span></button>
@@ -163,8 +164,8 @@ body{background:#fffafc}
       <button type="button" class="home-shortcut" data-view="money"><span class="shortcut-icon">💰</span><span>Chi tiêu</span></button>
     </div>
     <article class="card home-notes">
-      <div class="card-head"><h3><span class="mini-icon yellow">✎</span> GHI CHÚ GẦN ĐÂY</h3><button class="add" id="noteAdd" aria-label="Thêm ghi chú nhanh">＋</button></div>
-      <div class="notes" id="homeNotes"></div>
+      <div class="card-head"><h3><span class="mini-icon yellow">✎</span> GHI CHÚ GẦN ĐÂY</h3><a href="./notes/" class="add" aria-label="Mở ứng dụng ghi chú" style="text-decoration:none">↗</a></div>
+      <div class="notes" id="homeNotes"></div><a href="./notes/" class="note-app-link">Mở Ghi chú →</a>
     </article>
     <div class="home-photo-strip">
       <img src="assets/cat.webp" alt="Mèo nhỏ đáng yêu" loading="lazy">
@@ -180,7 +181,7 @@ body{background:#fffafc}
 <section id="view-photos" class="view page"><h2>Ảnh của tui</h2><p>Kho mood dùng cho Smart Random.</p><div class="card"><div class="gallery-row"><div class="thumb selected"><img src="assets/hero.webp"></div><div class="thumb selected"><img src="assets/cat.webp"></div><div class="thumb"><img src="assets/japan.webp"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div></div></div></section>
 <section id="view-settings" class="view page"><h2>Settings</h2><p>NGỌC OS hiện không dùng Pinterest. Smart Random dùng kho ảnh riêng.</p><div class="card"><div class="card-head"><h3>Smart Random</h3></div><p style="color:var(--muted);font-size:12px;line-height:1.7">Ảnh mặc định luôn là hoa/hoàng hôn. Bấm Smart Random để đổi mood sang phố Nhật hoặc mèo cozy; refresh trang sẽ quay lại ảnh hoa để giao diện luôn đẹp như mẫu.</p><button class="pill" id="randomSettings">Thử random</button></div></section>
 </div></main></div>
-<nav class="mobile-bottom-nav" aria-label="Điều hướng di động"><button type="button" data-view="home" class="active"><span class="mobile-icon">⌂</span>Home</button><button type="button" data-view="tasks"><span class="mobile-icon">☑</span>Việc</button><button type="button" class="mobile-add" id="mobileQuick" aria-label="Ghi nhanh">＋</button><a href="./cycle/"><span class="mobile-icon">♡</span>Chu kỳ</a><button type="button" data-view="notes"><span class="mobile-icon">✎</span>Ghi chú</button></nav><button class="quick" id="quickBtn">＋ Ghi nhanh</button>
+<nav class="mobile-bottom-nav" aria-label="Điều hướng di động"><button type="button" data-view="home" class="active"><span class="mobile-icon">⌂</span>Home</button><button type="button" data-view="tasks"><span class="mobile-icon">☑</span>Việc</button><button type="button" class="mobile-add" id="mobileQuick" aria-label="Ghi nhanh">＋</button><a href="./cycle/"><span class="mobile-icon">♡</span>Chu kỳ</a><a href="./notes/"><span class="mobile-icon">✎</span>Ghi chú</a></nav><button class="quick" id="quickBtn">＋ Ghi nhanh</button>
 <div class="modal-bg hidden" id="modal"><div class="modal"><h2>Ghi nhanh ✨</h2><textarea id="quickInput" placeholder="Nãy ăn ramen 950 yên / Mai 9h gọi bảo hiểm / Note: thêm bookmark..."></textarea><div class="modal-actions"><button id="cancel">Đóng</button><button class="save" id="saveQuick">Lưu</button></div></div></div><div class="toast" id="toast"></div>
 <script>
 const KEY='ngoc_os_v3';
@@ -193,7 +194,7 @@ function render(){
  homeTasks.innerHTML=db.tasks.slice(0,3).map(t=>`<div class="task ${t.done?'done':''}"><button class="check" data-check="${t.id}"></button><span class="name">${safe(t.title)}</span><span class="datechip">${safe(t.date)}</span></div>`).join('')||'<div class="home-empty">Chưa có việc nào được ghi.</div>';
  const spent=db.money.filter(x=>x.type==='out').reduce((a,b)=>a+b.amount,0);spendBig.textContent=yen(spent);homeMoney.innerHTML=db.money.slice(0,3).map(x=>`<div class="money-item"><span>${safe(x.title)}</span><b>${yen(x.amount)}</b></div>`).join('');
  if(document.getElementById('homeDaily'))homeDaily.innerHTML=db.daily.slice(0,5).map(x=>`<div class="time"><i class="dot"></i><b>${safe(x.time)}</b><span>${safe(x.title)}</span></div>`).join('');
- homeNotes.innerHTML=db.notes.slice(0,2).map(x=>`<div class="note"><b>${safe(x.title)}:</b><br>${safe(x.text)}<small>${safe(x.time||'')}</small></div>`).join('');
+ homeNotes.innerHTML='<p style="font-size:12px;color:#9d8392;margin:3px 0">Không hiển thị nội dung mẫu trên Home.</p>';
  tasksList.innerHTML=db.tasks.map(t=>`<div class="row"><small>${safe(t.date)}</small><span>${safe(t.title)}</span><button class="check" data-check="${t.id}"></button></div>`).join('');
  moneyList.innerHTML=db.money.map(x=>`<div class="row"><small>${x.type==='out'?'Chi':'Thu'}</small><span>${safe(x.title)}</span><b>${x.type==='out'?'−':'+'}${yen(x.amount)}</b></div>`).join('');
  if(document.getElementById('dailyList'))dailyList.innerHTML=db.daily.map(x=>`<div class="row"><small>${safe(x.time)}</small><span>${safe(x.title)}</span><span>Timeline</span></div>`).join('');
@@ -206,7 +207,7 @@ function randomHero(){db.hero=(db.hero+1)%heros.length;db.liked=false;localStora
 randomBtn.onclick=randomHero;randomSettings.onclick=randomHero;likeBtn.onclick=()=>{db.liked=!db.liked;localStorage.setItem(KEY,JSON.stringify(db));setHero()};
 function switchView(v){$('.view').forEach(x=>x.classList.toggle('active',x.id==='view-'+v));$('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===v));scrollTo({top:0,behavior:'smooth'})}
 $('[data-view]').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
-function openQuick(){modal.classList.remove('hidden');quickInput.focus()}quickBtn.onclick=openQuick;document.getElementById('mobileQuick').onclick=openQuick;sideQuick.onclick=openQuick;taskAdd.onclick=openQuick;if(document.getElementById('dailyAdd'))dailyAdd.onclick=openQuick;noteAdd.onclick=openQuick;cancel.onclick=()=>modal.classList.add('hidden');
+function openQuick(){modal.classList.remove('hidden');quickInput.focus()}quickBtn.onclick=openQuick;document.getElementById('mobileQuick').onclick=openQuick;sideQuick.onclick=openQuick;taskAdd.onclick=openQuick;if(document.getElementById('dailyAdd'))dailyAdd.onclick=openQuick;if(document.getElementById('noteAdd'))noteAdd.onclick=openQuick;cancel.onclick=()=>modal.classList.add('hidden');
 function classify(s){const t=s.toLowerCase();if(/note:|ghi chú|ý tưởng/.test(t))return'notes';if(/¥|yên|yen|mua |chi |bán /.test(t))return'money';if(/mai|nhớ|cần|phải|todo|deadline/.test(t))return'tasks';return'notes'}
 function getAmount(s){const m=s.replace(/,/g,'').match(/(\d{2,7})\s*(?:yên|yen)?/i);return m?+m[1]:0}function getTime(s){const m=s.match(/([01]?\d|2[0-3])[:h]([0-5]\d)?/i);return m?String(m[1]).padStart(2,'0')+':'+String(m[2]||'00').padStart(2,'0'):new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'})}
 saveQuick.onclick=()=>{const s=quickInput.value.trim();if(!s)return;const c=classify(s),id=Date.now();if(c==='tasks')db.tasks.unshift({id,title:s,date:/mai/i.test(s)?'Ngày mai':'Hôm nay',done:false});if(c==='money')db.money.unshift({id,title:s,type:/bán|thu|lương/.test(s.toLowerCase())?'in':'out',amount:getAmount(s)});if(c==='daily')db.daily.push({id,title:s,time:getTime(s)});if(c==='notes')db.notes.unshift({id,title:'Ghi nhanh',text:s.replace(/^note:\s*/i,''),time:getTime(s)});save();modal.classList.add('hidden');quickInput.value='';toast.textContent='Đã lưu vào '+c+' ✨';toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1600);switchView(c)};
