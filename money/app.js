@@ -168,6 +168,7 @@
   $("#toWalletInput").innerHTML=otherWallets.map(w=>'<option value="'+esc(w.id)+'">'+esc(w.name)+' ('+esc(w.currency)+')</option>').join("");
   if(otherWallets.some(w=>w.id===selectedDestination))$("#toWalletInput").value=selectedDestination;
   if(entryType==="transfer")$("#scanStatus").textContent="Chuyển tiền chỉ hỗ trợ giữa hai ví cùng đơn vị tiền.";
+  else if(!receiptFile)$("#scanStatus").textContent="Chọn ảnh hóa đơn; phần mềm sẽ thử điền số tiền, cửa hàng và thời gian.";
  }
  function resetReceipt(){
   if(receiptObjectUrl){URL.revokeObjectURL(receiptObjectUrl);receiptObjectUrl=null}
