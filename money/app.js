@@ -317,6 +317,7 @@
   overlayOpen("walletOverlay");
  }
  $("#addWalletBtn").onclick=()=>openWallet();
+ $("#entryAddWallet").onclick=()=>openWallet();
  $("#walletForm").onsubmit=e=>{
   e.preventDefault();
   const name=$("#walletName").value.trim(),currency=$("#walletCurrency").value,openingBalance=Number($("#walletInitial").value);
@@ -327,7 +328,10 @@
   const item={id:editingWalletId||id(),name,currency,openingBalance};
   if(editingWalletId)db.wallets=db.wallets.map(w=>w.id===editingWalletId?item:w);
   else db.wallets.push(item);
-  if(store()){overlayClose("walletOverlay");toast("Đã lưu ví ✓")}
+  if(store()){
+   if(!$("#entryOverlay").hidden){$("#walletInput").innerHTML=walletOptions(item.id);$("#walletInput").value=item.id;updateEntryUI()}
+   overlayClose("walletOverlay");toast("Đã lưu ví ✓")
+  }
  };
  function download(filename,blob){
   const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);
