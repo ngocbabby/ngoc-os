@@ -1,0 +1,56 @@
+/* Home v3: one focus card + a quiet app list */
+body{background:#fbfaf9}
+#view-home{background:#fbfaf9;color:#322d32}
+#view-home .focus-shell{max-width:660px;margin:auto;padding:34px 22px 115px}
+#view-home .focus-topline{display:flex;align-items:center;justify-content:space-between;gap:10px}
+#view-home .focus-brand{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;letter-spacing:.02em;color:#725668}
+#view-home .focus-brand i{font-size:22px;line-height:1;font-style:normal;color:#da5e8d}
+#view-home .focus-date{font-size:11px;color:#988d94;white-space:nowrap}
+#view-home .focus-welcome{margin:34px 0 5px;font-size:clamp(24px,4vw,32px);letter-spacing:-.7px;line-height:1.25;font-weight:720}
+#view-home .focus-intro{font-size:13px;color:#958990;margin:8px 0 28px}
+#view-home .focus-cycle{display:block;border:1px solid #f4e1e9;background:#f8eaf1;padding:19px 21px 22px;border-radius:24px;text-decoration:none;color:inherit;transition:background .2s,transform .2s}
+#view-home .focus-cycle:hover{background:#f6e1eb;transform:translateY(-1px)}
+#view-home .focus-cycle-eyebrow{display:flex;align-items:center;justify-content:space-between;color:#9d6380;letter-spacing:1.15px;font-size:10px;font-weight:800}
+#view-home .focus-cycle-eyebrow span:last-child{font-size:19px;line-height:1;font-weight:400}
+#view-home .focus-cycle-main{display:flex;gap:15px;align-items:center;margin-top:17px}
+#view-home .focus-cycle-icon{width:60px;height:60px;flex:none;border-radius:20px;background:#fff8fb;display:grid;place-items:center;color:#d85c8c}
+#view-home .focus-cycle-icon svg{width:29px;height:29px;stroke-width:1.8}
+#view-home .focus-cycle-copy{min-width:0;display:flex;flex-direction:column;gap:4px}
+#view-home #cycleHomeTitle{font-size:21px;font-weight:760;letter-spacing:-.4px;line-height:1.3}
+#view-home #cycleHomeHint{font-size:12px;color:#886e7b;line-height:1.45}
+#view-home .focus-section-title{font-weight:750;font-size:14px;margin:33px 0 13px 2px;letter-spacing:-.1px}
+#view-home .focus-app-list{border:1px solid #eee8eb;background:white;border-radius:22px;overflow:hidden}
+#view-home .focus-app{display:flex;align-items:center;gap:14px;min-height:81px;width:100%;padding:15px 19px;color:#322d32;text-decoration:none;text-align:left;cursor:pointer;background:transparent;border:0;font-family:inherit}
+#view-home .focus-app:not(:last-child){border-bottom:1px solid #f2eef0}
+#view-home .focus-app:hover{background:#fbf9fa}
+#view-home .focus-app-icon{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;flex:none}
+#view-home .focus-app-icon svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#view-home .focus-app-icon.notes{background:#f0effa;color:#756caa}
+#view-home .focus-app-icon.tasks{background:#eaf3ec;color:#67906d}
+#view-home .focus-app-icon.money{background:#fdf0e3;color:#ae794b;font-size:23px;font-weight:700}
+#view-home .focus-app-icon.photos{background:#ebf3f7;color:#6695a8}
+#view-home .focus-app-copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}
+#view-home .focus-app-name{font-size:14px;font-weight:730}
+#view-home .focus-app-sub{font-size:11px;color:#958b94;line-height:1.45}
+#view-home .focus-app-arrow{font-size:22px;font-weight:300;color:#b2a7af}
+@media(max-width:680px){
+ .main{padding:0 10px 89px}
+ #view-home .focus-shell{padding:28px 11px 95px}
+ #view-home .focus-welcome{margin-top:27px;font-size:26px}
+ #view-home .focus-intro{margin-bottom:26px}
+ #view-home .focus-cycle{padding:17px 19px 20px;border-radius:22px}
+ #view-home .focus-cycle-main{margin-top:16px}
+ #view-home .focus-cycle-icon{height:57px;width:57px;border-radius:18px}
+ #view-home #cycleHomeTitle{font-size:19px}
+ #view-home .focus-section-title{margin-top:30px}
+ #view-home .focus-app{min-height:77px;gap:12px;padding:13px 16px}
+ #view-home .focus-app-icon{width:43px;height:43px}
+ .mobile-bottom-nav{height:calc(71px + env(safe-area-inset-bottom));padding:0 10px env(safe-area-inset-bottom);background:#fffdfdf7;border-top:1px solid #eee9ed;backdrop-filter:blur(14px);z-index:45}
+ .mobile-bottom-nav button,.mobile-bottom-nav a{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;min-width:50px;border:0;background:transparent;text-decoration:none;font-family:inherit;color:#99929a;font-weight:600;font-size:10px}
+ .mobile-bottom-nav svg{display:block;height:21px;width:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+ .mobile-bottom-nav .active{color:#dc5688}
+ .mobile-bottom-nav .mobile-add{display:grid;place-items:center;width:48px;height:48px;min-width:48px;margin-top:-13px;border-radius:17px;background:#e8759b;color:white;box-shadow:0 7px 16px #e8759b37}
+ .mobile-bottom-nav .mobile-add svg{width:26px;height:26px;stroke-width:2}
+ .quick,.mobile-cycle-link{display:none}
+}
+@media(prefers-reduced-motion:reduce){#view-home .focus-cycle{transition:none}}
