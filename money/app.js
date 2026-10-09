@@ -30,7 +30,7 @@
  db.settings ||= {hideBalance:false,legacyImportDone:false};
 
  let screen="overview",filter="all",monthIndex=new Date().getFullYear()*12+new Date().getMonth(),searchText="";
- let editingTxId=null,entryType="expense",receiptFile=null,receiptObjectUrl=null,detectedReceiptCurrency=null,scanId=0,busyScan=false,editingWalletId=null,editingBudgetId=null;
+ let editingTxId=null,entryType="expense",receiptFile=null,receiptObjectUrl=null,detectedReceiptCurrency=null,ocrUsed=false,scanId=0,busyScan=false,editingWalletId=null,editingBudgetId=null;
  const toast=message=>{
   const element=$("#toast");element.textContent=message;element.classList.add("show");
   clearTimeout(toast.timer);toast.timer=setTimeout(()=>element.classList.remove("show"),3400);
@@ -171,7 +171,7 @@
  }
  function resetReceipt(){
   if(receiptObjectUrl){URL.revokeObjectURL(receiptObjectUrl);receiptObjectUrl=null}
-  receiptFile=null;detectedReceiptCurrency=null;busyScan=false;$("#receiptPreview").hidden=true;$("#receiptImage").removeAttribute("src");
+  receiptFile=null;detectedReceiptCurrency=null;ocrUsed=false;busyScan=false;$("#receiptPreview").hidden=true;$("#receiptImage").removeAttribute("src");
   $("#rawOcrDetails").hidden=true;$("#rawOcrText").textContent="";$("#reviewWarning").hidden=true;$("#reviewWarning").textContent="⚠️ Kiểm tra lại số tiền và ngày giờ trước khi lưu. OCR có thể nhận nhầm.";$("#retryScan").hidden=true;
   const s=$("#scanStatus");s.textContent="Chọn ảnh hóa đơn; phần mềm sẽ thử điền số tiền, cửa hàng và thời gian.";s.className="scan-status";
  }
@@ -224,6 +224,7 @@
    $("#rawOcrDetails").hidden=false;$("#rawOcrText").textContent=parsed.rawText||"(Không nhận diện được chữ)";
    $("#reviewWarning").hidden=false;
    detectedReceiptCurrency=parsed.currency;
+   ocrUsed=Boolean(parsed.rawText.trim());
    if(parsed.amount)$("#amountInput").value=parsed.amount;
    else $("#amountInput").value="";
    if(parsed.merchant)$("#merchantInput").value=parsed.merchant;
@@ -273,7 +274,7 @@
    source:created?.source||"manual"
   };
   // Only status is saved, not the receipt image or OCR output.
-  if(receiptFile)tx.source="receipt_ocr";
+  if(ocrUsed)tx.source="receipt_ocr";
   if(created)db.transactions=db.transactions.map(x=>x.id===editingTxId?tx:x);
   else db.transactions.push(tx);
   if(!store())return;
