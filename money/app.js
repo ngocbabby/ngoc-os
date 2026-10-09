@@ -254,6 +254,7 @@
   const request=++scanId;
   if(receiptObjectUrl){URL.revokeObjectURL(receiptObjectUrl);receiptObjectUrl=null}
   if(!file.type.startsWith("image/")||file.size>15_000_000){toast("Chọn ảnh JPG/PNG/WebP dưới 15 MB.");return}
+  lineItems=[];itemsEnabled=false;renderItems();
   receiptFile=file;receiptObjectUrl=URL.createObjectURL(file);$("#receiptImage").src=receiptObjectUrl;$("#receiptPreview").hidden=false;
   $("#reviewWarning").hidden=true;$("#rawOcrDetails").hidden=true;$("#retryScan").hidden=true;busyScan=true;
   $("#cameraBtn").disabled=$("#galleryBtn").disabled=true;
