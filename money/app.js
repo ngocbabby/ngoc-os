@@ -163,7 +163,6 @@
   if(!$("#walletInput").value&&db.wallets.length)$("#walletInput").value=db.wallets[0].id;
   const selectedWallet=wallet($("#walletInput").value);
   $("#amountUnit").textContent=selectedWallet?.currency||"JPY";
-  const others=db.wallets.filter(w=>w.currency===selectedWallet?.currency&&w.id!==selectedWallet?.id);
   const selectedDestination=$("#toWalletInput").value;
   const otherWallets=db.wallets.filter(w=>w.currency===selectedWallet?.currency&&w.id!==selectedWallet?.id);
   $("#toWalletInput").innerHTML=otherWallets.map(w=>'<option value="'+esc(w.id)+'">'+esc(w.name)+' ('+esc(w.currency)+')</option>').join("");
@@ -398,4 +397,20 @@
   }
  });
  renderAll();
+ // Open a draft transferred from the Home quick-capture widget, but never save it automatically.
+ try {
+  const add=new URLSearchParams(window.location.search).get("add");
+  if(add==="expense"||add==="income"){
+   openEntry(add);
+   const raw=sessionStorage.getItem("ngoc_os_money_pending_draft_v1");
+   sessionStorage.removeItem("ngoc_os_money_pending_draft_v1");
+   if(raw){
+    const draft=JSON.parse(raw);
+    if(draft?.type===add&&Date.now()-Number(draft.created)<5*60*1000){
+     $("#merchantInput").value=String(draft.text||"").slice(0,100);
+     if(Number.isSafeInteger(draft.amount)&&draft.amount>0&&draft.amount<=1_000_000_000)$("#amountInput").value=draft.amount;
+    }
+   }
+  }
+ }catch{}
 })();
