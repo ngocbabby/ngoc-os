@@ -128,7 +128,7 @@
   const date=kind.trusted?findDate(text):null;
   const time=kind.trusted?findTime(text):null;
   const merchant=kind.trusted?findMerchant(lines,kind):null;
-  const items=kind.trusted&&global.MoneyItems?global.MoneyItems.parseLineItems(lines,{merchant}):[];
+  const items=kind.type==="receipt"&&global.MoneyItems?global.MoneyItems.parseLineItems(lines,{merchant}):[];
   const currency=classifyCurrency(text);
   const amount=amountResult.amount;
   const score=(amount?3:0)+(date?1:0)+(time?1:0)+(merchant?1:0)+(items.length?1:0);
