@@ -4,3 +4,23 @@
 @media(min-width:700px){body{padding-top:20px}.app{border-radius:24px;overflow:clip;box-shadow:0 0 40px #000a}.sheet{border-radius:24px}.full-sheet{height:min(90dvh,980px);border-radius:24px}}@media(prefers-reduced-motion:reduce){.screen{animation:none}.toast{transition:none}}
 
 .field-label-row{display:flex;align-items:center;justify-content:space-between;gap:10px}.field-label-row label{margin-bottom:0}.wallet-add-inline{border:0;background:transparent;color:#61d989;font-size:11px;font-weight:680;padding:3px 0}.field-label-row+select{margin-top:4px}
+
+/* Receipt product review: editable fields and a non-double-counting reconciliation */
+.editable-fields-hint{font-size:12px;color:#b4eac4;margin:15px 0 4px;background:#163f27;border:1px solid #285c39;padding:11px 12px;border-radius:12px}
+.items-panel{margin:20px 0 16px;border:1px solid #3a3a40;border-radius:17px;padding:15px 12px;background:#202125}
+.items-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+.items-panel-head h3{font-size:15px;margin:0 0 3px;font-weight:720}
+.items-panel-head p{color:#aaa8ae;margin:0;font-size:11px;line-height:1.6}
+.items-panel-head .wallet-add-inline{flex:none;margin-top:2px}
+.item-editor{background:#2b2b30;border:1px solid #3c3c43;border-radius:13px;margin:10px 0;padding:11px}
+.item-editor-first{display:flex;align-items:flex-end;gap:9px}
+.item-editor-first label{flex:1;min-width:0}
+.item-editor label{font-size:11px;color:#aeadb5;display:block}
+.item-editor input,.item-editor select{display:block;width:100%;min-width:0;margin-top:5px;padding:9px 7px;color:#fff;border-radius:9px;border:1px solid #52525a;background:#202024;min-height:39px;font-size:13px}
+.item-editor select option{background:#25252b}
+.item-editor-fields{display:grid;grid-template-columns:66px 1fr minmax(108px,1.3fr);gap:8px;margin-top:10px}
+.remove-item{background:#3b292e;border:0;color:#fc9ba1;border-radius:10px;width:37px;height:39px;font-size:19px;flex:none}
+.items-summary{font-size:12px;line-height:1.65;border-radius:11px;padding:11px 12px;background:#1e3528;color:#abeabc}
+.items-summary.warn{background:#453920;color:#f3d89a}
+.items-hint{color:#8f8e97;font-size:11px;line-height:1.65;margin:12px 0 0}
+@media(max-width:390px){.items-panel{padding:12px 9px}.item-editor-fields{grid-template-columns:55px minmax(80px,1fr) minmax(95px,1.35fr);gap:5px}.item-editor input,.item-editor select{padding:8px 4px;font-size:12px}}

@@ -9,6 +9,7 @@
 <link rel="icon" href="../assets/app-icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="./style.css">
 <script src="./receipt.js" defer></script>
+<script src="./items.js" defer></script>
 <script src="./app.js" defer></script>
 <title>Sổ thu chi · Ngọc OS</title>
 </head>
@@ -159,9 +160,14 @@
       <form id="entryForm">
         <label class="form-label" for="amountInput">Số tiền</label>
         <div class="amount-row"><input id="amountInput" required type="number" inputmode="numeric" min="1" step="1" placeholder="0"><span id="amountUnit">JPY</span></div>
-        <div class="field"><label for="merchantInput">Tên giao dịch / cửa hàng</label><input id="merchantInput" maxlength="100" placeholder="Tên cửa hàng hoặc khoản chi"></div>
+        <p id="editableFieldsHint" class="editable-fields-hint" hidden>✏️ Bạn có thể nhấn vào mọi ô để sửa trước khi lưu.</p><div class="field"><label for="merchantInput">Tên giao dịch / cửa hàng</label><input id="merchantInput" maxlength="100" placeholder="Tên cửa hàng hoặc khoản chi"></div>
         <div class="field"><label for="categoryInput">Danh mục</label><select id="categoryInput"></select></div>
-        <div class="field"><div class="field-label-row"><label for="walletInput">Ví thanh toán</label><button type="button" id="entryAddWallet" class="wallet-add-inline">＋ Tạo ví</button></div><select id="walletInput"></select></div>
+        <section id="itemsPanel" class="items-panel" hidden>
+<div class="items-panel-head"><div><h3>🛍️ Từng món trên bill</h3><p>Chạm vào để sửa tên, giá, số lượng hoặc danh mục.</p></div><button id="addLineItem" type="button" class="wallet-add-inline">＋ Thêm món</button></div>
+<div id="lineItemsList"></div><div id="lineItemsSummary" class="items-summary" aria-live="polite"></div>
+<p class="items-hint">Giá mỗi dòng là thành tiền của món. Không cộng lần nữa vào tổng khoản chi.</p>
+</section>
+<div class="field"><div class="field-label-row"><label for="walletInput">Ví thanh toán</label><button type="button" id="entryAddWallet" class="wallet-add-inline">＋ Tạo ví</button></div><select id="walletInput"></select></div>
         <div class="field" id="toWalletField" hidden><label for="toWalletInput">Chuyển đến ví</label><select id="toWalletInput"></select></div>
         <div class="form-grid"><div class="field"><label for="dateInput">Ngày</label><input id="dateInput" type="date" required></div><div class="field"><label for="timeInput">Giờ</label><input id="timeInput" type="time" required></div></div>
         <div class="field"><label for="memoInput">Ghi chú (không bắt buộc)</label><textarea id="memoInput" rows="2" maxlength="350" placeholder="Thêm mô tả..."></textarea></div>
@@ -196,7 +202,7 @@
   <div class="sheet-header"><button class="sheet-close" type="button" data-close="helpOverlay"><svg><use href="#i-close"/></svg></button><h2 id="helpHeading">Sổ thu chi & quyền riêng tư</h2></div>
   <div class="sheet-body help-content">
     <p>📷 <b>Quét bill:</b> ảnh hóa đơn được đọc bằng Tesseract.js (OCR Nhật/Anh) ngay trong trình duyệt. Lần đầu cần internet để tải bộ nhận diện. Ảnh không tải lên máy chủ của Ngọc OS.</p>
-    <p>⚠️ <b>Độ chính xác:</b> bản quét có thể sai cửa hàng, số tiền, ngày, giờ, nhất là ảnh mờ hoặc bill nhiều dòng. Bạn phải kiểm tra và bấm lưu.</p>
+    <p>🛒 <b>Từng sản phẩm:</b> có thể sửa tên, số lượng, giá và nhóm hàng. Nếu tổng món khác tổng hóa đơn, ứng dụng yêu cầu xác nhận và không cộng trùng vào khoản chi.</p><p>⚠️ <b>Độ chính xác:</b> bản quét có thể sai cửa hàng, số tiền, ngày, giờ, nhất là ảnh mờ hoặc bill nhiều dòng. Bạn phải kiểm tra và bấm lưu.</p>
     <p>🔒 <b>Lưu trữ:</b> danh sách giao dịch, ví và ngân sách được lưu trên thiết bị. Không tự đồng bộ; xóa dữ liệu trình duyệt có thể mất dữ liệu. Hãy sao lưu JSON định kỳ. Ảnh bill chỉ hiển thị lúc nhập, không lưu dài hạn.</p>
     <p>💴 <b>Đơn vị tiền:</b> ví JPY và VND được thống kê tách biệt; ứng dụng không cộng JPY với VND theo tỷ giá ước đoán.</p>
     <p>🧾 <b>Thu chi cũ:</b> bạn có thể nhập thủ công từ dữ liệu Ngọc OS trước đây. App không tự thêm khoản chi mẫu.</p>
