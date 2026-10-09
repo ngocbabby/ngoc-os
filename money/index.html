@@ -152,7 +152,20 @@
           <img id="receiptImage" alt="Ảnh hóa đơn vừa chọn">
           <button type="button" class="preview-close" id="removeReceipt" aria-label="Bỏ ảnh"><svg><use href="#i-close"/></svg></button>
         </div>
-        <div id="scanStatus" class="scan-status" role="status" aria-live="polite">Chọn ảnh hóa đơn; phần mềm sẽ thử điền số tiền, cửa hàng và thời gian.</div>
+        <div class="document-review" id="documentReview" hidden>
+<strong id="documentResultTitle">Loại chứng từ</strong>
+<p id="documentResultReason"></p>
+<label for="documentTypeChoice">Chọn loại giấy tờ nếu ứng dụng nhận nhầm</label>
+<select id="documentTypeChoice">
+<option value="auto">Tự nhận diện</option>
+<option value="receipt">Biên lai mua hàng</option>
+<option value="online">Đơn hàng online</option>
+<option value="invoice">Hóa đơn / yêu cầu thanh toán</option>
+<option value="return">Trả hàng / hoàn tiền</option>
+</select>
+<div id="documentNotExpense" class="document-not-expense" hidden>⛔ Đây không phải hóa đơn mua hàng đã thanh toán. Ứng dụng sẽ không tự ghi khoản chi.</div>
+</div>
+<div id="scanStatus" class="scan-status" role="status" aria-live="polite">Chọn ảnh hóa đơn; phần mềm sẽ thử điền số tiền, cửa hàng và thời gian.</div>
         <button id="retryScan" class="retry-btn" type="button" hidden>↻ Đọc lại bill</button>
         <details id="rawOcrDetails" class="ocr-raw" hidden><summary>Văn bản đọc được từ bill</summary><pre id="rawOcrText"></pre></details>
         <div id="reviewWarning" class="review-warning" hidden>⚠️ Kiểm tra lại số tiền và ngày giờ trước khi lưu. OCR có thể nhận nhầm.</div>

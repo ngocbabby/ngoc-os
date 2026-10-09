@@ -31,7 +31,7 @@
 
  let screen="overview",filter="all",monthIndex=new Date().getFullYear()*12+new Date().getMonth(),searchText="";
  let lineItems=[],itemsEnabled=false;
- let editingTxId=null,entryType="expense",receiptFile=null,receiptObjectUrl=null,detectedReceiptCurrency=null,ocrUsed=false,scanId=0,busyScan=false,editingWalletId=null,editingBudgetId=null;
+ let editingTxId=null,entryType="expense",receiptFile=null,receiptObjectUrl=null,detectedReceiptCurrency=null,detectedDocumentType=null,ocrUsed=false,scanId=0,busyScan=false,editingWalletId=null,editingBudgetId=null;
  const toast=message=>{
   const element=$("#toast");element.textContent=message;element.classList.add("show");
   clearTimeout(toast.timer);toast.timer=setTimeout(()=>element.classList.remove("show"),3400);
@@ -208,7 +208,8 @@
 
  function resetReceipt(){
   if(receiptObjectUrl){URL.revokeObjectURL(receiptObjectUrl);receiptObjectUrl=null}
-  receiptFile=null;detectedReceiptCurrency=null;ocrUsed=false;busyScan=false;
+  receiptFile=null;detectedReceiptCurrency=null;detectedDocumentType=null;ocrUsed=false;busyScan=false;
+  $("#documentReview").hidden=true;$("#documentNotExpense").hidden=true;$("#documentTypeChoice").value="auto";
   $("#editableFieldsHint").hidden=true;$("#receiptPreview").hidden=true;$("#receiptImage").removeAttribute("src");
   $("#rawOcrDetails").hidden=true;$("#rawOcrText").textContent="";$("#reviewWarning").hidden=true;$("#reviewWarning").textContent="⚠️ Kiểm tra lại số tiền và ngày giờ trước khi lưu. OCR có thể nhận nhầm.";$("#retryScan").hidden=true;
   const s=$("#scanStatus");s.textContent="Chọn ảnh hóa đơn; phần mềm sẽ thử điền số tiền, cửa hàng và thời gian.";s.className="scan-status";
@@ -243,6 +244,7 @@
  $("#galleryBtn").onclick=()=>$("#imageInput").click();
  $("#removeReceipt").onclick=()=>{scanId++;resetReceipt()};
  $("#retryScan").onclick=()=>{if(receiptFile)runScan(receiptFile)};
+ $("#documentTypeChoice").onchange=()=>{if(receiptFile)runScan(receiptFile)};
  for(const input of [$("#captureInput"),$("#imageInput")]){
   input.addEventListener("change",()=>{const f=input.files?.[0];input.value="";if(f)runScan(f)});
  }
@@ -260,11 +262,16 @@
   $("#cameraBtn").disabled=$("#galleryBtn").disabled=true;
   try{
    progress("Đang nhận diện chữ trên bill…");
-   const parsed=await window.MoneyReceipt.recognizeReceipt(file,(message,value)=>{if(request===scanId)progress(message,value)});
+   const parsed=await window.MoneyReceipt.recognizeReceipt(file,(message,value)=>{if(request===scanId)progress(message,value)},{mode:$("#documentTypeChoice").value});
    if(request!==scanId)return;
    $("#rawOcrDetails").hidden=false;$("#rawOcrText").textContent=parsed.rawText||"(Không nhận diện được chữ)";
    $("#reviewWarning").hidden=false;
    detectedReceiptCurrency=parsed.currency;
+   detectedDocumentType=parsed.documentType;
+   $("#documentReview").hidden=false;
+   $("#documentResultTitle").textContent=parsed.documentLabel||"Chứng từ chưa xác định";
+   $("#documentResultReason").textContent=parsed.documentReason||"Kiểm tra thông tin trên ảnh.";
+   $("#documentNotExpense").hidden=parsed.trustedDocument===true;
    ocrUsed=Boolean(parsed.rawText.trim());
    lineItems=Array.isArray(parsed.items)?parsed.items.map(x=>({...x})):[];itemsEnabled=ocrUsed;
    $("#editableFieldsHint").hidden=false;renderItems();
@@ -276,10 +283,11 @@
    if(parsed.date)$("#dateInput").value=parsed.date;else $("#dateInput").value="";
    if(parsed.time)$("#timeInput").value=parsed.time;else $("#timeInput").value="";
    updateItemSummary();
-   const matching=db.wallets.find(w=>w.currency===parsed.currency);
+   const matching=parsed.currency?db.wallets.find(w=>w.currency===parsed.currency):null;
    if(matching){$("#walletInput").value=matching.id;updateEntryUI()}
-   else $("#reviewWarning").textContent="⚠️ Bill dùng "+parsed.currency+" nhưng chưa có ví tương ứng. Hãy tạo và chọn ví "+parsed.currency+" trước khi lưu.";
-   const hasFields=Boolean(parsed.amount&&parsed.merchant&&parsed.date);
+   else if(parsed.currency)$("#reviewWarning").textContent="⚠️ Bill dùng "+parsed.currency+" nhưng chưa có ví tương ứng. Hãy tạo và chọn ví "+parsed.currency+" trước khi lưu.";
+   else $("#reviewWarning").textContent="⚠️ Chưa xác định được loại tiền. Kiểm tra ví và số tiền trước khi lưu.";
+   const hasFields=Boolean(parsed.trustedDocument&&parsed.amount&&parsed.merchant&&parsed.date);
    const status=$("#scanStatus");status.className="scan-status "+(hasFields?"success":"error");
    status.textContent=parsed.rawText.trim()
     ? "Đã đọc bill · "+(parsed.confidence==="high"?"Có vẻ rõ":"Cần kiểm tra kỹ")+". "+(parsed.missing.length?"Chưa nhận diện: "+parsed.missing.join(", ")+". ":"")+"Bạn có thể sửa mọi trường trước khi lưu."
@@ -300,6 +308,7 @@
   const merchant=$("#merchantInput").value.trim(),category=$("#categoryInput").value,date=$("#dateInput").value,time=$("#timeInput").value;
   if(!Number.isSafeInteger(amount)||amount<=0||amount>1_000_000_000){toast("Số tiền phải là số nguyên dương và không vượt 1 tỷ.");return}
   if(!sourceWallet){toast("Hãy chọn ví thanh toán.");return}
+  if(entryType==="expense"&&receiptFile&&detectedDocumentType==="return"){toast("Ảnh đang là trang trả hàng, không phải bill. Chọn đúng chứng từ hoặc nhập khoản chi thủ công.");return}
   if(receiptFile&&detectedReceiptCurrency&&entryType==="expense"&&detectedReceiptCurrency!==sourceWallet.currency){toast("Bill dùng "+detectedReceiptCurrency+" nhưng ví đang là "+sourceWallet.currency+". Chọn đúng ví hoặc bỏ ảnh.");return}
   if(!validDay(date)||!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(time)){toast("Vui lòng kiểm tra ngày và giờ giao dịch.");return}
   if(!merchant&&entryType!=="transfer"){toast("Nhập tên cửa hàng hoặc tên giao dịch.");return}
