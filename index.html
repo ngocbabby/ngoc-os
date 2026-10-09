@@ -110,6 +110,7 @@ body{background:#fffafc}
 
 .note-app-link{display:inline-block;margin-top:10px;text-decoration:none;font-size:12px;font-weight:700;color:#be4684}
 </style>
+<link rel="stylesheet" href="./assets/home-focus.css">
 </head>
 <body>
 <div class="app">
@@ -131,47 +132,43 @@ body{background:#fffafc}
 </aside>
 <main class="main"><div class="workspace">
 <section id="view-home" class="view active">
-  <div class="hero" id="hero">
-    <div class="hero-tools"><button class="pill" id="randomBtn">✨ Smart Random</button></div>
-    <button class="pill hero-like" id="likeBtn">♡ Đúng gu</button>
-    <div class="greeting"><h1>Chào buổi tối, Ngọc ♡</h1><p>Hôm nay cũng đã rất tuyệt rồi!</p></div>
-    <div class="clock"><strong id="clock">20:03</strong><span id="dateLine"></span><div class="weather">Higashiomi, Shiga&nbsp; ☁︎ 21°C</div></div>
-  </div>
-  <div class="dash">
-    <p class="home-section-label">Tổng quan của bạn ✨</p>
-    <div class="home-main-grid">
-      <article class="card today-card cycle-home-card">
-        <div class="card-head"><h3>♡ CHU KỲ KINH NGUYỆT</h3><a class="cycle-home-go" href="./cycle/">Xem chi tiết ↗</a></div>
-        <a href="./cycle/" class="cycle-home-content" style="text-decoration:none;color:inherit">
-          <span class="cycle-home-emoji" aria-hidden="true">🌷</span>
-          <span><strong id="cycleHomeTitle">Chu kỳ của tôi</strong><p id="cycleHomeHint">Theo dõi và chăm sóc sức khỏe</p></span>
-        </a>
-      </article>
-      <article class="card home-work">
-        <div class="card-head"><h3><span class="mini-icon pink">✓</span> VIỆC CẦN LÀM</h3><button class="add" id="taskAdd" aria-label="Thêm việc nhanh">＋</button></div>
-        <div id="homeTasks"></div>
-      </article>
-      <article class="card home-wallet">
-        <div class="card-head"><h3><span class="mini-icon green">¥</span> CHI TIÊU ĐÃ GHI</h3></div>
-        <div class="money-big" id="spendBig">¥0</div>
-        <div class="summary-subtext">Tổng chi từ các mục đã lưu</div>
-        <div id="homeMoney"></div>
-      </article>
-    </div>
-    <div class="home-shortcuts" aria-label="Lối tắt">
-      <a class="home-shortcut" href="./cycle/"><span class="shortcut-icon">🩸</span><span>Ghi chu kỳ</span></a>
-      <button type="button" class="home-shortcut" data-view="tasks"><span class="shortcut-icon">☑️</span><span>Công việc</span></button>
-      <button type="button" class="home-shortcut" data-view="money"><span class="shortcut-icon">💰</span><span>Chi tiêu</span></button>
-    </div>
-    <article class="card home-notes">
-      <div class="card-head"><h3><span class="mini-icon yellow">✎</span> GHI CHÚ GẦN ĐÂY</h3><a href="./notes/" class="add" aria-label="Mở ứng dụng ghi chú" style="text-decoration:none">↗</a></div>
-      <div class="notes" id="homeNotes"></div><a href="./notes/" class="note-app-link">Mở Ghi chú →</a>
-    </article>
-    <div class="home-photo-strip">
-      <img src="assets/cat.webp" alt="Mèo nhỏ đáng yêu" loading="lazy">
-      <div style="flex:1"><h3>Một góc dễ thương 🐱</h3><p>Giữ những hình ảnh yêu thích</p></div>
-      <button type="button" data-view="photos">Xem ảnh ↗</button>
-    </div>
+  <div class="focus-shell">
+    <header class="focus-header">
+      <div class="focus-topline">
+        <span class="focus-brand"><i aria-hidden="true">✿</i> Ngọc OS</span>
+        <time class="focus-date" id="homeDate"></time>
+      </div>
+      <h1 class="focus-welcome" id="homeGreeting">Chào bạn ♡</h1>
+      <p class="focus-intro">Một nơi cho những điều quan trọng.</p>
+    </header>
+
+    <a class="focus-cycle" href="./cycle/" aria-label="Mở ứng dụng Chu kỳ kinh nguyệt">
+      <span class="focus-cycle-eyebrow"><span>SỨC KHỎE CỦA BẠN</span><span aria-hidden="true">↗</span></span>
+      <span class="focus-cycle-main">
+        <span class="focus-cycle-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.6 8.5c0 5-8.6 10.8-8.6 10.8S3.4 13.5 3.4 8.5a4.7 4.7 0 0 1 8.6-2.2 4.7 4.7 0 0 1 8.6 2.2Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="focus-cycle-copy"><strong id="cycleHomeTitle">Chu kỳ của tôi</strong><span id="cycleHomeHint">Theo dõi chu kỳ kinh nguyệt</span></span>
+      </span>
+    </a>
+
+    <h2 class="focus-section-title">Ứng dụng của bạn</h2>
+    <nav class="focus-app-list" aria-label="Các ứng dụng">
+      <a class="focus-app" href="./notes/">
+        <span class="focus-app-icon notes" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></svg></span>
+        <span class="focus-app-copy"><span class="focus-app-name">Ghi chú</span><span class="focus-app-sub">Viết, lưu ý tưởng và danh sách</span></span><span class="focus-app-arrow" aria-hidden="true">›</span>
+      </a>
+      <button type="button" class="focus-app" data-view="tasks">
+        <span class="focus-app-icon tasks" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 9h18m-14 6 2.5 2.5L16 12"/></svg></span>
+        <span class="focus-app-copy"><span class="focus-app-name">Công việc</span><span class="focus-app-sub">Những việc cần hoàn thành</span></span><span class="focus-app-arrow" aria-hidden="true">›</span>
+      </button>
+      <button type="button" class="focus-app" data-view="money">
+        <span class="focus-app-icon money" aria-hidden="true">¥</span>
+        <span class="focus-app-copy"><span class="focus-app-name">Thu chi</span><span class="focus-app-sub">Quản lý tiền của bạn</span></span><span class="focus-app-arrow" aria-hidden="true">›</span>
+      </button>
+      <button type="button" class="focus-app" data-view="photos">
+        <span class="focus-app-icon photos" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="9" r="1.3"/><path d="m3 17 5.5-5 4.5 4 3-3 5 4"/></svg></span>
+        <span class="focus-app-copy"><span class="focus-app-name">Ảnh của tui</span><span class="focus-app-sub">Kho ảnh và cảm hứng</span></span><span class="focus-app-arrow" aria-hidden="true">›</span>
+      </button>
+    </nav>
   </div>
 </section>
 <section id="view-tasks" class="view page"><h2>Tasks</h2><p>Việc cần làm và deadline.</p><div class="list" id="tasksList"></div></section>
@@ -179,39 +176,29 @@ body{background:#fffafc}
 
 <section id="view-notes" class="view page"><h2>Notes</h2><p>Những điều muốn nhớ.</p><div class="list" id="notesList"></div></section>
 <section id="view-photos" class="view page"><h2>Ảnh của tui</h2><p>Kho mood dùng cho Smart Random.</p><div class="card"><div class="gallery-row"><div class="thumb selected"><img src="assets/hero.webp"></div><div class="thumb selected"><img src="assets/cat.webp"></div><div class="thumb"><img src="assets/japan.webp"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div></div></div></section>
-<section id="view-settings" class="view page"><h2>Settings</h2><p>NGỌC OS hiện không dùng Pinterest. Smart Random dùng kho ảnh riêng.</p><div class="card"><div class="card-head"><h3>Smart Random</h3></div><p style="color:var(--muted);font-size:12px;line-height:1.7">Ảnh mặc định luôn là hoa/hoàng hôn. Bấm Smart Random để đổi mood sang phố Nhật hoặc mèo cozy; refresh trang sẽ quay lại ảnh hoa để giao diện luôn đẹp như mẫu.</p><button class="pill" id="randomSettings">Thử random</button></div></section>
+<section id="view-settings" class="view page"><h2>Cài đặt</h2><p>Ngọc OS lưu dữ liệu hiện tại trên thiết bị này. Ghi chú mới và chu kỳ được lưu riêng trên cùng trình duyệt; không tự đồng bộ giữa các điện thoại.</p><p>Dữ liệu công việc, thu chi và ghi chú cũ vẫn được giữ nguyên.</p><button type="button" data-view="notes" class="pill">Xem ghi chú cũ</button></section>
 </div></main></div>
-<nav class="mobile-bottom-nav" aria-label="Điều hướng di động"><button type="button" data-view="home" class="active"><span class="mobile-icon">⌂</span>Home</button><button type="button" data-view="tasks"><span class="mobile-icon">☑</span>Việc</button><button type="button" class="mobile-add" id="mobileQuick" aria-label="Ghi nhanh">＋</button><a href="./cycle/"><span class="mobile-icon">♡</span>Chu kỳ</a><a href="./notes/"><span class="mobile-icon">✎</span>Ghi chú</a></nav><button class="quick" id="quickBtn">＋ Ghi nhanh</button>
-<div class="modal-bg hidden" id="modal"><div class="modal"><h2>Ghi nhanh ✨</h2><textarea id="quickInput" placeholder="Nãy ăn ramen 950 yên / Mai 9h gọi bảo hiểm / Note: thêm bookmark..."></textarea><div class="modal-actions"><button id="cancel">Đóng</button><button class="save" id="saveQuick">Lưu</button></div></div></div><div class="toast" id="toast"></div>
-<script>
-const KEY='ngoc_os_v3';
-const seed={tasks:[{id:1,title:'Mai 9h gọi bảo hiểm',date:'15/08',done:false},{id:2,title:'Gửi báo cáo tuần cho sếp',date:'16/08',done:false},{id:3,title:'Đọc 30p sách kỹ thuật',date:'Hôm nay',done:false},{id:4,title:'Ôn thi lý thuyết bằng lái',date:'Hôm nay',done:false},{id:5,title:'Check đơn Tenbai',date:'18/08',done:false}],money:[{id:1,type:'out',amount:950,title:'Ramen'},{id:2,type:'out',amount:450,title:'Cà phê'},{id:3,type:'out',amount:1050,title:'Siêu thị'}],daily:[{id:1,time:'07:30',title:'Thức dậy'},{id:2,time:'08:15',title:'Đi làm'},{id:3,time:'17:20',title:'Tan làm'},{id:4,time:'18:00',title:'Gym'},{id:5,time:'20:30',title:'Học tiếng Nhật'}],notes:[{id:1,title:'Ý tưởng',text:'Thêm bookmark cho web truyện → phân loại theo genre',time:'19:30'},{id:2,title:'Nhắc mình',text:'Uống nhiều nước mỗi ngày và ngủ trước 23h',time:'10:15'},{id:3,title:'Tenbai',text:'Check kèo Gashapon mới cuối tuần này',time:'09:40'}],hero:0,liked:false};
-let db=JSON.parse(localStorage.getItem(KEY)||'null')||structuredClone(seed);db.hero=0;
-const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],yen=n=>'¥'+Number(n||0).toLocaleString('ja-JP');
-function save(){localStorage.setItem(KEY,JSON.stringify(db));render()}
-function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function render(){
- homeTasks.innerHTML=db.tasks.slice(0,3).map(t=>`<div class="task ${t.done?'done':''}"><button class="check" data-check="${t.id}"></button><span class="name">${safe(t.title)}</span><span class="datechip">${safe(t.date)}</span></div>`).join('')||'<div class="home-empty">Chưa có việc nào được ghi.</div>';
- const spent=db.money.filter(x=>x.type==='out').reduce((a,b)=>a+b.amount,0);spendBig.textContent=yen(spent);homeMoney.innerHTML=db.money.slice(0,3).map(x=>`<div class="money-item"><span>${safe(x.title)}</span><b>${yen(x.amount)}</b></div>`).join('');
- if(document.getElementById('homeDaily'))homeDaily.innerHTML=db.daily.slice(0,5).map(x=>`<div class="time"><i class="dot"></i><b>${safe(x.time)}</b><span>${safe(x.title)}</span></div>`).join('');
- homeNotes.innerHTML='<p style="font-size:12px;color:#9d8392;margin:3px 0">Chưa có ghi chú được hiển thị.</p>';
- tasksList.innerHTML=db.tasks.map(t=>`<div class="row"><small>${safe(t.date)}</small><span>${safe(t.title)}</span><button class="check" data-check="${t.id}"></button></div>`).join('');
- moneyList.innerHTML=db.money.map(x=>`<div class="row"><small>${x.type==='out'?'Chi':'Thu'}</small><span>${safe(x.title)}</span><b>${x.type==='out'?'−':'+'}${yen(x.amount)}</b></div>`).join('');
- if(document.getElementById('dailyList'))dailyList.innerHTML=db.daily.map(x=>`<div class="row"><small>${safe(x.time)}</small><span>${safe(x.title)}</span><span>Timeline</span></div>`).join('');
- notesList.innerHTML=db.notes.map(x=>`<div class="row"><small>${safe(x.time||'')}</small><span><b>${safe(x.title)}</b><br>${safe(x.text)}</span><span>Note</span></div>`).join('');
- $$('[data-check]').forEach(b=>b.onclick=()=>{const t=db.tasks.find(x=>x.id==b.dataset.check);if(t){t.done=!t.done;save()}});setHero();
-}
-const heros=[{src:'assets/hero.webp',pos:'center 59%'},{src:'assets/japan.webp',pos:'center 54%'},{src:'assets/cat.webp',pos:'center 47%'}];
-function setHero(){const h=heros[db.hero%heros.length];hero.style.backgroundPosition=h.pos;likeBtn.textContent=db.liked?'♥ Đúng gu':'♡ Đúng gu';likeBtn.style.color=db.liked?'#ed628f':''}
-function randomHero(){db.hero=(db.hero+1)%heros.length;db.liked=false;localStorage.setItem(KEY,JSON.stringify(db));setHero()}
-randomBtn.onclick=randomHero;randomSettings.onclick=randomHero;likeBtn.onclick=()=>{db.liked=!db.liked;localStorage.setItem(KEY,JSON.stringify(db));setHero()};
-function switchView(v){$('.view').forEach(x=>x.classList.toggle('active',x.id==='view-'+v));$('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===v));scrollTo({top:0,behavior:'smooth'})}
-$('[data-view]').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
-function openQuick(){modal.classList.remove('hidden');quickInput.focus()}quickBtn.onclick=openQuick;document.getElementById('mobileQuick').onclick=openQuick;sideQuick.onclick=openQuick;taskAdd.onclick=openQuick;if(document.getElementById('dailyAdd'))dailyAdd.onclick=openQuick;if(document.getElementById('noteAdd'))noteAdd.onclick=openQuick;cancel.onclick=()=>modal.classList.add('hidden');
-function classify(s){const t=s.toLowerCase();if(/note:|ghi chú|ý tưởng/.test(t))return'notes';if(/¥|yên|yen|mua |chi |bán /.test(t))return'money';if(/mai|nhớ|cần|phải|todo|deadline/.test(t))return'tasks';return'notes'}
-function getAmount(s){const m=s.replace(/,/g,'').match(/(\d{2,7})\s*(?:yên|yen)?/i);return m?+m[1]:0}function getTime(s){const m=s.match(/([01]?\d|2[0-3])[:h]([0-5]\d)?/i);return m?String(m[1]).padStart(2,'0')+':'+String(m[2]||'00').padStart(2,'0'):new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'})}
-saveQuick.onclick=()=>{const s=quickInput.value.trim();if(!s)return;const c=classify(s),id=Date.now();if(c==='tasks')db.tasks.unshift({id,title:s,date:/mai/i.test(s)?'Ngày mai':'Hôm nay',done:false});if(c==='money')db.money.unshift({id,title:s,type:/bán|thu|lương/.test(s.toLowerCase())?'in':'out',amount:getAmount(s)});if(c==='daily')db.daily.push({id,title:s,time:getTime(s)});if(c==='notes')db.notes.unshift({id,title:'Ghi nhanh',text:s.replace(/^note:\s*/i,''),time:getTime(s)});save();modal.classList.add('hidden');quickInput.value='';toast.textContent='Đã lưu vào '+c+' ✨';toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1600);switchView(c)};
-function tick(){const d=new Date(),h=d.getHours();clock.textContent=d.toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'});dateLine.textContent=d.toLocaleDateString('vi-VN',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'});document.querySelector('.greeting h1').textContent=(h<11?'Chào buổi sáng':h<17?'Chào buổi chiều':'Chào buổi tối')+', Ngọc ♡'}tick();setInterval(tick,30000);render();
-(function updateCycleHome(){const title=document.getElementById('cycleHomeTitle'),hint=document.getElementById('cycleHomeHint');if(!title)return;try{const c=JSON.parse(localStorage.getItem('ngoc_os_cycle_guardian_v1')||'null');if(!c?.periods?.length)return;const p=[...c.periods].filter(x=>x.start).sort((a,b)=>a.start.localeCompare(b.start)).at(-1);if(!p)return;const date=new Date(),start=new Date(p.start+'T12:00:00');const current=new Date(date.getFullYear(),date.getMonth(),date.getDate(),12);const day=Math.round((Date.UTC(current.getFullYear(),current.getMonth(),current.getDate())-Date.UTC(start.getFullYear(),start.getMonth(),start.getDate()))/86400000)+1;if(day<1)return;title.textContent=p.end?'Ngày chu kỳ thứ '+day:(day<=10?'Ngày hành kinh thứ '+day:'Kỳ kinh cần xác nhận');hint.textContent=p.end?'Nhấn để xem lịch và dự báo':'Xác nhận khi kỳ kinh kết thúc';}catch{}})();
-</script>
+<nav class="mobile-bottom-nav" aria-label="Điều hướng di động">
+  <button type="button" data-view="home" class="active"><svg viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v10h-7v-7h-4v7H3z"/></svg><span>Home</span></button>
+  <button type="button" data-view="tasks"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8 12 2.5 2.5L16 9"/></svg><span>Công việc</span></button>
+  <button type="button" class="mobile-add" id="mobileQuick" aria-label="Ghi nhanh"><svg viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></svg></button>
+  <a href="./cycle/"><svg viewBox="0 0 24 24"><path d="M20.6 8.5c0 5-8.6 10.8-8.6 10.8S3.4 13.5 3.4 8.5a4.7 4.7 0 0 1 8.6-2.2 4.7 4.7 0 0 1 8.6 2.2Z"/></svg><span>Chu kỳ</span></a>
+  <a href="./notes/"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></svg><span>Ghi chú</span></a>
+</nav><button class="quick" id="quickBtn">＋ Ghi nhanh</button>
+<div class="modal-bg hidden" id="modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="quickTitle">
+    <h2 id="quickTitle">Ghi nhanh ✨</h2>
+    <label class="quick-label" for="quickType">Lưu vào mục</label>
+    <select id="quickType" class="quick-select">
+      <option value="task">Công việc</option>
+      <option value="expense">Chi tiêu</option>
+      <option value="income">Thu nhập</option>
+      <option value="note">Ghi chú</option>
+    </select>
+    <textarea id="quickInput" aria-label="Nội dung" placeholder="Nhập nội dung vào đây..."></textarea>
+    <div class="modal-actions"><button id="cancel" type="button">Đóng</button><button class="save" id="saveQuick" type="button">Lưu</button></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script src="./assets/home-focus.js" defer></script>
 </body></html>
