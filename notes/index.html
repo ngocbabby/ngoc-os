@@ -52,14 +52,20 @@
 
 <main id="mainArea" class="main-area">
   <section id="screen-home" class="screen active" aria-label="Trang chủ ghi chú">
-    <div class="section-heading compact"><h2>Gần đây</h2></div>
+    <header class="notes-home-header">
+      <h1>Ghi chú</h1>
+      <p>Không gian riêng của bạn</p>
+    </header>
+    <div class="section-heading compact recent-heading">
+      <h2>Gần đây</h2>
+      <button id="viewMoreBtn" type="button" class="home-link" data-route="notes" hidden>Xem tất cả →</button>
+    </div>
     <div id="recentNotes" class="recent-scroll"></div>
-    <div class="section-heading folder-heading"><h2>Riêng tư</h2><div class="heading-actions">
-      <button type="button" class="icon-plain" data-action="manage-folders" aria-label="Quản lý thư mục"><svg><use href="#i-more"/></svg></button>
-      <button type="button" class="icon-plain" data-action="new-folder" aria-label="Tạo thư mục"><svg><use href="#i-plus"/></svg></button>
-    </div></div>
-    <div id="homeNoteRows" class="home-note-list"></div>
-    <button id="viewMoreBtn" type="button" class="view-more" data-route="notes" hidden><svg><use href="#i-more"/></svg>Xem thêm</button>
+    <div class="section-heading folder-heading">
+      <h2>Thư mục</h2>
+      <button type="button" class="folder-create" data-action="new-folder" aria-label="Tạo thư mục"><svg><use href="#i-plus"/></svg></button>
+    </div>
+    <div id="homeFolders" class="home-folders"></div>
   </section>
   <section id="screen-notes" class="screen" aria-label="Danh sách ghi chú">
     <div class="large-screen-heading"><h1>Ghi chú</h1><div class="heading-actions">
