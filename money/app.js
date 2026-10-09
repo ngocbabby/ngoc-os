@@ -265,7 +265,7 @@
    $("#reviewWarning").hidden=false;
    detectedReceiptCurrency=parsed.currency;
    ocrUsed=Boolean(parsed.rawText.trim());
-   lineItems=Array.isArray(parsed.items)?parsed.items.map(x=>({...x})):[];itemsEnabled=lineItems.length>0;
+   lineItems=Array.isArray(parsed.items)?parsed.items.map(x=>({...x})):[];itemsEnabled=ocrUsed;
    $("#editableFieldsHint").hidden=false;renderItems();
    if(parsed.amount)$("#amountInput").value=parsed.amount;
    else $("#amountInput").value="";
