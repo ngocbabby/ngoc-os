@@ -2,7 +2,7 @@
 (function moneyApp(){
  const KEY="ngoc_os_money_v1",LEGACY="ngoc_os_v3";
  const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
- const categories={
+ const categories={meat:{name:"Thịt",icon:"🥩"},produce:{name:"Rau củ & trái cây",icon:"🥬"},dairy:{name:"Sữa",icon:"🥛"},groceries:{name:"Thực phẩm khác",icon:"🍞"},household:{name:"Đồ sinh hoạt",icon:"🧴"},
   food:{name:"Ăn uống",icon:"🍽️"},shopping:{name:"Mua sắm",icon:"🛒"},
   transport:{name:"Đi lại / xăng xe",icon:"🚗"},home:{name:"Nhà ở",icon:"🏠"},
   bills:{name:"Hóa đơn / điện nước",icon:"💡"},health:{name:"Y tế",icon:"💗"},
@@ -10,7 +10,7 @@
   salary:{name:"Lương",icon:"💼"},refund:{name:"Hoàn tiền",icon:"🔁"},
   gift:{name:"Quà tặng",icon:"🎁"},other:{name:"Khác",icon:"🧾"}
  };
- const expenseCategories=["food","shopping","transport","home","bills","health","study","entertainment","other"];
+ const expenseCategories=["food","shopping","transport","home","bills","health","study","entertainment","meat","produce","dairy","groceries","household","other"];
  const incomeCategories=["salary","refund","gift","other"];
  const id=()=>Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,9);
  const esc=value=>String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
@@ -30,6 +30,7 @@
  db.settings ||= {hideBalance:false,legacyImportDone:false};
 
  let screen="overview",filter="all",monthIndex=new Date().getFullYear()*12+new Date().getMonth(),searchText="";
+ let lineItems=[],itemsEnabled=false;
  let editingTxId=null,entryType="expense",receiptFile=null,receiptObjectUrl=null,detectedReceiptCurrency=null,ocrUsed=false,scanId=0,busyScan=false,editingWalletId=null,editingBudgetId=null;
  const toast=message=>{
   const element=$("#toast");element.textContent=message;element.classList.add("show");
@@ -96,7 +97,7 @@
   }
   $("#overviewChart").innerHTML=weeks.map(w=>'<div class="chart-slot"><div class="chart-bars"><div class="chart-bar out" style="height:'+(peak?w.expense/peak*100:0)+'%"></div><div class="chart-bar in" style="height:'+(peak?w.income/peak*100:0)+'%"></div></div><span class="chart-day">'+w.start+'/'+(month+1)+'</span></div>').join("");
   $("#chartCaption").textContent="Biểu đồ theo tuần · "+new Date(year,month).toLocaleDateString("vi-VN",{month:"long",year:"numeric"})+" · JPY";
-  const spending={};for(const tx of db.transactions)if(tx.type==="expense"&&tx.currency==="JPY"&&inMonth(tx,current))spending[tx.category]=(spending[tx.category]||0)+tx.amount;
+  const spending={};for(const tx of db.transactions)if(tx.type==="expense"&&tx.currency==="JPY"&&inMonth(tx,current)){for(const [cat,sum] of Object.entries(window.MoneyItems.allocate(tx).breakdown))spending[cat]=(spending[cat]||0)+sum;}
   const order=Object.entries(spending).sort((a,b)=>b[1]-a[1]).slice(0,5);
   $("#topCategories").innerHTML=order.length?order.map(([key,amount])=>
    '<div class="category-line"><span class="category-bubble">'+symbol(key)+'</span><div class="category-content"><div class="category-content-top"><b>'+esc(label(key))+'</b><span>'+money(amount,"JPY")+' · '+(currentTotals.out?Math.round(amount/currentTotals.out*100):0)+'%</span></div><div class="progress-track"><span style="width:'+(currentTotals.out?Math.min(100,amount/currentTotals.out*100):0)+'%"></span></div></div></div>'
@@ -106,7 +107,7 @@
   const {label:monthLabel}=monthBounds();$("#monthTitle").textContent=monthLabel;
   $$(".type-tab").forEach(b=>b.classList.toggle("active",b.dataset.filter===filter));
   const q=searchText.trim().toLocaleLowerCase();
-  const list=sortTransactions(db.transactions.filter(tx=>inMonth(tx)&&(filter==="all"||tx.type===filter)&&(!q||[tx.merchant,label(tx.category),tx.note].some(t=>String(t||"").toLocaleLowerCase().includes(q)))));
+  const list=sortTransactions(db.transactions.filter(tx=>inMonth(tx)&&(filter==="all"||tx.type===filter)&&(!q||[tx.merchant,label(tx.category),tx.note,...(tx.items||[]).map(x=>x.name)].some(t=>String(t||"").toLocaleLowerCase().includes(q)))));
   const groups=new Map();
   for(const tx of list){if(!groups.has(tx.date))groups.set(tx.date,[]);groups.get(tx.date).push(tx)}
   if(!list.length){
@@ -130,7 +131,7 @@
    $("#emptyBudgetBtn").onclick=()=>openBudget();return;
   }
   $("#budgetList").innerHTML=db.budgets.map(b=>{
-   const spent=db.transactions.filter(tx=>tx.type==="expense"&&tx.currency===b.currency&&tx.category===b.category&&inMonth(tx)).reduce((a,x)=>a+x.amount,0);
+   const spent=db.transactions.filter(tx=>tx.type==="expense"&&tx.currency===b.currency&&inMonth(tx)).reduce((a,x)=>a+(window.MoneyItems.allocate(x).breakdown[b.category]||0),0);
    const ratio=Math.min(100,spent/b.amount*100),over=spent>b.amount;
    return '<article class="budget-row"><div class="budget-meta"><strong>'+symbol(b.category)+' '+esc(label(b.category))+'</strong><span>'+money(b.amount,b.currency)+'</span></div><div class="budget-progress '+(over?"over":"")+'"><div style="width:'+ratio+'%"></div></div><div class="budget-foot"><span>Đã chi '+money(spent,b.currency)+'</span><span>'+(over?"Vượt "+money(spent-b.amount,b.currency):"Còn "+money(b.amount-spent,b.currency))+'</span></div><div class="budget-row-actions"><button type="button" class="text-button" data-edit-budget="'+esc(b.id)+'">Sửa</button> <button type="button" class="text-button" data-delete-budget="'+esc(b.id)+'">Xóa</button></div></article>';
   }).join("");
@@ -154,6 +155,7 @@
  function updateEntryUI(){
   $$(".segment").forEach(b=>b.classList.toggle("active",b.dataset.entryType===entryType));
   $("#scanPanel").hidden=entryType!=="expense";
+  renderItems();
   $("#toWalletField").hidden=entryType!=="transfer";
   $("#categoryInput").disabled=entryType==="transfer";
   $("#categoryInput").innerHTML=options(entryType==="income"?incomeCategories:expenseCategories,$("#categoryInput").value);
@@ -172,13 +174,16 @@
  }
  function resetReceipt(){
   if(receiptObjectUrl){URL.revokeObjectURL(receiptObjectUrl);receiptObjectUrl=null}
-  receiptFile=null;detectedReceiptCurrency=null;ocrUsed=false;busyScan=false;$("#receiptPreview").hidden=true;$("#receiptImage").removeAttribute("src");
+  receiptFile=null;detectedReceiptCurrency=null;ocrUsed=false;busyScan=false;
+  $("#editableFieldsHint").hidden=true;$("#receiptPreview").hidden=true;$("#receiptImage").removeAttribute("src");
   $("#rawOcrDetails").hidden=true;$("#rawOcrText").textContent="";$("#reviewWarning").hidden=true;$("#reviewWarning").textContent="⚠️ Kiểm tra lại số tiền và ngày giờ trước khi lưu. OCR có thể nhận nhầm.";$("#retryScan").hidden=true;
   const s=$("#scanStatus");s.textContent="Chọn ảnh hóa đơn; phần mềm sẽ thử điền số tiền, cửa hàng và thời gian.";s.className="scan-status";
  }
  function openEntry(type="expense",editId=null){
   resetReceipt();scanId++;editingTxId=editId;
+  lineItems=[];itemsEnabled=false;
   const existing=editId?db.transactions.find(t=>t.id===editId):null;
+  lineItems=Array.isArray(existing?.items)?structuredClone(existing.items):[];itemsEnabled=Array.isArray(existing?.items);
   entryType=existing?.type||type||"expense";
   $("#entryHeading").textContent=editId?"Sửa giao dịch":"Thêm giao dịch";
   $("#deleteTransaction").hidden=!editId;
@@ -193,7 +198,7 @@
   if(existing?.category)$("#categoryInput").value=existing.category;
   $("#toWalletInput").innerHTML=walletOptions(existing?.toWalletId);
   if(existing?.toWalletId)$("#toWalletInput").value=existing.toWalletId;
-  updateEntryUI();overlayOpen("entryOverlay");
+  updateEntryUI();renderItems();overlayOpen("entryOverlay");
  }
  function setEntryType(type){entryType=type;updateEntryUI()}
  $$(".segment").forEach(b=>b.onclick=()=>setEntryType(b.dataset.entryType));
@@ -226,6 +231,8 @@
    $("#reviewWarning").hidden=false;
    detectedReceiptCurrency=parsed.currency;
    ocrUsed=Boolean(parsed.rawText.trim());
+   lineItems=Array.isArray(parsed.items)?parsed.items.map(x=>({...x})):[];itemsEnabled=lineItems.length>0;
+   $("#editableFieldsHint").hidden=false;renderItems();
    if(parsed.amount)$("#amountInput").value=parsed.amount;
    else $("#amountInput").value="";
    if(parsed.merchant)$("#merchantInput").value=parsed.merchant;
@@ -233,6 +240,7 @@
    $("#categoryInput").value=parsed.category||"other";
    if(parsed.date)$("#dateInput").value=parsed.date;else $("#dateInput").value="";
    if(parsed.time)$("#timeInput").value=parsed.time;else $("#timeInput").value="";
+   updateItemSummary();
    const matching=db.wallets.find(w=>w.currency===parsed.currency);
    if(matching){$("#walletInput").value=matching.id;updateEntryUI()}
    else $("#reviewWarning").textContent="⚠️ Bill dùng "+parsed.currency+" nhưng chưa có ví tương ứng. Hãy tạo và chọn ví "+parsed.currency+" trước khi lưu.";
@@ -260,6 +268,14 @@
   if(receiptFile&&detectedReceiptCurrency&&entryType==="expense"&&detectedReceiptCurrency!==sourceWallet.currency){toast("Bill dùng "+detectedReceiptCurrency+" nhưng ví đang là "+sourceWallet.currency+". Chọn đúng ví hoặc bỏ ảnh.");return}
   if(!validDay(date)||!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(time)){toast("Vui lòng kiểm tra ngày và giờ giao dịch.");return}
   if(!merchant&&entryType!=="transfer"){toast("Nhập tên cửa hàng hoặc tên giao dịch.");return}
+  let approvedItems=null;
+  if(entryType==="expense"&&itemsEnabled){
+   if(lineItems.length>window.MoneyItems.maxItems||lineItems.some(x=>!window.MoneyItems.validateItem(x))){toast("Sửa các món chưa hợp lệ.");return}
+   if(lineItems.length){const sum=lineItems.reduce((a,x)=>a+x.amount,0);
+    if(sum!==amount&&!confirm("Tổng các món "+money(sum,sourceWallet.currency)+" khác tổng bill "+money(amount,sourceWallet.currency)+". Vẫn lưu tổng hóa đơn đã nhập?"))return;
+    approvedItems=lineItems.map(window.MoneyItems.normalItem);
+   }
+  }
   const destination=entryType==="transfer"?wallet($("#toWalletInput").value):null;
   if(entryType==="transfer"&&(!destination||destination.id===sourceWallet.id||destination.currency!==sourceWallet.currency)){toast("Chọn hai ví khác nhau, cùng loại tiền.");return}
   if(!editingTxId&&entryType!=="transfer"){
@@ -272,7 +288,7 @@
    toWalletId:entryType==="transfer"?destination.id:null,currency:sourceWallet.currency,
    merchant:entryType==="transfer"?"Chuyển ví":merchant,category:entryType==="transfer"?"other":category,
    note:$("#memoInput").value.trim(),date,time,created:created?.created||Date.now(),
-   source:created?.source||"manual"
+   source:created?.source||"manual",...(approvedItems?{items:approvedItems}:{})
   };
   // Only status is saved, not the receipt image or OCR output.
   if(ocrUsed)tx.source="receipt_ocr";
@@ -339,9 +355,9 @@
   const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);
  }
  function exportCSV(){
-  const columns=["Ngày","Giờ","Loại","Số tiền","Đơn vị","Ví","Ví nhận","Danh mục","Tên giao dịch","Ghi chú","Nguồn"];
+  const columns=["Ngày","Giờ","Loại","Số tiền","Đơn vị","Ví","Ví nhận","Danh mục","Tên giao dịch","Ghi chú","Nguồn","Chi tiết món JSON"];
   const cell=value=>'"'+String(value??"").replace(/"/g,'""').replace(/^[=+\-@]/,"'"+String(value??"").charAt(0))+'"';
-  const rows=sortTransactions(db.transactions).map(t=>[t.date,t.time,t.type,t.amount,t.currency,wallet(t.walletId)?.name||"",wallet(t.toWalletId)?.name||"",label(t.category),t.merchant,t.note,t.source].map(cell).join(","));
+  const rows=sortTransactions(db.transactions).map(t=>[t.date,t.time,t.type,t.amount,t.currency,wallet(t.walletId)?.name||"",wallet(t.toWalletId)?.name||"",label(t.category),t.merchant,t.note,t.source,JSON.stringify(t.items||[])].map(cell).join(","));
   download("ngoc-os-thu-chi-"+dayKey()+".csv",new Blob(["\ufeff"+[columns.map(cell).join(","),...rows].join("\r\n")],{type:"text/csv;charset=utf-8"}));
  }
  function exportJSON(){
@@ -357,6 +373,7 @@
    const walletMap=new Map(wallets.map(w=>[w.id,w]));
    const transactions=parsed.transactions.filter(t=>t&&typeof t.id==="string"&&["expense","income","transfer"].includes(t.type)&&Number.isSafeInteger(t.amount)&&t.amount>0&&t.amount<=1_000_000_000&&validDay(t.date)&&/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(t.time||"")&&walletMap.has(t.walletId)&&walletMap.get(t.walletId).currency===t.currency&&["JPY","VND"].includes(t.currency)&&typeof t.merchant==="string"&&typeof t.note==="string"&&((t.type!=="transfer"&&!t.toWalletId)||(t.type==="transfer"&&walletMap.has(t.toWalletId)&&t.toWalletId!==t.walletId&&walletMap.get(t.toWalletId).currency===t.currency)));
    if(transactions.length!==parsed.transactions.length||new Set(transactions.map(t=>t.id)).size!==transactions.length)throw Error("Giao dịch không hợp lệ");
+   if(transactions.some(t=>t.items!==undefined&&(!Array.isArray(t.items)||t.items.length>window.MoneyItems.maxItems||!t.items.every(window.MoneyItems.validateItem))))throw Error("Chi tiết món sai");
    const budgets=parsed.budgets.filter(b=>b&&typeof b.id==="string"&&expenseCategories.includes(b.category)&&["JPY","VND"].includes(b.currency)&&Number.isSafeInteger(b.amount)&&b.amount>0);
    if(budgets.length!==parsed.budgets.length)throw Error("Ngân sách không hợp lệ");
    if(!confirm("Khôi phục sẽ thay thế "+db.transactions.length+" giao dịch và toàn bộ ví/ngân sách hiện tại bằng dữ liệu bản sao. Bạn đã sao lưu chưa?"))return;
