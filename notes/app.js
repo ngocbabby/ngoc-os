@@ -17,9 +17,9 @@ function get(id){return db.notes.find(x=>x.id===id)}
 function icon(type){return '<svg><use href="#i-'+type+'"/></svg>'}
 function card(n,compact=false){return '<button type="button" class="'+(compact?"recent-card":"note-tile")+'" data-open="'+esc(n.id)+'">'+(compact?'<div class="recent-thumb">'+(n.image?'<img alt="" src="'+esc(n.image)+'">':icon(n.kind==="checklist"?"i-list":"note").replace("#i-i-","#i-"))+'</div><div class="recent-info"><b>'+esc(title(n))+'</b><p>'+esc(excerpt(n).slice(0,70))+'</p></div>':(n.image?'<img class="tile-photo" src="'+esc(n.image)+'" alt="">':"")+'<h3>'+esc(title(n))+(n.pinned?" 📌":"")+'</h3>'+(n.kind==="checklist"?(n.items||[]).slice(0,5).map(x=>'<div class="tile-check">'+(x.checked?"☑":"☐")+' '+esc(x.text)+'</div>').join(""):'<p>'+esc(excerpt(n))+'</p>')+'<small>'+dateText(n.updated)+'</small>')+'</button>'}
 function draw(){const notes=all();
- $("#recentNotes").innerHTML=notes.length?notes.slice(0,8).map(n=>card(n,true)).join(""):'<div class="empty-message">Chưa có ghi chú nào.</div>';
- $("#homeNoteRows").innerHTML=notes.slice(0,5).map(n=>'<button class="home-note-row" data-open="'+esc(n.id)+'"><span class="row-chevron">'+icon("arrow")+'</span><span class="row-icon">'+icon(n.kind==="checklist"?"task":"note")+'</span><span class="row-name">'+esc(title(n))+'</span><span class="row-more">'+icon("more")+'</span></button>').join("");
- $("#viewMoreBtn").hidden=notes.length<=5;
+ $("#recentNotes").innerHTML=notes.length?notes.slice(0,4).map(n=>card(n,true)).join(""):'<div class="notes-home-empty">Chưa có ghi chú. Chạm nút soạn ở dưới để bắt đầu.</div>';
+ $("#homeFolders").innerHTML='<button class="home-folder-row" type="button" data-home-all><span class="home-folder-icon">'+icon("note")+'</span><span>Tất cả ghi chú</span><small>'+notes.length+'</small>'+icon("arrow")+'</button>'+db.folders.slice(0,4).map(f=>'<button class="home-folder-row" type="button" data-home-folder="'+esc(f.id)+'"><span class="home-folder-icon">'+icon("folder")+'</span><span>'+esc(f.name)+'</span><small>'+notes.filter(n=>n.folder===f.id).length+'</small>'+icon("arrow")+'</button>').join("");
+ $("#viewMoreBtn").hidden=notes.length===0;
  const subset=notes.filter(n=>(!filter||n.folder===filter)&&(!search||(title(n)+" "+excerpt(n)).toLocaleLowerCase().includes(search.toLocaleLowerCase())));
  $("#notesGrid").innerHTML=subset.length?subset.filter(n=>n.kind!=="checklist").map(n=>card(n)).join("")||'<div class="empty-message">Chưa có ghi chú dạng văn bản.</div>':'<div class="empty-message">Chưa có ghi chú nào.</div>';
  $("#taskGrid").innerHTML=notes.filter(n=>n.kind==="checklist"&&(!search||(title(n)+" "+excerpt(n)).toLowerCase().includes(search.toLowerCase()))).map(n=>card(n)).join("")||'<div class="empty-message">Chưa có danh sách nào.</div>';
@@ -27,9 +27,11 @@ function draw(){const notes=all();
  $("#folderFilterBtn").firstChild.textContent=filter?(db.folders.find(x=>x.id===filter)?.name||"Tất cả")+" ":"Tất cả ghi chú ";
  $("#folderList").innerHTML=db.folders.map(f=>'<button class="folder-row" data-folder="'+esc(f.id)+'">'+icon("folder")+'<span>'+esc(f.name)+'</span><small>'+notes.filter(n=>n.folder===f.id).length+'</small>'+icon("arrow")+'</button>').join("")||'<div class="empty-message">Chưa có thư mục.</div>';
  $$("[data-open]").forEach(b=>b.onclick=()=>openNote(b.dataset.open));
- $$("[data-folder]").forEach(b=>b.onclick=()=>{filter=b.dataset.folder;show("notes")});
+ $("[data-folder]").forEach(b=>b.onclick=()=>{filter=b.dataset.folder;show("notes")});
+  $("#homeFolders").querySelector("[data-home-all]")?.addEventListener("click",()=>{filter=null;show("notes")});
+  $("#homeFolders").querySelectorAll("[data-home-folder]").forEach(b=>b.onclick=()=>{filter=b.dataset.homeFolder;show("notes")});
 }
-function show(page){if(route==="editor")flush();route=page;$$(".screen").forEach(x=>x.classList.toggle("active",x.id==="screen-"+page));$$("[data-route]").forEach(x=>x.classList.toggle("active",x.dataset.route===page));$("#topbar").hidden=page==="editor";$("#homeDock").hidden=page!=="home";$("#listDock").hidden=page!=="notes"&&page!=="tasks";$("#fab").hidden=page==="editor";closeFab();window.scrollTo(0,0);draw()}
+function show(page){if(route==="editor")flush();route=page;$$(".screen").forEach(x=>x.classList.toggle("active",x.id==="screen-"+page));$$("[data-route]").forEach(x=>x.classList.toggle("active",x.dataset.route===page));$("#topbar").hidden=page==="editor";$("#homeDock").hidden=page!=="home";$("#listDock").hidden=page!=="notes"&&page!=="tasks";$("#fab").hidden=page==="editor"||page==="home";closeFab();window.scrollTo(0,0);draw()}
 function make(kind="text"){closeFab();current={id:id(),kind,title:"",text:"",items:kind==="checklist"?[{id:id(),text:"",checked:false}]:[],folder:filter,pinned:false,archived:false,created:Date.now(),updated:Date.now(),image:null};prior=route;route="editor";renderEditor();showEditor()}
 function openNote(key){const n=get(key);if(!n)return;current=structuredClone(n);prior=route;route="editor";renderEditor();showEditor()}
 function showEditor(){$$(".screen").forEach(x=>x.classList.toggle("active",x.id==="screen-editor"));$("#topbar").hidden=true;$("#homeDock").hidden=true;$("#listDock").hidden=true;$("#fab").hidden=true;closeFab();window.scrollTo(0,0)}
