@@ -194,7 +194,7 @@ function render(){
  homeTasks.innerHTML=db.tasks.slice(0,3).map(t=>`<div class="task ${t.done?'done':''}"><button class="check" data-check="${t.id}"></button><span class="name">${safe(t.title)}</span><span class="datechip">${safe(t.date)}</span></div>`).join('')||'<div class="home-empty">Chưa có việc nào được ghi.</div>';
  const spent=db.money.filter(x=>x.type==='out').reduce((a,b)=>a+b.amount,0);spendBig.textContent=yen(spent);homeMoney.innerHTML=db.money.slice(0,3).map(x=>`<div class="money-item"><span>${safe(x.title)}</span><b>${yen(x.amount)}</b></div>`).join('');
  if(document.getElementById('homeDaily'))homeDaily.innerHTML=db.daily.slice(0,5).map(x=>`<div class="time"><i class="dot"></i><b>${safe(x.time)}</b><span>${safe(x.title)}</span></div>`).join('');
- homeNotes.innerHTML='<p style="font-size:12px;color:#9d8392;margin:3px 0">Không hiển thị nội dung mẫu trên Home.</p>';
+ homeNotes.innerHTML='<p style="font-size:12px;color:#9d8392;margin:3px 0">Chưa có ghi chú được hiển thị.</p>';
  tasksList.innerHTML=db.tasks.map(t=>`<div class="row"><small>${safe(t.date)}</small><span>${safe(t.title)}</span><button class="check" data-check="${t.id}"></button></div>`).join('');
  moneyList.innerHTML=db.money.map(x=>`<div class="row"><small>${x.type==='out'?'Chi':'Thu'}</small><span>${safe(x.title)}</span><b>${x.type==='out'?'−':'+'}${yen(x.amount)}</b></div>`).join('');
  if(document.getElementById('dailyList'))dailyList.innerHTML=db.daily.map(x=>`<div class="row"><small>${safe(x.time)}</small><span>${safe(x.title)}</span><span>Timeline</span></div>`).join('');
