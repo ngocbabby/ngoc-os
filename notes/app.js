@@ -27,7 +27,7 @@ function draw(){const notes=all();
  $("#folderFilterBtn").firstChild.textContent=filter?(db.folders.find(x=>x.id===filter)?.name||"Tất cả")+" ":"Tất cả ghi chú ";
  $("#folderList").innerHTML=db.folders.map(f=>'<button class="folder-row" data-folder="'+esc(f.id)+'">'+icon("folder")+'<span>'+esc(f.name)+'</span><small>'+notes.filter(n=>n.folder===f.id).length+'</small>'+icon("arrow")+'</button>').join("")||'<div class="empty-message">Chưa có thư mục.</div>';
  $$("[data-open]").forEach(b=>b.onclick=()=>openNote(b.dataset.open));
- $("[data-folder]").forEach(b=>b.onclick=()=>{filter=b.dataset.folder;show("notes")});
+ $$("[data-folder]").forEach(b=>b.onclick=()=>{filter=b.dataset.folder;show("notes")});
   $("#homeFolders").querySelector("[data-home-all]")?.addEventListener("click",()=>{filter=null;show("notes")});
   $("#homeFolders").querySelectorAll("[data-home-folder]").forEach(b=>b.onclick=()=>{filter=b.dataset.homeFolder;show("notes")});
 }
