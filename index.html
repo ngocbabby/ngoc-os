@@ -27,7 +27,88 @@
 .quick{position:fixed;right:24px;bottom:23px;border:0;border-radius:999px;background:linear-gradient(135deg,#f4749e,#f65f91);color:#fff;padding:13px 17px;font-weight:700;font-size:12px;box-shadow:0 12px 30px rgba(246,95,145,.25);z-index:40}.modal-bg{position:fixed;inset:0;background:rgba(55,43,48,.28);backdrop-filter:blur(7px);display:grid;place-items:center;padding:18px;z-index:60}.modal{width:min(520px,100%);background:#fffaf8;border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:0 26px 70px rgba(67,40,51,.18)}.modal h2{font-family:"Playfair Display",serif;font-weight:500;margin:0}.modal textarea{width:100%;height:118px;margin:14px 0;border:1px solid var(--line);border-radius:16px;padding:13px;resize:none;outline:none}.modal textarea:focus{border-color:#ecb3c5;box-shadow:0 0 0 4px #fdebf1}.modal-actions{display:flex;justify-content:flex-end;gap:8px}.modal-actions button{border:1px solid var(--line);border-radius:999px;padding:9px 14px;background:#fff;font-size:12px}.modal-actions .save{background:#413638;color:#fff;border-color:#413638}.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,12px);opacity:0;background:#3f3536;color:#fff;padding:10px 14px;border-radius:999px;z-index:100;transition:.2s;font-size:12px}.toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:1050px){.app{grid-template-columns:72px 1fr}.sidebar{padding:21px 10px}.logo{font-size:0}.logo:before{content:"♡";font-family:"DM Sans";font-size:24px;color:#ed6f9b}.logo-heart,.tagline,.nav button span,.quick-card{display:none}.nav button{justify-content:center}.nav button svg{width:19px;height:19px}.top-grid,.middle{grid-template-columns:1fr 1fr}.today-card{grid-column:1/-1}.gallery-row{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:680px){.app{display:block}.sidebar{display:none}.main{padding:0 10px 82px}.hero{height:420px;border-radius:0 0 23px 23px}.clock{top:22px;bottom:auto}.greeting{bottom:33px}.greeting h1{font-size:39px}.top-grid,.middle{display:block}.card,.photo-card{margin-top:11px}.gallery-row{display:flex;overflow:auto}.thumb{min-width:100px}.quick{bottom:17px}.row{grid-template-columns:66px 1fr auto}}
-.cycle-home-card{background:linear-gradient(126deg,#fff3f8,#faf2ff);border:1px solid #f8dbe9}.cycle-home-go{font-size:12px;font-weight:700;color:#d84885;text-decoration:none}.cycle-home-content{display:flex;align-items:center;gap:13px;padding:12px 0 7px}.cycle-home-emoji{font-size:39px}.cycle-home-content strong{font-size:17px}.cycle-home-content p{font-size:11px;color:#8d7285;margin:4px 0}.cycle-home-link{display:block;margin-top:9px;padding:11px 12px;border-radius:13px;background:white;color:#c73f7e;text-decoration:none;font-size:11px;font-weight:700}.mobile-cycle-link{display:none}@media(max-width:680px){.mobile-cycle-link{position:fixed;left:12px;bottom:17px;z-index:50;display:flex;align-items:center;gap:5px;background:#fff2f8;color:#c6357a;text-decoration:none;padding:12px 14px;border-radius:999px;box-shadow:0 5px 25px #aa628142;font-weight:750;font-size:12px}.quick{right:12px}.cycle-home-card{margin-top:12px}}</style>
+.cycle-home-card{background:linear-gradient(126deg,#fff3f8,#faf2ff);border:1px solid #f8dbe9}.cycle-home-go{font-size:12px;font-weight:700;color:#d84885;text-decoration:none}.cycle-home-content{display:flex;align-items:center;gap:13px;padding:12px 0 7px}.cycle-home-emoji{font-size:39px}.cycle-home-content strong{font-size:17px}.cycle-home-content p{font-size:11px;color:#8d7285;margin:4px 0}.cycle-home-link{display:block;margin-top:9px;padding:11px 12px;border-radius:13px;background:white;color:#c73f7e;text-decoration:none;font-size:11px;font-weight:700}.mobile-cycle-link{display:none}@media(max-width:680px){.mobile-cycle-link{position:fixed;left:12px;bottom:17px;z-index:50;display:flex;align-items:center;gap:5px;background:#fff2f8;color:#c6357a;text-decoration:none;padding:12px 14px;border-radius:999px;box-shadow:0 5px 25px #aa628142;font-weight:750;font-size:12px}.quick{right:12px}.cycle-home-card{margin-top:12px}}
+/* Calm mobile-first home */
+body{background:#fffafc}
+#view-home .hero{height:160px;border-radius:0 0 24px 24px;box-shadow:none;background-image:linear-gradient(100deg,#ffeaf2,#f2ebff)!important;background-position:center!important}
+#view-home .hero:after{display:none}
+#view-home .greeting{left:24px;bottom:27px;color:#463247;text-shadow:none}
+#view-home .greeting h1{font-family:"DM Sans",system-ui,sans-serif;font-size:clamp(24px,4vw,32px);font-weight:700;letter-spacing:-1.3px;line-height:1.25}
+#view-home .greeting p{font-size:12px;color:#896f82;margin-top:6px}
+#view-home .hero-tools,#view-home .hero-like,#view-home .clock .weather{display:none}
+#view-home .clock{right:24px;top:23px;bottom:auto;color:#9b6b8e;text-shadow:none}
+#view-home .clock strong{font-family:"DM Sans",sans-serif;font-size:18px;font-weight:600}
+#view-home .clock #dateLine{font-size:10px;margin-top:2px}
+#view-home .dash{padding:21px 4px 24px;max-width:940px;margin:auto}
+#view-home .home-section-label{font-weight:750;letter-spacing:-.2px;font-size:14px;margin:0 0 12px;color:#42353f}
+#view-home .home-main-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:15px;align-items:stretch}
+#view-home .home-main-grid .cycle-home-card{grid-column:1/-1;min-height:148px;background:linear-gradient(115deg,#ffe2ee,#f2e6ff);border:1px solid #f8dbe9;box-shadow:none;margin:0;padding:20px;border-radius:24px}
+#view-home .cycle-home-card .card-head{margin:0}
+#view-home .cycle-home-card .card-head h3{font-size:11px;letter-spacing:.07em;color:#9e607f}
+#view-home .cycle-home-card .cycle-home-content{padding:10px 0 4px;gap:15px}
+#view-home .cycle-home-card .cycle-home-emoji{background:#fff7fbbb;border-radius:19px;width:65px;height:65px;display:grid;place-items:center;font-size:34px}
+#view-home .cycle-home-card .cycle-home-content strong{font-size:22px;letter-spacing:-.5px}
+#view-home .cycle-home-card .cycle-home-content p{font-size:12px;margin:5px 0;color:#856778}
+#view-home .cycle-home-card .cycle-home-link{display:none}
+#view-home .home-work,#view-home .home-wallet,#view-home .home-notes{margin:0;border:1px solid #f3e6ed;border-radius:23px;background:#fff;padding:19px;box-shadow:none;min-height:158px}
+#view-home .card-head{margin-bottom:13px}
+#view-home .card-head h3{font-size:12px;letter-spacing:.03em}
+#view-home .home-work .task{padding:10px 0}
+#view-home .home-empty{color:#a48b9c;font-size:12px;line-height:1.6;padding:12px 0}
+#view-home .home-wallet .money-big{font-size:32px;color:#493346;font-family:"DM Sans",sans-serif;letter-spacing:-1px;margin-top:16px}
+#view-home .home-wallet .delta{display:none}
+#view-home .home-wallet #homeMoney{display:none}
+#view-home .home-wallet .summary-subtext{font-size:11px;color:#a48b9b}
+#view-home .home-shortcuts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0 24px}
+#view-home .home-shortcut{display:flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;border:1px solid #f0e6ee;border-radius:17px;background:#fff;color:#685466;font-weight:700;font-size:12px;padding:15px 8px;min-height:55px}
+#view-home .home-shortcut .shortcut-icon{font-size:19px}
+#view-home .home-notes{min-height:0;margin:0}
+#view-home .home-notes .notes{grid-template-columns:repeat(2,minmax(0,1fr))}
+#view-home .home-notes .note{background:#fcf4f8;border-radius:14px;min-height:68px}
+#view-home .home-notes .note:nth-child(2){background:#f7f1fd}
+#view-home .home-notes .note:nth-child(n+3){display:none}
+#view-home .home-photo-strip{display:flex;align-items:center;justify-content:space-between;gap:16px;background:#fff;border:1px solid #f2e6ed;border-radius:20px;padding:12px 16px;margin-top:16px}
+#view-home .home-photo-strip img{width:66px;height:58px;border-radius:14px;object-fit:cover}
+#view-home .home-photo-strip h3{font-size:13px;margin:0}
+#view-home .home-photo-strip p{font-size:11px;color:#9d8392;margin:5px 0 0}
+#view-home .home-photo-strip button{border:0;background:#fbe9f2;color:#b65282;border-radius:14px;padding:10px;font-weight:700;font-size:11px}
+.mobile-bottom-nav{display:none}
+@media(max-width:1050px){#view-home .home-main-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){
+ .main{padding:0 12px 94px}
+ #view-home .hero{height:143px;border-radius:0 0 23px 23px}
+ #view-home .greeting{left:17px;bottom:19px}
+ #view-home .greeting h1{font-size:25px}
+ #view-home .greeting p{max-width:240px}
+ #view-home .clock{right:18px;top:15px}
+ #view-home .clock strong{font-size:15px}
+ #view-home .clock #dateLine{font-size:9px}
+ #view-home .dash{padding:17px 1px 8px}
+ #view-home .home-main-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+ #view-home .home-main-grid .cycle-home-card{padding:17px;min-height:135px}
+ #view-home .cycle-home-card .cycle-home-content strong{font-size:18px}
+ #view-home .cycle-home-card .cycle-home-emoji{width:57px;height:57px;font-size:29px}
+ #view-home .home-work,#view-home .home-wallet{padding:13px;min-height:150px}
+ #view-home .home-work .task:nth-child(n+3){display:none}
+ #view-home .home-work .task{grid-template-columns:19px 1fr;gap:6px;font-size:11px}
+ #view-home .home-work .datechip{display:none}
+ #view-home .home-wallet .money-big{font-size:23px}
+ #view-home .home-shortcuts{gap:9px;margin:13px 0 20px}
+ #view-home .home-shortcut{flex-direction:column;gap:4px;padding:8px 5px;font-size:10px;min-height:69px}
+ #view-home .home-shortcut .shortcut-icon{font-size:23px}
+ #view-home .home-notes{padding:15px}
+ #view-home .home-photo-strip{margin-top:11px}
+ .mobile-bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;height:calc(68px + env(safe-area-inset-bottom));padding:4px 8px env(safe-area-inset-bottom);background:#fffafcf6;backdrop-filter:blur(16px);border-top:1px solid #f2e4eb;justify-content:space-around;align-items:center;z-index:45}
+ .mobile-bottom-nav button,.mobile-bottom-nav a{background:transparent;border:0;color:#8e7787;font-size:10px;text-decoration:none;min-width:54px;display:flex;flex-direction:column;gap:1px;align-items:center}
+ .mobile-bottom-nav .mobile-icon{font-size:22px;line-height:1.1}
+ .mobile-bottom-nav .active{color:#e6508d}
+ .mobile-bottom-nav .mobile-add{background:#f45b99;color:#fff;width:48px;height:48px;min-width:48px;border-radius:18px;font-size:28px;display:grid;place-items:center;margin-top:-13px;box-shadow:0 7px 15px #ed75a35c}
+ .quick,.mobile-cycle-link{display:none}
+ .toast{bottom:82px}
+ .modal-bg{z-index:60}
+}
+
+</style>
 </head>
 <body>
 <div class="app">
@@ -56,18 +137,40 @@
     <div class="clock"><strong id="clock">20:03</strong><span id="dateLine"></span><div class="weather">Higashiomi, Shiga&nbsp; ☁︎ 21°C</div></div>
   </div>
   <div class="dash">
-    <div class="top-grid">
-      <article class="card"><div class="card-head"><h3><span class="mini-icon pink">▣</span>CÔNG VIỆC</h3><button class="add" id="taskAdd">＋</button></div><div id="homeTasks"></div></article>
-      <article class="card"><div class="card-head"><h3><span class="mini-icon green">▤</span>CHI TIÊU HÔM NAY</h3></div><div class="money-big" id="spendBig">¥0</div><div class="delta">so với hôm qua &nbsp; <b>−¥1,200</b></div><div id="homeMoney"></div></article>
-      <article class="card today-card cycle-home-card"><div class="card-head"><h3><span class="mini-icon pink">♡</span> CHU KỲ KINH NGUYỆT</h3><a class="cycle-home-go" href="./cycle/">Mở →</a></div><div class="cycle-home-content"><div class="cycle-home-emoji">🌷</div><div><strong id="cycleHomeTitle">Chu kỳ của tôi</strong><p id="cycleHomeHint">Theo dõi nhẹ nhàng, bảo vệ sức khỏe</p></div></div><a class="cycle-home-link" href="./cycle/">🩸 Xem lịch · Ghi nhanh · Phân tích sức khỏe →</a></article>
+    <p class="home-section-label">Tổng quan của bạn ✨</p>
+    <div class="home-main-grid">
+      <article class="card today-card cycle-home-card">
+        <div class="card-head"><h3>♡ CHU KỲ KINH NGUYỆT</h3><a class="cycle-home-go" href="./cycle/">Xem chi tiết ↗</a></div>
+        <a href="./cycle/" class="cycle-home-content" style="text-decoration:none;color:inherit">
+          <span class="cycle-home-emoji" aria-hidden="true">🌷</span>
+          <span><strong id="cycleHomeTitle">Chu kỳ của tôi</strong><p id="cycleHomeHint">Theo dõi và chăm sóc sức khỏe</p></span>
+        </a>
+      </article>
+      <article class="card home-work">
+        <div class="card-head"><h3><span class="mini-icon pink">✓</span> VIỆC CẦN LÀM</h3><button class="add" id="taskAdd" aria-label="Thêm việc nhanh">＋</button></div>
+        <div id="homeTasks"></div>
+      </article>
+      <article class="card home-wallet">
+        <div class="card-head"><h3><span class="mini-icon green">¥</span> CHI TIÊU ĐÃ GHI</h3></div>
+        <div class="money-big" id="spendBig">¥0</div>
+        <div class="summary-subtext">Tổng chi từ các mục đã lưu</div>
+        <div id="homeMoney"></div>
+      </article>
     </div>
-    <div class="middle">
-      <article class="photo-card"><img src="assets/cat.webp" alt="Mèo nằm trong nắng"><div class="photo-overlay"><b>Hôm nay</b><br>chọn yêu bản thân nhiều hơn một chút nhé 💕</div></article>
-      <article class="card"><div class="card-head"><h3><span class="mini-icon yellow">▰</span>GHI CHÚ</h3><button class="add" id="noteAdd">＋</button></div><div class="notes" id="homeNotes"></div></article>
-      <article class="photo-card"><img src="assets/japan.webp" alt="Phố Nhật lúc hoàng hôn"><button class="heart">♥</button><div class="photo-overlay"><b>Shiga, Japan</b></div></article>
+    <div class="home-shortcuts" aria-label="Lối tắt">
+      <a class="home-shortcut" href="./cycle/"><span class="shortcut-icon">🩸</span><span>Ghi chu kỳ</span></a>
+      <button type="button" class="home-shortcut" data-view="tasks"><span class="shortcut-icon">☑️</span><span>Công việc</span></button>
+      <button type="button" class="home-shortcut" data-view="money"><span class="shortcut-icon">💰</span><span>Chi tiêu</span></button>
     </div>
-    <article class="card gallery"><div class="card-head"><h3><span class="mini-icon green">▧</span>ẢNH CỦA TUI</h3><button class="add" data-view="photos">›</button></div><div class="gallery-row"><div class="thumb selected"><img src="assets/hero.webp" alt="Hoa hoàng hôn"></div><div class="thumb selected"><img src="assets/cat.webp" alt="Mèo cozy"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"><img src="assets/japan.webp" alt="Phố Nhật"></div><div class="thumb"></div><div class="thumb"><img src="assets/hero.webp" alt="Hoa"></div><div class="thumb"></div></div></article>
-    <div class="footer-quote"><b>♥</b>&nbsp;&nbsp; Bạn không cần hoàn hảo để bắt đầu, nhưng bạn phải bắt đầu để trở nên tốt hơn. &nbsp;&nbsp;<b>♥</b></div>
+    <article class="card home-notes">
+      <div class="card-head"><h3><span class="mini-icon yellow">✎</span> GHI CHÚ GẦN ĐÂY</h3><button class="add" id="noteAdd" aria-label="Thêm ghi chú nhanh">＋</button></div>
+      <div class="notes" id="homeNotes"></div>
+    </article>
+    <div class="home-photo-strip">
+      <img src="assets/cat.webp" alt="Mèo nhỏ đáng yêu" loading="lazy">
+      <div style="flex:1"><h3>Một góc dễ thương 🐱</h3><p>Giữ những hình ảnh yêu thích</p></div>
+      <button type="button" data-view="photos">Xem ảnh ↗</button>
+    </div>
   </div>
 </section>
 <section id="view-tasks" class="view page"><h2>Tasks</h2><p>Việc cần làm và deadline.</p><div class="list" id="tasksList"></div></section>
@@ -77,7 +180,7 @@
 <section id="view-photos" class="view page"><h2>Ảnh của tui</h2><p>Kho mood dùng cho Smart Random.</p><div class="card"><div class="gallery-row"><div class="thumb selected"><img src="assets/hero.webp"></div><div class="thumb selected"><img src="assets/cat.webp"></div><div class="thumb"><img src="assets/japan.webp"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div></div></div></section>
 <section id="view-settings" class="view page"><h2>Settings</h2><p>NGỌC OS hiện không dùng Pinterest. Smart Random dùng kho ảnh riêng.</p><div class="card"><div class="card-head"><h3>Smart Random</h3></div><p style="color:var(--muted);font-size:12px;line-height:1.7">Ảnh mặc định luôn là hoa/hoàng hôn. Bấm Smart Random để đổi mood sang phố Nhật hoặc mèo cozy; refresh trang sẽ quay lại ảnh hoa để giao diện luôn đẹp như mẫu.</p><button class="pill" id="randomSettings">Thử random</button></div></section>
 </div></main></div>
-<a href="./cycle/" class="mobile-cycle-link">🌸 Chu kỳ</a><button class="quick" id="quickBtn">＋ Ghi nhanh</button>
+<nav class="mobile-bottom-nav" aria-label="Điều hướng di động"><button type="button" data-view="home" class="active"><span class="mobile-icon">⌂</span>Home</button><button type="button" data-view="tasks"><span class="mobile-icon">☑</span>Việc</button><button type="button" class="mobile-add" id="mobileQuick" aria-label="Ghi nhanh">＋</button><a href="./cycle/"><span class="mobile-icon">♡</span>Chu kỳ</a><button type="button" data-view="notes"><span class="mobile-icon">✎</span>Ghi chú</button></nav><button class="quick" id="quickBtn">＋ Ghi nhanh</button>
 <div class="modal-bg hidden" id="modal"><div class="modal"><h2>Ghi nhanh ✨</h2><textarea id="quickInput" placeholder="Nãy ăn ramen 950 yên / Mai 9h gọi bảo hiểm / Note: thêm bookmark..."></textarea><div class="modal-actions"><button id="cancel">Đóng</button><button class="save" id="saveQuick">Lưu</button></div></div></div><div class="toast" id="toast"></div>
 <script>
 const KEY='ngoc_os_v3';
@@ -87,10 +190,10 @@ const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],yen
 function save(){localStorage.setItem(KEY,JSON.stringify(db));render()}
 function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function render(){
- homeTasks.innerHTML=db.tasks.slice(0,5).map(t=>`<div class="task ${t.done?'done':''}"><button class="check" data-check="${t.id}"></button><span class="name">${safe(t.title)}</span><span class="datechip">${safe(t.date)}</span></div>`).join('');
+ homeTasks.innerHTML=db.tasks.slice(0,3).map(t=>`<div class="task ${t.done?'done':''}"><button class="check" data-check="${t.id}"></button><span class="name">${safe(t.title)}</span><span class="datechip">${safe(t.date)}</span></div>`).join('')||'<div class="home-empty">Chưa có việc nào được ghi.</div>';
  const spent=db.money.filter(x=>x.type==='out').reduce((a,b)=>a+b.amount,0);spendBig.textContent=yen(spent);homeMoney.innerHTML=db.money.slice(0,3).map(x=>`<div class="money-item"><span>${safe(x.title)}</span><b>${yen(x.amount)}</b></div>`).join('');
  if(document.getElementById('homeDaily'))homeDaily.innerHTML=db.daily.slice(0,5).map(x=>`<div class="time"><i class="dot"></i><b>${safe(x.time)}</b><span>${safe(x.title)}</span></div>`).join('');
- homeNotes.innerHTML=db.notes.slice(0,3).map(x=>`<div class="note"><b>${safe(x.title)}:</b><br>${safe(x.text)}<small>${safe(x.time||'')}</small></div>`).join('');
+ homeNotes.innerHTML=db.notes.slice(0,2).map(x=>`<div class="note"><b>${safe(x.title)}:</b><br>${safe(x.text)}<small>${safe(x.time||'')}</small></div>`).join('');
  tasksList.innerHTML=db.tasks.map(t=>`<div class="row"><small>${safe(t.date)}</small><span>${safe(t.title)}</span><button class="check" data-check="${t.id}"></button></div>`).join('');
  moneyList.innerHTML=db.money.map(x=>`<div class="row"><small>${x.type==='out'?'Chi':'Thu'}</small><span>${safe(x.title)}</span><b>${x.type==='out'?'−':'+'}${yen(x.amount)}</b></div>`).join('');
  if(document.getElementById('dailyList'))dailyList.innerHTML=db.daily.map(x=>`<div class="row"><small>${safe(x.time)}</small><span>${safe(x.title)}</span><span>Timeline</span></div>`).join('');
@@ -98,12 +201,12 @@ function render(){
  $$('[data-check]').forEach(b=>b.onclick=()=>{const t=db.tasks.find(x=>x.id==b.dataset.check);if(t){t.done=!t.done;save()}});setHero();
 }
 const heros=[{src:'assets/hero.webp',pos:'center 59%'},{src:'assets/japan.webp',pos:'center 54%'},{src:'assets/cat.webp',pos:'center 47%'}];
-function setHero(){const h=heros[db.hero%heros.length];hero.style.backgroundImage=`url('${h.src}')`;hero.style.backgroundPosition=h.pos;likeBtn.textContent=db.liked?'♥ Đúng gu':'♡ Đúng gu';likeBtn.style.color=db.liked?'#ed628f':''}
+function setHero(){const h=heros[db.hero%heros.length];hero.style.backgroundPosition=h.pos;likeBtn.textContent=db.liked?'♥ Đúng gu':'♡ Đúng gu';likeBtn.style.color=db.liked?'#ed628f':''}
 function randomHero(){db.hero=(db.hero+1)%heros.length;db.liked=false;localStorage.setItem(KEY,JSON.stringify(db));setHero()}
 randomBtn.onclick=randomHero;randomSettings.onclick=randomHero;likeBtn.onclick=()=>{db.liked=!db.liked;localStorage.setItem(KEY,JSON.stringify(db));setHero()};
-function switchView(v){$$('.view').forEach(x=>x.classList.toggle('active',x.id==='view-'+v));$$('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===v));scrollTo({top:0,behavior:'smooth'})}
-$$('[data-view]').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
-function openQuick(){modal.classList.remove('hidden');quickInput.focus()}quickBtn.onclick=openQuick;sideQuick.onclick=openQuick;taskAdd.onclick=openQuick;if(document.getElementById('dailyAdd'))dailyAdd.onclick=openQuick;noteAdd.onclick=openQuick;cancel.onclick=()=>modal.classList.add('hidden');
+function switchView(v){$('.view').forEach(x=>x.classList.toggle('active',x.id==='view-'+v));$('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===v));scrollTo({top:0,behavior:'smooth'})}
+$('[data-view]').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
+function openQuick(){modal.classList.remove('hidden');quickInput.focus()}quickBtn.onclick=openQuick;document.getElementById('mobileQuick').onclick=openQuick;sideQuick.onclick=openQuick;taskAdd.onclick=openQuick;if(document.getElementById('dailyAdd'))dailyAdd.onclick=openQuick;noteAdd.onclick=openQuick;cancel.onclick=()=>modal.classList.add('hidden');
 function classify(s){const t=s.toLowerCase();if(/note:|ghi chú|ý tưởng/.test(t))return'notes';if(/¥|yên|yen|mua |chi |bán /.test(t))return'money';if(/mai|nhớ|cần|phải|todo|deadline/.test(t))return'tasks';return'notes'}
 function getAmount(s){const m=s.replace(/,/g,'').match(/(\d{2,7})\s*(?:yên|yen)?/i);return m?+m[1]:0}function getTime(s){const m=s.match(/([01]?\d|2[0-3])[:h]([0-5]\d)?/i);return m?String(m[1]).padStart(2,'0')+':'+String(m[2]||'00').padStart(2,'0'):new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'})}
 saveQuick.onclick=()=>{const s=quickInput.value.trim();if(!s)return;const c=classify(s),id=Date.now();if(c==='tasks')db.tasks.unshift({id,title:s,date:/mai/i.test(s)?'Ngày mai':'Hôm nay',done:false});if(c==='money')db.money.unshift({id,title:s,type:/bán|thu|lương/.test(s.toLowerCase())?'in':'out',amount:getAmount(s)});if(c==='daily')db.daily.push({id,title:s,time:getTime(s)});if(c==='notes')db.notes.unshift({id,title:'Ghi nhanh',text:s.replace(/^note:\s*/i,''),time:getTime(s)});save();modal.classList.add('hidden');quickInput.value='';toast.textContent='Đã lưu vào '+c+' ✨';toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1600);switchView(c)};
