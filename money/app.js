@@ -283,9 +283,10 @@
    if(parsed.date)$("#dateInput").value=parsed.date;else $("#dateInput").value="";
    if(parsed.time)$("#timeInput").value=parsed.time;else $("#timeInput").value="";
    updateItemSummary();
-   const matching=db.wallets.find(w=>w.currency===parsed.currency);
+   const matching=parsed.currency?db.wallets.find(w=>w.currency===parsed.currency):null;
    if(matching){$("#walletInput").value=matching.id;updateEntryUI()}
-   else $("#reviewWarning").textContent="⚠️ Bill dùng "+parsed.currency+" nhưng chưa có ví tương ứng. Hãy tạo và chọn ví "+parsed.currency+" trước khi lưu.";
+   else if(parsed.currency)$("#reviewWarning").textContent="⚠️ Bill dùng "+parsed.currency+" nhưng chưa có ví tương ứng. Hãy tạo và chọn ví "+parsed.currency+" trước khi lưu.";
+   else $("#reviewWarning").textContent="⚠️ Chưa xác định được loại tiền. Kiểm tra ví và số tiền trước khi lưu.";
    const hasFields=Boolean(parsed.trustedDocument&&parsed.amount&&parsed.merchant&&parsed.date);
    const status=$("#scanStatus");status.className="scan-status "+(hasFields?"success":"error");
    status.textContent=parsed.rawText.trim()
