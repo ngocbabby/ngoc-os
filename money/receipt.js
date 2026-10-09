@@ -99,7 +99,7 @@
   const category=categoryFrom((merchant||"")+" "+lines.slice(0,5).join(" "));
   return {
    amount,merchant,date,time,currency,category,rawText:source,
-   confidence:!amount?"low":score>=5?"high":score>=3?"medium":"low",
+   confidence:!amount||!totals.length?"low":score>=5?"high":score>=3?"medium":"low",
    amountSource,missing:[!amount&&"số tiền",!merchant&&"tên cửa hàng",!date&&"ngày",!time&&"giờ"].filter(Boolean)
   };
  }
