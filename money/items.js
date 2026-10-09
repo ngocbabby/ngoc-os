@@ -38,7 +38,7 @@
   if(amount===null)return null;
   // Do not interpret receipt reference numbers or bare prices as item names.
   if(!front&&previousName)front=normalize(previousName);
-  if(!front||front.length<2||front.length>100||/^[\d,.%:()¥￥\s-]+$/.test(front))return null;
+  if(!front||front.length<1||front.length>100||/^[\d,.%:()¥￥\s-]+$/.test(front))return null;
   if(/(?:\bNo[.:]?\s*\d+|商品コード|伝票番号|^[#*]\s*\d+)/i.test(front))return null;
   let quantity=1;
   let confidence="medium";
@@ -54,7 +54,7 @@
     if(qtyMatch){quantity=Number(qtyMatch[1]);front=front.slice(0,qtyMatch.index).trim();confidence="low"}
    }
   }
-  if(quantity<1||quantity>99||!front||front.length<2)return null;
+  if(quantity<1||quantity>99||!front||front.length<1)return null;
   // Some OCR outputs prepend a row number "*".
   front=front.replace(/^[\s*・•]+/,"").replace(/\s*[¥￥]\s*$/,"").trim();
   if(!front||/^[^a-zA-Z\u3040-\u30ff\u3400-\u9fff]+$/.test(front))return null;
