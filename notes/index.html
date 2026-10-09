@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#151517">
+<meta name="description" content="Ghi chú và danh sách cá nhân trong Ngọc OS.">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" href="../assets/app-icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./style.css">
+<script src="./app.js" defer></script>
+<title>Ghi chú · Ngọc OS</title>
+</head>
+<body>
+<svg aria-hidden="true" class="svg-defs" xmlns="http://www.w3.org/2000/svg">
+<symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10h-6v-7H9v7H3z"/></symbol>
+<symbol id="i-note" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
+<symbol id="i-task" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4M8 14l2 2 5-5"/></symbol>
+<symbol id="i-folder" viewBox="0 0 24 24"><path d="M2 7V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7z"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="m15 4-8 8 8 8"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+<symbol id="i-more" viewBox="0 0 24 24"><circle cx="4" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="20" cy="12" r="1.5"/></symbol>
+<symbol id="i-pencil" viewBox="0 0 24 24"><path d="M12 6H5a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-7"/><path d="m11 13 9-9-3-3-9 9-2 5 5-2z"/></symbol>
+<symbol id="i-checklist" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="m7 12 3 3 7-7"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M8 3h8l-1 7 3 3v2H6v-2l3-3-1-7zM12 15v7"/></symbol>
+<symbol id="i-unpin" viewBox="0 0 24 24"><path d="M8 3h8l-1 7 3 3v2H6v-2l3-3-1-7zM12 15v7"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><path d="M12 3v13m0-13-4 4m4-4 4 4M5 12H3v8h18v-8h-2"/></symbol>
+<symbol id="i-archive" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v11h14V9M9 14h6"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 6h16M9 6V4h6v2M6 6l1 15h10l1-15M10 10v7M14 10v7"/></symbol>
+<symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 6-6 4 4 3-3 5 5"/></symbol>
+<symbol id="i-draw" viewBox="0 0 24 24"><path d="m4 20 4-1 12-12-3-3L5 16l-1 4zM14 7l3 3"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4M8 22h8"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><rect x="2.5" y="3" width="19" height="18" rx="2"/><path d="m6 9 2 2 3-3M13 9h5M6 16l2 2 3-3M13 16h5"/></symbol>
+<symbol id="i-type" viewBox="0 0 24 24"><path d="M4 5h16M12 5v15M7 20h10M5 5v4M19 5v4"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></symbol>
+</svg>
+
+<div id="notesApp" class="app-shell">
+<header class="topbar" id="topbar">
+  <a class="profile-badge" href="../" aria-label="Quay về Ngọc OS">N</a>
+  <nav class="top-tabs" aria-label="Điều hướng ghi chú">
+    <button type="button" class="top-tab active" data-route="home" aria-label="Trang chủ" title="Trang chủ"><svg><use href="#i-home"/></svg></button>
+    <button type="button" class="top-tab" data-route="notes" aria-label="Ghi chú" title="Ghi chú"><svg><use href="#i-note"/></svg></button>
+    <button type="button" class="top-tab" data-route="tasks" aria-label="Nhiệm vụ" title="Nhiệm vụ"><svg><use href="#i-task"/></svg></button>
+    <button type="button" class="top-tab" data-route="folders" aria-label="Thư mục" title="Thư mục"><svg><use href="#i-folder"/></svg></button>
+  </nav>
+</header>
+
+<main id="mainArea" class="main-area">
+  <section id="screen-home" class="screen active" aria-label="Trang chủ ghi chú">
+    <div class="section-heading compact"><h2>Gần đây</h2></div>
+    <div id="recentNotes" class="recent-scroll"></div>
+    <div class="section-heading folder-heading"><h2>Riêng tư</h2><div class="heading-actions">
+      <button type="button" class="icon-plain" data-action="manage-folders" aria-label="Quản lý thư mục"><svg><use href="#i-more"/></svg></button>
+      <button type="button" class="icon-plain" data-action="new-folder" aria-label="Tạo thư mục"><svg><use href="#i-plus"/></svg></button>
+    </div></div>
+    <div id="homeNoteRows" class="home-note-list"></div>
+    <button id="viewMoreBtn" type="button" class="view-more" data-route="notes" hidden><svg><use href="#i-more"/></svg>Xem thêm</button>
+  </section>
+  <section id="screen-notes" class="screen" aria-label="Danh sách ghi chú">
+    <div class="large-screen-heading"><h1>Ghi chú</h1><div class="heading-actions">
+      <button type="button" class="icon-plain" data-action="search" aria-label="Tìm kiếm"><svg><use href="#i-search"/></svg></button>
+      <button type="button" class="icon-plain" data-action="settings" aria-label="Tuỳ chọn"><svg><use href="#i-more"/></svg></button>
+    </div></div>
+    <div class="filter-row"><button id="folderFilterBtn" type="button" class="filter-pill" data-action="choose-folder">Tất cả ghi chú <span aria-hidden="true">⌄</span></button><span id="noteCount"></span></div>
+    <div id="notesGrid" class="notes-masonry"></div>
+  </section>
+  <section id="screen-tasks" class="screen" aria-label="Danh sách nhiệm vụ">
+    <div class="large-screen-heading"><h1>Nhiệm vụ</h1><button type="button" class="icon-plain" data-action="search" aria-label="Tìm kiếm"><svg><use href="#i-search"/></svg></button></div>
+    <div id="taskGrid" class="notes-masonry"></div>
+  </section>
+  <section id="screen-folders" class="screen" aria-label="Thư mục">
+    <div class="large-screen-heading"><h1>Thư mục</h1><button type="button" class="icon-plain" data-action="new-folder" aria-label="Tạo thư mục"><svg><use href="#i-plus"/></svg></button></div>
+    <div id="folderList" class="folder-list"></div>
+  </section>
+
+  <section id="screen-editor" class="screen editor-screen" aria-label="Chỉnh sửa ghi chú">
+    <div class="editor-top">
+      <button id="editorBack" class="icon-plain" type="button" aria-label="Quay lại"><svg><use href="#i-back"/></svg></button>
+      <div class="editor-top-actions">
+        <button id="editorPin" class="editor-action" type="button" aria-label="Ghim ghi chú" title="Ghim"><svg><use href="#i-pin"/></svg></button>
+        <button id="editorShare" class="editor-action" type="button" aria-label="Chia sẻ ghi chú" title="Chia sẻ"><svg><use href="#i-share"/></svg></button>
+        <button id="editorArchive" class="editor-action" type="button" aria-label="Lưu trữ ghi chú" title="Lưu trữ"><svg><use href="#i-archive"/></svg></button>
+        <button id="editorMore" class="icon-plain" type="button" aria-label="Thêm tuỳ chọn" title="Thêm"><svg><use href="#i-more"/></svg></button>
+      </div>
+    </div>
+    <div class="editor-main">
+      <div id="folderBreadcrumb" class="editor-subtitle">Riêng tư</div>
+      <input id="editorTitle" aria-label="Tiêu đề" type="text" placeholder="Tiêu đề" maxlength="160" autocomplete="off">
+      <div id="textEditor" class="text-editor"><textarea id="editorBody" aria-label="Nội dung ghi chú" placeholder="Bắt đầu viết..." spellcheck="true"></textarea></div>
+      <div id="checklistEditor" class="checklist-editor" hidden><div id="checklistItems"></div><button id="addListItem" class="add-list-item" type="button"><svg><use href="#i-plus"/></svg><span>Mục danh sách</span></button></div>
+      <div id="editorMedia" class="editor-media"></div>
+    </div>
+    <div class="editor-footer">
+      <div id="saveStatus" class="save-status" aria-live="polite">Tự động lưu trên thiết bị</div>
+      <div class="editor-tools">
+        <button id="editorInsert" class="tool-icon" type="button" aria-label="Chèn nội dung"><svg><use href="#i-plus"/></svg></button>
+        <button id="editorImage" class="tool-icon" type="button" aria-label="Chèn hình ảnh"><svg><use href="#i-image"/></svg></button>
+        <button id="editorSketch" class="tool-icon" type="button" aria-label="Thêm bản vẽ"><svg><use href="#i-draw"/></svg></button>
+        <button id="editorAudio" class="tool-icon" type="button" aria-label="Ghi âm"><svg><use href="#i-mic"/></svg></button>
+        <button id="editorDone" class="tool-icon editor-done" type="button" aria-label="Hoàn tất"><svg><use href="#i-check"/></svg></button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="homeDock" class="bottom-dock">
+  <button type="button" class="dock-icon" data-action="search" aria-label="Tìm kiếm"><svg><use href="#i-search"/></svg></button>
+  <button type="button" class="dock-search" data-action="search"><span class="dock-face">✧</span><span>Tìm ghi chú</span></button>
+  <button type="button" class="dock-icon" id="composeBtn" aria-label="Tạo ghi chú"><svg><use href="#i-pencil"/></svg></button>
+</div>
+<nav id="listDock" class="list-dock" aria-label="Loại nội dung" hidden>
+  <button type="button" data-route="notes" class="list-dock-item"><svg><use href="#i-note"/></svg><span>Ghi chú</span></button>
+  <button type="button" data-route="tasks" class="list-dock-item"><svg><use href="#i-task"/></svg><span>Nhiệm vụ</span></button>
+</nav>
+
+<button id="fab" type="button" class="fab" aria-label="Tạo mới" aria-expanded="false"><svg><use href="#i-plus"/></svg></button>
+<div id="fabBackdrop" class="fab-backdrop" hidden></div>
+<div id="fabMenu" class="fab-menu" hidden>
+  <button type="button" data-create="image"><svg><use href="#i-image"/></svg> Hình ảnh</button>
+  <button type="button" data-create="draw"><svg><use href="#i-draw"/></svg> Bản vẽ</button>
+  <button type="button" data-create="audio"><svg><use href="#i-mic"/></svg> Âm thanh</button>
+  <button type="button" data-create="checklist"><svg><use href="#i-list"/></svg> Danh sách</button>
+  <button type="button" data-create="text"><svg><use href="#i-type"/></svg> Văn bản</button>
+</div>
+
+<div id="overlay" class="overlay" hidden>
+  <div id="overlayCard" class="overlay-card" role="dialog" aria-modal="true" aria-labelledby="overlayHeading">
+    <div class="overlay-top"><h2 id="overlayHeading">Tuỳ chọn</h2><button type="button" id="closeOverlay" class="icon-plain" aria-label="Đóng"><svg><use href="#i-x"/></svg></button></div>
+    <div id="overlayBody"></div>
+  </div>
+</div>
+
+<input id="imageFile" type="file" accept="image/*" hidden>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+</div>
+</body></html>
