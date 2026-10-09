@@ -172,6 +172,40 @@
   if(entryType==="transfer")$("#scanStatus").textContent="Chuyển tiền chỉ hỗ trợ giữa hai ví cùng đơn vị tiền.";
   else if(!receiptFile)$("#scanStatus").textContent="Chọn ảnh hóa đơn; phần mềm sẽ thử điền số tiền, cửa hàng và thời gian.";
  }
+
+ const itemCategories=["meat","produce","dairy","groceries","household","food","shopping","transport","home","bills","health","study","entertainment","other"];
+ function updateItemSummary(){
+  if(!itemsEnabled)return;
+  const invalid=lineItems.some(x=>!window.MoneyItems.validateItem(x));
+  const sum=lineItems.reduce((a,x)=>a+(Number.isSafeInteger(x.amount)?x.amount:0),0);
+  const total=Number($("#amountInput").value),currency=wallet($("#walletInput").value)?.currency||"JPY";
+  const delta=Number.isSafeInteger(total)&&total>0?total-sum:null;
+  const info=invalid?"⚠️ Món chưa hợp lệ.":!lineItems.length?"Chưa có món.":delta===null?"Nhập tổng hóa đơn để đối chiếu.":delta===0?"✅ Khớp tổng hóa đơn.":delta>0?"⚠️ Còn "+money(delta,currency)+" chưa phân loại (thuế, phí, hàng thiếu).":"⚠️ Tổng món vượt bill "+money(-delta,currency)+" (có thể do giảm giá).";
+  const el=$("#lineItemsSummary");el.className="items-summary "+(invalid||delta!==0?"warn":"good");
+  el.textContent="Tổng món: "+money(sum,currency)+(delta===null?"":" · Bill: "+money(total,currency))+" — "+info;
+ }
+ function renderItems(){
+  $("#itemsPanel").hidden=entryType!=="expense"||!itemsEnabled;
+  if($("#itemsPanel").hidden)return;
+  $("#lineItemsList").innerHTML=lineItems.map((x,i)=>'<div class="item-editor" data-line="'+i+'"><div class="item-editor-first"><label>Tên món<input data-item-field="name" maxlength="100" value="'+esc(x.name)+'"></label><button type="button" class="remove-item" data-remove-line="'+i+'" aria-label="Xóa món">✕</button></div><div class="item-editor-fields"><label>Số lượng<input data-item-field="quantity" type="number" min="1" max="99" step="1" value="'+esc(x.quantity)+'"></label><label>Thành tiền<input data-item-field="amount" type="number" min="0" max="1000000000" step="1" value="'+esc(x.amount)+'"></label><label>Nhóm<select data-item-field="category">'+itemCategories.map(cat=>'<option value="'+cat+'" '+(x.category===cat?"selected":"")+'>'+esc(label(cat))+'</option>').join("")+'</select></label></div></div>').join("")||'<p class="items-hint">Không nhận diện được món. Bạn có thể bấm Thêm món hoặc chỉ lưu tổng bill.</p>';
+  $("[data-line]").forEach(row=>{
+   const i=Number(row.dataset.line);
+   row.querySelectorAll("[data-item-field]").forEach(el=>el.oninput=()=>{
+    const field=el.dataset.itemField;
+    lineItems[i][field]=field==="name"||field==="category"?el.value:el.value===""?NaN:Number(el.value);
+    updateItemSummary();
+   });
+  });
+  $("[data-remove-line]").forEach(btn=>btn.onclick=()=>{lineItems.splice(Number(btn.dataset.removeLine),1);renderItems()});
+  updateItemSummary();
+ }
+ $("#addLineItem").onclick=()=>{
+  if(lineItems.length>=window.MoneyItems.maxItems){toast("Tối đa 80 món mỗi bill.");return}
+  itemsEnabled=true;lineItems.push({name:"",quantity:1,amount:0,category:"other",source:"manual"});renderItems();
+  $("[data-line]").at(-1)?.querySelector('[data-item-field="name"]')?.focus();
+ };
+ $("#amountInput").addEventListener("input",updateItemSummary);
+
  function resetReceipt(){
   if(receiptObjectUrl){URL.revokeObjectURL(receiptObjectUrl);receiptObjectUrl=null}
   receiptFile=null;detectedReceiptCurrency=null;ocrUsed=false;busyScan=false;
