@@ -145,19 +145,25 @@
       location.href = "./notes/";
       return;
     }
-    const unique = Date.now() + Math.floor(Math.random()*9999);
-    if (type === "task") {
-      db.tasks.unshift({id:unique,title:text,date:"Hôm nay",done:false});
-    } else if (type === "expense" || type === "income") {
+    if (type === "expense" || type === "income") {
+      // Keep a short-lived unsaved draft, then ask for explicit confirmation in Moneybook.
       const amount = getAmount(text);
-      if (!amount || !Number.isFinite(amount)) { toast("Hãy ghi số tiền bằng số."); return; }
-      db.money.unshift({id:unique,title:text,type:type==="income"?"in":"out",amount});
+      try { sessionStorage.setItem("ngoc_os_money_pending_draft_v1",JSON.stringify({type,text,amount:Number.isFinite(amount)?amount:null,created:Date.now()})); }
+      catch { /* Draft can still be completed manually in Moneybook. */ }
+      textarea.value = "";
+      closeQuick();
+      location.href = "./money/?add=" + encodeURIComponent(type);
+      return;
     }
-    if (!save()) return;
-    textarea.value = "";
-    closeQuick();
-    toast("Đã lưu");
-    switchView(type==="task"?"tasks":"money");
+    if (type === "task") {
+      const unique = Date.now() + Math.floor(Math.random()*9999);
+      db.tasks.unshift({id:unique,title:text,date:"Hôm nay",done:false});
+      if (!save()) return;
+      textarea.value = "";
+      closeQuick();
+      toast("Đã lưu công việc");
+      switchView("tasks");
+    }
   });
 
   tick();
