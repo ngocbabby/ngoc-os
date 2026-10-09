@@ -24,3 +24,11 @@
 .items-summary.warn{background:#453920;color:#f3d89a}
 .items-hint{color:#8f8e97;font-size:11px;line-height:1.65;margin:12px 0 0}
 @media(max-width:390px){.items-panel{padding:12px 9px}.item-editor-fields{grid-template-columns:55px minmax(80px,1fr) minmax(95px,1.35fr);gap:5px}.item-editor input,.item-editor select{padding:8px 4px;font-size:12px}}
+
+/* Explain detected documents before populating an expense. */
+.document-review{margin:12px 0 15px;padding:14px;border-radius:14px;background:#1d2830;border:1px solid #365066}
+.document-review strong{display:block;font-size:14px;color:#d3f2ff}
+.document-review p{font-size:12px;line-height:1.55;color:#c7c3cc;margin:5px 0 12px}
+.document-review label{font-size:11px;color:#a5a4ad;display:block;margin-bottom:6px}
+.document-review select{width:100%;padding:11px;background:#262931;color:white;border:1px solid #4f525a;border-radius:10px}
+.document-not-expense{margin-top:11px;padding:11px;border-radius:10px;background:#4a262c;color:#ffd1d6;font-size:12px;line-height:1.55}
