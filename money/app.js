@@ -30,7 +30,7 @@
  db.settings ||= {hideBalance:false,legacyImportDone:false};
 
  let screen="overview",filter="all",monthIndex=new Date().getFullYear()*12+new Date().getMonth(),searchText="";
- let editingTxId=null,entryType="expense",receiptFile=null,receiptObjectUrl=null,scanId=0,busyScan=false,editingWalletId=null,editingBudgetId=null;
+ let editingTxId=null,entryType="expense",receiptFile=null,receiptObjectUrl=null,detectedReceiptCurrency=null,scanId=0,busyScan=false,editingWalletId=null,editingBudgetId=null;
  const toast=message=>{
   const element=$("#toast");element.textContent=message;element.classList.add("show");
   clearTimeout(toast.timer);toast.timer=setTimeout(()=>element.classList.remove("show"),3400);
@@ -164,13 +164,16 @@
   const selectedWallet=wallet($("#walletInput").value);
   $("#amountUnit").textContent=selectedWallet?.currency||"JPY";
   const others=db.wallets.filter(w=>w.currency===selectedWallet?.currency&&w.id!==selectedWallet?.id);
-  $("#toWalletInput").innerHTML=walletOptions($("#toWalletInput").value,selectedWallet?.currency).replace(new RegExp('<option value="'+String(selectedWallet?.id||"")+"\"[^>]*>[^<]*</option>"),"");
+  const selectedDestination=$("#toWalletInput").value;
+  const otherWallets=db.wallets.filter(w=>w.currency===selectedWallet?.currency&&w.id!==selectedWallet?.id);
+  $("#toWalletInput").innerHTML=otherWallets.map(w=>'<option value="'+esc(w.id)+'">'+esc(w.name)+' ('+esc(w.currency)+')</option>').join("");
+  if(otherWallets.some(w=>w.id===selectedDestination))$("#toWalletInput").value=selectedDestination;
   if(entryType==="transfer")$("#scanStatus").textContent="Chuyển tiền chỉ hỗ trợ giữa hai ví cùng đơn vị tiền.";
  }
  function resetReceipt(){
   if(receiptObjectUrl){URL.revokeObjectURL(receiptObjectUrl);receiptObjectUrl=null}
-  receiptFile=null;busyScan=false;$("#receiptPreview").hidden=true;$("#receiptImage").removeAttribute("src");
-  $("#rawOcrDetails").hidden=true;$("#rawOcrText").textContent="";$("#reviewWarning").hidden=true;$("#retryScan").hidden=true;
+  receiptFile=null;detectedReceiptCurrency=null;busyScan=false;$("#receiptPreview").hidden=true;$("#receiptImage").removeAttribute("src");
+  $("#rawOcrDetails").hidden=true;$("#rawOcrText").textContent="";$("#reviewWarning").hidden=true;$("#reviewWarning").textContent="⚠️ Kiểm tra lại số tiền và ngày giờ trước khi lưu. OCR có thể nhận nhầm.";$("#retryScan").hidden=true;
   const s=$("#scanStatus");s.textContent="Chọn ảnh hóa đơn; phần mềm sẽ thử điền số tiền, cửa hàng và thời gian.";s.className="scan-status";
  }
  function openEntry(type="expense",editId=null){
@@ -194,13 +197,7 @@
  }
  function setEntryType(type){entryType=type;updateEntryUI()}
  $$(".segment").forEach(b=>b.onclick=()=>setEntryType(b.dataset.entryType));
- $("#walletInput").onchange=()=>{
-  const currency=wallet($("#walletInput").value)?.currency;
-  $("#amountUnit").textContent=currency||"JPY";
-  const eligible=db.wallets.filter(w=>w.currency===currency&&w.id!==$("#walletInput").value);
-  $("#toWalletInput").innerHTML=walletOptions(null,currency).split('</option>').filter(fragment=>!fragment.includes('value="'+$("#walletInput").value+'"')).join('</option>');
-  if(eligible.length)$("#toWalletInput").value=eligible[0].id;
- };
+ $("#walletInput").onchange=()=>updateEntryUI();
  $("#navAdd").onclick=()=>openEntry("expense");
  $("#scanShortcut").onclick=()=>{openEntry("expense");$("#cameraBtn").click()};
  $("#cameraBtn").onclick=()=>$("#captureInput").click();
@@ -227,6 +224,7 @@
    if(request!==scanId)return;
    $("#rawOcrDetails").hidden=false;$("#rawOcrText").textContent=parsed.rawText||"(Không nhận diện được chữ)";
    $("#reviewWarning").hidden=false;
+   detectedReceiptCurrency=parsed.currency;
    if(parsed.amount)$("#amountInput").value=parsed.amount;
    else $("#amountInput").value="";
    if(parsed.merchant)$("#merchantInput").value=parsed.merchant;
@@ -236,7 +234,7 @@
    if(parsed.time)$("#timeInput").value=parsed.time;else $("#timeInput").value="";
    const matching=db.wallets.find(w=>w.currency===parsed.currency);
    if(matching){$("#walletInput").value=matching.id;updateEntryUI()}
-   else toast("Bill dùng "+parsed.currency+" nhưng chưa có ví phù hợp. Hãy tạo ví đúng tiền tệ trước khi lưu.");
+   else $("#reviewWarning").textContent="⚠️ Bill dùng "+parsed.currency+" nhưng chưa có ví tương ứng. Hãy tạo và chọn ví "+parsed.currency+" trước khi lưu.";
    const hasFields=Boolean(parsed.amount&&parsed.merchant&&parsed.date);
    const status=$("#scanStatus");status.className="scan-status "+(hasFields?"success":"error");
    status.textContent=parsed.rawText.trim()
@@ -258,6 +256,7 @@
   const merchant=$("#merchantInput").value.trim(),category=$("#categoryInput").value,date=$("#dateInput").value,time=$("#timeInput").value;
   if(!Number.isSafeInteger(amount)||amount<=0||amount>1_000_000_000){toast("Số tiền phải là số nguyên dương và không vượt 1 tỷ.");return}
   if(!sourceWallet){toast("Hãy chọn ví thanh toán.");return}
+  if(receiptFile&&detectedReceiptCurrency&&entryType==="expense"&&detectedReceiptCurrency!==sourceWallet.currency){toast("Bill dùng "+detectedReceiptCurrency+" nhưng ví đang là "+sourceWallet.currency+". Chọn đúng ví hoặc bỏ ảnh.");return}
   if(!validDay(date)||!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(time)){toast("Vui lòng kiểm tra ngày và giờ giao dịch.");return}
   if(!merchant&&entryType!=="transfer"){toast("Nhập tên cửa hàng hoặc tên giao dịch.");return}
   const destination=entryType==="transfer"?wallet($("#toWalletInput").value):null;
@@ -351,7 +350,7 @@
    const wallets=parsed.wallets.filter(x=>typeof x.id==="string"&&typeof x.name==="string"&&["JPY","VND"].includes(x.currency)&&Number.isSafeInteger(Number(x.openingBalance))&&Number(x.openingBalance)>=0);
    if(wallets.length!==parsed.wallets.length||wallets.length===0||new Set(wallets.map(x=>x.id)).size!==wallets.length)throw Error("Ví không hợp lệ");
    const walletMap=new Map(wallets.map(w=>[w.id,w]));
-   const transactions=parsed.transactions.filter(t=>t&&typeof t.id==="string"&&["expense","income","transfer"].includes(t.type)&&Number.isSafeInteger(t.amount)&&t.amount>0&&t.amount<=1_000_000_000&&validDay(t.date)&&/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(t.time||"")&&walletMap.has(t.walletId)&&walletMap.get(t.walletId).currency===t.currency&&["JPY","VND"].includes(t.currency)&&typeof t.merchant==="string"&&typeof t.note==="string"&&(!t.toWalletId||walletMap.has(t.toWalletId)));
+   const transactions=parsed.transactions.filter(t=>t&&typeof t.id==="string"&&["expense","income","transfer"].includes(t.type)&&Number.isSafeInteger(t.amount)&&t.amount>0&&t.amount<=1_000_000_000&&validDay(t.date)&&/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(t.time||"")&&walletMap.has(t.walletId)&&walletMap.get(t.walletId).currency===t.currency&&["JPY","VND"].includes(t.currency)&&typeof t.merchant==="string"&&typeof t.note==="string"&&((t.type!=="transfer"&&!t.toWalletId)||(t.type==="transfer"&&walletMap.has(t.toWalletId)&&t.toWalletId!==t.walletId&&walletMap.get(t.toWalletId).currency===t.currency)));
    if(transactions.length!==parsed.transactions.length||new Set(transactions.map(t=>t.id)).size!==transactions.length)throw Error("Giao dịch không hợp lệ");
    const budgets=parsed.budgets.filter(b=>b&&typeof b.id==="string"&&expenseCategories.includes(b.category)&&["JPY","VND"].includes(b.currency)&&Number.isSafeInteger(b.amount)&&b.amount>0);
    if(budgets.length!==parsed.budgets.length)throw Error("Ngân sách không hợp lệ");
@@ -365,9 +364,9 @@
   let old;
   try{old=JSON.parse(localStorage.getItem(LEGACY)||"null")}catch{}
   const candidates=Array.isArray(old?.money)?old.money:[];
-  const dated=candidates.filter(x=>validDay(x.date)&&x.type&&Number(x.amount)>0);
+  const dated=candidates.filter(x=>validDay(x.date)&&/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(x.time||"")&&x.type&&Number(x.amount)>0);
   if(!dated.length){
-   toast("Dữ liệu thu chi cũ không có ngày giao dịch: không thể tự nhập an toàn. Bạn có thể thêm thủ công.");return;
+   toast("Dữ liệu thu chi cũ thiếu ngày hoặc giờ giao dịch: không thể tự nhập an toàn. Bạn có thể thêm thủ công.");return;
   }
   if(!confirm("Có "+dated.length+" khoản thu chi cũ có ngày. Chỉ nhập các giao dịch hợp lệ; kiểm tra lại sau khi nhập. Tiếp tục?"))return;
   let added=0;
@@ -376,7 +375,7 @@
    if(db.transactions.some(t=>t.id===key))continue;
    const amount=Number(x.amount);
    if(!Number.isSafeInteger(amount)||amount<=0||amount>1e9)continue;
-   db.transactions.push({id:key,type:x.type==="in"?"income":"expense",amount,walletId:db.wallets.find(w=>w.currency==="JPY")?.id||db.wallets[0].id,currency:"JPY",merchant:String(x.title||"Khoản cũ").slice(0,100),note:"Nhập từ Ngọc OS cũ",category:"other",date:x.date,time:/^\d{2}:\d{2}$/.test(x.time)?x.time:"12:00",created:Date.now(),source:"legacy"});
+   db.transactions.push({id:key,type:x.type==="in"?"income":"expense",amount,walletId:db.wallets.find(w=>w.currency==="JPY")?.id||db.wallets[0].id,currency:"JPY",merchant:String(x.title||"Khoản cũ").slice(0,100),note:"Nhập từ Ngọc OS cũ",category:"other",date:x.date,time:x.time,created:Date.now(),source:"legacy"});
    added++;
   }
   if(added&&store())toast("Đã nhập "+added+" giao dịch có ngày; kiểm tra giờ nếu không rõ.");
