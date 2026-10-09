@@ -34,10 +34,34 @@ function make(kind="text"){closeFab();current={id:id(),kind,title:"",text:"",ite
 function openNote(key){const n=get(key);if(!n)return;current=structuredClone(n);prior=route;route="editor";renderEditor();showEditor()}
 function showEditor(){$$(".screen").forEach(x=>x.classList.toggle("active",x.id==="screen-editor"));$("#topbar").hidden=true;$("#homeDock").hidden=true;$("#listDock").hidden=true;$("#fab").hidden=true;closeFab();window.scrollTo(0,0)}
 function renderEditor(){const n=current;if(!n)return;$("#editorTitle").value=n.title||"";$("#editorBody").value=n.text||"";$("#textEditor").hidden=n.kind==="checklist";$("#checklistEditor").hidden=n.kind!=="checklist";$("#editorPin").classList.toggle("on",Boolean(n.pinned));$("#folderBreadcrumb").textContent=db.folders.find(x=>x.id===n.folder)?.name||"Riêng tư";$("#editorMedia").innerHTML=n.image?'<img src="'+esc(n.image)+'" alt="Ảnh đã đính kèm">':"";$("#saveStatus").textContent="Tự động lưu trên thiết bị";renderItems()}
-function renderItems(){if(!current||current.kind!=="checklist")return;$("#checklistItems").innerHTML=(current.items||[]).map(x=>'<div class="checklist-row"><input type="checkbox" data-box="'+esc(x.id)+'" aria-label="Hoàn thành mục" '+(x.checked?"checked":"")+'><input type="text" data-item="'+esc(x.id)+'" placeholder="Việc cần làm" value="'+esc(x.text)+'"><button class="remove-row" data-remove="'+esc(x.id)+'" type="button" aria-label="Xóa mục">'+icon("x")+'</button></div>').join("");
- $$("[data-item]").forEach(el=>el.oninput=()=>{const x=current.items.find(i=>i.id===el.dataset.item);if(x)x.text=el.value;queueSave()});
+function renderItems(){if(!current||current.kind!=="checklist")return;$("#checklistItems").innerHTML=(current.items||[]).map(x=>'<div class="checklist-row"><input type="checkbox" data-box="'+esc(x.id)+'" aria-label="Hoàn thành mục" '+(x.checked?"checked":"")+'><input type="text" data-item="'+esc(x.id)+'" enterkeyhint="next" placeholder="Việc cần làm" value="'+esc(x.text)+'"><button class="remove-row" data-remove="'+esc(x.id)+'" type="button" aria-label="Xóa mục">'+icon("x")+'</button></div>').join("");
+ document.querySelectorAll("[data-item]").forEach(el=>{
+  el.oninput=()=>{const x=current.items.find(i=>i.id===el.dataset.item);if(x)x.text=el.value;queueSave()};
+  el.onkeydown=e=>{
+    if(e.key!=="Enter"||e.isComposing)return;
+    e.preventDefault();
+    const index=current.items.findIndex(item=>item.id===el.dataset.item);
+    if(!el.value.trim()){
+      // Empty row: move to an existing next row instead of creating endless blank items.
+      const next=current.items[index+1];
+      if(next)Array.from(document.querySelectorAll("[data-item]")).find(input=>input.dataset.item===next.id)?.focus();
+      return;
+    }
+    insertListItem(el.dataset.item);
+  };
+ });
  $$("[data-box]").forEach(el=>el.onchange=()=>{const x=current.items.find(i=>i.id===el.dataset.box);if(x)x.checked=el.checked;queueSave()});
  $$("[data-remove]").forEach(el=>el.onclick=()=>{current.items=current.items.filter(i=>i.id!==el.dataset.remove);queueSave();renderItems()})
+}
+function insertListItem(afterId=null){
+ if(!current||current.kind!=="checklist")return;
+ const newItem={id:id(),text:"",checked:false};
+ const index=afterId===null?-1:current.items.findIndex(item=>item.id===afterId);
+ current.items.splice(index<0?current.items.length:index+1,0,newItem);
+ renderItems();
+ queueSave();
+ const input=Array.from(document.querySelectorAll("[data-item]")).find(el=>el.dataset.item===newItem.id);
+ if(input){input.focus();input.scrollIntoView?.({block:"nearest"})}
 }
 function flush(){clearTimeout(saveTimer);if(!current)return;const old=get(current.id);if(!filled(current)){if(old)db.notes=db.notes.filter(x=>x.id!==current.id);persist();return}current.updated=Date.now();if(old)Object.assign(old,current);else db.notes.unshift(structuredClone(current));if(persist())$("#saveStatus").textContent="Đã lưu"}
 function queueSave(){$("#saveStatus").textContent="Đang lưu…";clearTimeout(saveTimer);saveTimer=setTimeout(flush,550)}
@@ -56,7 +80,7 @@ function toggleFab(){const open=$("#fabMenu").hidden;$("#fabMenu").hidden=!open;
 $$("[data-route]").forEach(b=>b.onclick=()=>{if(b.dataset.route==="notes")filter=null;show(b.dataset.route)});
 $$("[data-action]").forEach(b=>b.onclick=()=>{const a=b.dataset.action;if(a==="new-folder")newFolder();else if(a==="manage-folders")show("folders");else if(a==="search")query();else if(a==="choose-folder")folderMenu();else if(a==="settings")settings()});
 $("#composeBtn").onclick=()=>make("text");$("#fab").onclick=toggleFab;$("#fabBackdrop").onclick=closeFab;$$("[data-create]").forEach(b=>b.onclick=()=>create(b.dataset.create));
-$("#editorBack").onclick=done;$("#editorDone").onclick=done;$("#editorTitle").oninput=e=>{if(current){current.title=e.target.value;queueSave()}};$("#editorBody").oninput=e=>{if(current){current.text=e.target.value;queueSave()}};$("#addListItem").onclick=()=>{if(!current)return;current.items.push({id:id(),text:"",checked:false});renderItems();queueSave();$$("[data-item]").at(-1)?.focus()};
+$("#editorBack").onclick=done;$("#editorDone").onclick=done;$("#editorTitle").oninput=e=>{if(current){current.title=e.target.value;queueSave()}};$("#editorBody").oninput=e=>{if(current){current.text=e.target.value;queueSave()}};$("#addListItem").onclick=()=>insertListItem();
 $("#editorPin").onclick=()=>{if(!current)return;current.pinned=!current.pinned;renderEditor();queueSave()};$("#editorArchive").onclick=()=>{if(!current)return;current.archived=!current.archived;queueSave();notify(current.archived?"Đã lưu trữ":"Đã bỏ lưu trữ");done()};$("#editorMore").onclick=moreEditor;
 $("#editorInsert").onclick=()=>overlay("Chèn nội dung",'<button id="insertChecklist" class="overlay-btn">☑ Danh sách</button><button id="insertImage" class="overlay-btn">▧ Hình ảnh</button>',()=>{$("#insertChecklist").onclick=()=>{if(!current)return;current.kind="checklist";current.items=current.items?.length?current.items:[{id:id(),text:"",checked:false}];renderEditor();queueSave();closeOverlay()};$("#insertImage").onclick=()=>{closeOverlay();addPhoto()}});
 $("#editorImage").onclick=addPhoto;$("#editorAudio").onclick=()=>notify("Ghi âm sẽ được bổ sung sau");$("#editorSketch").onclick=()=>notify("Bản vẽ sẽ được bổ sung sau");
