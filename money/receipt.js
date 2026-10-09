@@ -54,7 +54,7 @@
   if(returnSignals.test(t0))return {type:"return",label:"Trang trả hàng / hoàn tiền",trusted:false,reason:"Đây là hướng dẫn hoặc yêu cầu trả hàng, không phải bằng chứng đã thanh toán."};
   const invoice=/(?:請求書|お支払票|払込票|納付書|料金明細|ご請求額|請求金額|invoice|bill\s*payment|billing\s*statement)/i.test(t);
   const online=/(?:ご注文(?!ありがとうございます)|注文番号|注文内容|注文詳細|注文日時|注文履歴|購入履歴|購入明細|支払完了|決済完了|order\s*(?:number|total|confirmation|details)|purchase\s*confirmed)/i.test(t);
-  const receipt=/(?:領収書|領収証|お買上|お買い上げ|レシート|ご利用明細|お支払い金額|お支払額|お会計|総合計|合計金額|税込合計|cashier|receipt|amount\s*paid|grand\s*total)/i.test(t);
+  const receipt=/(?:業\s*務\s*ス\s*[ーｰ]\s*パ\s*[ーｰ]|COSTCO|売\s*上|領収書|領収証|お買上|お買い上げ|レシート|ご利用明細|お支払い金額|お支払額|お会計|総合計|合計金額|税込合計|cashier|receipt|amount\s*paid|grand\s*total)/i.test(t);
   const dated=!!findDate(t);
   const total=/(?:^|[\n\s])(?:総\s*合\s*計|合\s*計|TOTAL)\s*[:：¥￥\s]*\d/m.test(t);
   if(invoice)return {type:"invoice",label:"Hóa đơn / giấy yêu cầu thanh toán",trusted:true,reason:"Ngày trên giấy có thể là ngày phát hành hoặc hạn thanh toán."};
@@ -99,7 +99,7 @@
   const best=totals[0];
   return {amount:best?.amount||null,source:best?.source||null,identified:!!best};
  }
- const knownMerchant=/(?:セブン.?イレブン|ファミリーマート|ローソン|イオン|西友|ライフ|マックスバリュ|ツルハ|ウエルシア|スギ薬局|ダイソー|カインズ|ニトリ|ドン.?キホーテ|マツモトキヨシ|スターバックス|マクドナルド|コメダ|すき家|吉野家|コスモ石油|ENEOS|apollostation|コストコ|ヤマダデンキ|コーナン|無印良品|セリア|ユニクロ|Family\s*Mart|7.?Eleven|Lawson|AEON|Costco|Don.?Quijote|McDonald|Starbucks|Rakuten|楽天市場|Amazon|アマゾン|ヨドバシ|ビックカメラ|ヤフーショッピング|Yahoo!\s*ショッピング)/i;
+ const knownMerchant=/(?:業\s*務\s*ス\s*[ーｰ]\s*パ\s*[ーｰ]|セブン.?イレブン|ファミリーマート|ローソン|イオン|西友|ライフ|マックスバリュ|ツルハ|ウエルシア|スギ薬局|ダイソー|カインズ|ニトリ|ドン.?キホーテ|マツモトキヨシ|スターバックス|マクドナルド|コメダ|すき家|吉野家|コスモ石油|ENEOS|apollostation|コストコ|ヤマダデンキ|コーナン|無印良品|セリア|ユニクロ|Family\s*Mart|7.?Eleven|Lawson|AEON|Costco|Don.?Quijote|McDonald|Starbucks|Rakuten|楽天市場|Amazon|アマゾン|ヨドバシ|ビックカメラ|ヤフーショッピング|Yahoo!\s*ショッピング)/i;
  function findMerchant(lines,kind){
   if(!kind.trusted)return null;
   const first=lines.slice(0,12);

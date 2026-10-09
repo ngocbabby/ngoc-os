@@ -60,29 +60,92 @@
   if(!front||/^[^a-zA-Z\u3040-\u30ff\u3400-\u9fff]+$/.test(front))return null;
   return {name:front.slice(0,100),quantity,amount,category:categorize(front),confidence,source:"ocr"};
  }
+
+ // ぎょうむスーパー / 業務スーパー: JAN rows, product rows and separate 2コ×単100 ￥200 rows.
+ // COSTCO: item name followed by SKU, quantity, unit price, extended price, tax flag E.
+ const janRow=/^\s*[\d -]{8,17}\s*(?:JAN|JAM|JANコード)\s*$/i;
+ const endOfItems=/(?:^|[\s*＊※])(?:小\s*計|税\s*抜\s*計|合\s*計|総\s*合\s*計|お預り|お釣り|外\s*税\s*計|現\s*金\s*計|ご請求合計|TOTAL|SUBTOTAL|GRAND TOTAL|現金|お買上点数|お買上点数|ご利用合計)/i;
+ const value=t=>{
+  const x=normalize(t).replace(/[,.\s]/g,"");
+  return /^\d{1,9}$/.test(x)?Number(x):null;
+ };
+ function cleanProductName(text){
+  return normalize(text).replace(/^(?:0\d{4,7}|\d{5,8})\s*[※＊*]\s*/,"")
+   .replace(/^[※＊*・•\s]+/,"").replace(/\s*[¥￥]\s*$/,"").trim();
+ }
+ function amountQuantity(line){
+  const text=normalize(line);
+  let m=text.match(/^\s*(\d{1,2})\s*(?:コ|個|点|本|袋|枚|ヶ|パック|箱)?\s*[×Xx*]\s*(?:単価?|@)?\s*[¥￥]?\s*([\d,.]+)(?:\s*[¥￥]\s*([\d,.]+)|\s+([\d,.]+)\s*円?)?\s*$/);
+  if(!m)return null;
+  const quantity=Number(m[1]),unit=value(m[2]),printed=value(m[3]||m[4]);
+  if(quantity<1||quantity>99||!Number.isInteger(unit)||unit<=0)return null;
+  const total=Number.isInteger(printed)?printed:quantity*unit;
+  if(!Number.isSafeInteger(total)||total<=0||total>1_000_000_000)return null;
+  return {quantity,amount:total,unit,confidence:Number.isInteger(printed)?"medium":"low"};
+ }
+ function costcoRow(line){
+  const text=normalize(line).replace(/[◯○●◉・]/g,"@").replace(/[￥¥]/g,"");
+  // 78948  1@  688  688 E    |   98414 1@ 3,507 3,507 E
+  const m=text.match(/^\s*(\d{4,8})\s+(\d{1,2})\s*[@\s]\s*([\d,.]+)\s+([\d,.]+)\s*(?:[EeAabB])?\s*$/);
+  if(!m)return null;
+  const quantity=Number(m[2]),unit=value(m[3]),total=value(m[4]);
+  if(!Number.isInteger(unit)||!Number.isInteger(total)||quantity<1||quantity>99||total<1||total>1_000_000_000)return null;
+  return {quantity,amount:total,confidence:Math.abs(quantity*unit-total)<2?"high":"low"};
+ }
  function parseLineItems(lines,context={}){
-  const normalized=(Array.isArray(lines)?lines:String(lines||"").split("\n")).map(normalize).filter(Boolean);
+  const input=(Array.isArray(lines)?lines:String(lines||"").split("\n")).map(normalize).filter(Boolean);
   const merchant=normalize(context.merchant||"");
-  const results=[],seen=new Set();
-  let pending=null,foundLine=false;
-  for(let i=0;i<normalized.length&&results.length<maxItems;i++){
-   const line=normalized[i];
-   // Once totals start, the remaining lines are normally tax/payment/loyalty information.
-   if(standaloneTotal.test(line)&&foundLine)break;
-   if(totalOrAdjustment.test(line)||header.test(line)||line===merchant||line.length>115){pending=null;continue}
-   // Exclude prominent company headings and printed store names when they lack an explicit price.
-   if(/^[\s\-+=_#*]+$/.test(line)){pending=null;continue}
-   const candidate=itemFromLine(line,pending);
-   if(candidate){
-    const hash=candidate.name+"|"+candidate.quantity+"|"+candidate.amount;
-    // Ignore exact OCR line duplicates immediately adjacent; different identical purchases remain separate if distinct rows.
-    if(!seen.has(i+":"+hash)){results.push(candidate);seen.add(i+":"+hash)}
-    foundLine=true;pending=null;continue;
+  const isCostco=/costco|コストコ/i.test(merchant);
+  const rows=[],seen=new Set();
+  let pending=null,lastResultIndex=-1,lastItemRow=-4;
+  for(let i=0;i<input.length&&rows.length<maxItems;i++){
+   const line=input[i];
+   if(endOfItems.test(line)&&rows.length)break;
+   if(janRow.test(line)||/^\s*\d{11,14}\s*(?:JAN|JAM)?\s*$/i.test(line))continue;
+   if(totalOrAdjustment.test(line)||header.test(line)||line===merchant||line.length>125){
+    if(!/^\s*0?\d{5,8}\s*※/.test(line))pending=null;
+    continue;
    }
-   // One optional name-only line immediately before a standalone yen amount.
-   pending=(i>0&&line.length>=3&&line.length<=65&&/[a-zA-Z\u3040-\u30ff\u3400-\u9fff]/.test(line)&&!/\d{5,}/.test(line)&&!header.test(line))?line:null;
+   const countLine=amountQuantity(line);
+   if(countLine){
+    if(pending){
+     const item={name:pending,quantity:countLine.quantity,amount:countLine.amount,category:categorize(pending),confidence:countLine.confidence,source:"ocr"};
+     rows.push(item);lastResultIndex=rows.length-1;lastItemRow=i;pending=null;
+    }else if(lastResultIndex>=0&&i-lastItemRow<=3){
+     // Quantity details belong to the preceding item, not a second product.
+     rows[lastResultIndex].quantity=countLine.quantity;
+     rows[lastResultIndex].amount=countLine.amount;
+     rows[lastResultIndex].confidence="low";
+     lastItemRow=i;
+    }
+    continue;
+   }
+   const costco=costcoRow(line);
+   if(costco){
+    if(pending){
+     rows.push({name:pending,quantity:costco.quantity,amount:costco.amount,category:categorize(pending),confidence:costco.confidence,source:"ocr"});
+     lastResultIndex=rows.length-1;lastItemRow=i;pending=null;
+    }
+    continue;
+   }
+   const item=itemFromLine(line,null);
+   if(item){
+    const cleaned=cleanProductName(item.name);
+    if(!cleaned||!/[a-zA-Z\u3040-\u30ff\u3400-\u9fff]/.test(cleaned)){pending=null;continue}
+    item.name=cleaned;item.category=categorize(cleaned);
+    rows.push(item);lastResultIndex=rows.length-1;lastItemRow=i;pending=null;continue;
+   }
+   // Only save plausible product titles as candidates for a subsequent qty/price line.
+   const name=cleanProductName(line);
+   const mayBeName=name.length>=2&&name.length<=85&&
+    /[a-zA-Z\u3040-\u30ff\u3400-\u9fff]/.test(name)&&
+    !/^\s*(?:No|伝票|レジ|賞|チNo|クレジット|商品ID|カード会員|消費税|登録番号|電話|CARD|現金|BIZ\/GOLD|ご利用)/i.test(name)&&
+    !/^\d{4,}/.test(name)&&
+    !/^\s*(?:レジ|取引|店名|営業|ご注文)/.test(name)&&
+    (isCostco||/^\s*\d{4,8}\s*[※＊*]|^\s*[※＊*]/.test(line)||/[\u3040-\u30ff\u3400-\u9fff]{3,}/.test(name));
+   pending=mayBeName?name:null;
   }
-  return results;
+  return rows;
  }
  function validateItem(item){
   return !!item&&typeof item.name==="string"&&item.name.trim().length>=1&&item.name.trim().length<=100&&Number.isSafeInteger(item.quantity)&&item.quantity>=1&&item.quantity<=99&&Number.isSafeInteger(item.amount)&&item.amount>=0&&item.amount<=1_000_000_000&&categorySet.has(item.category);
