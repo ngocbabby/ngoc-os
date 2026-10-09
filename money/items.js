@@ -18,7 +18,7 @@
   return "other";
  }
  const totalOrAdjustment=/(?:合\s*計|総\s*計|ご利用金額|お\s*支\s*払|お買上金額|お買い上げ計|税込\s*計|総額|小\s*計|税抜|税額|消費税|内税|外税|税率|税|値引|割引|お値引|クーポン|ポイント|お\s*釣|お\s*つり|釣銭|お預|預り|おつり|支払|現金|カード|クレジット|電子マネー|決済|お支払い|レジ袋代合計|合計点数|商品点数|subtotal|grand\s*total|total|tax|change|discount|coupon|payment|cash\s*tendered)/i;
- const header=/(?:\b20\d{2}[\-/.\s年]\d{1,2}|令和\d{1,2}年|\b\d{1,2}:\d{2}\b|〒|電話|tel[:：\s]|fax|レシート|領収|伝票|レジ(?:No)?|取引|店番号|店舗番号|インボイス|適格|登録番号|お客様|お買い上げ|担当|営業時間|株式会社|合同会社|レジ|商品コード|バーコード|\/www\.|https?:|shop\s*name|receipt|thank\s*you|terminal|store\s*id|no[.:]\s*\d+)/i;
+ const header=/(?:\b20\d{2}[\-/.\s年]\d{1,2}|令和\d{1,2}年|\b\d{1,2}:\d{2}\b|〒|電話|tel[:：\s]|fax|レシート|領収|伝票|レジ(?:No)?|取引|店番号|店舗番号|インボイス|適格|登録番号|お客様|お買い上げ|担当|営業時間|株式会社|合同会社|レジ|商品コード|注文番号|注文日|請求額|請求金額|発行日|支払期限|バーコード|\/www\.|https?:|shop\s*name|receipt|thank\s*you|terminal|store\s*id|no[.:]\s*\d+)/i;
  const standaloneTotal=/^(?:合\s*計|小\s*計|総\s*合\s*計|お\s*支\s*払\s*金\s*額|税込(?:み)?合計|TOTAL|SUBTOTAL|GRAND TOTAL)/i;
  function rawAmount(t){
   const str=normalize(t).replace(/[￥]/g,"¥").replace(/\s+/g,"");
