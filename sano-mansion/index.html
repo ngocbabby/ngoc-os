@@ -65,6 +65,69 @@ main{padding:16px 12px 60px}.banner{background:#e7f4f4;border:1px solid #b4dddb;
 .d2-note{font-size:11px;color:#637b87;padding:0 12px 13px}
 @media(max-width:790px){#designerPanel{margin-top:12px}.d2-add{min-height:66px}.d2-presets button{min-height:56px}#viewport{height:min(60dvh,570px)}}
 
+
+/* INTERIOR VISUAL SYSTEM V3 */
+:root{--ink:#263e3b;--cream:#f8f6f0;--sage:#6e9682;--gold:#c89d61;--line:#dde7e4;--muted:#748481}
+body{background:linear-gradient(180deg,#f2f5f1 0%,#fcfaf6 450px,#f5f6f2 100%);color:#283b3a}
+header{background:linear-gradient(120deg,#193931,#355d4b 78%,#45694b);border-bottom:4px solid #d0b27a}
+h1,h2{letter-spacing:-.025em}h1{font-weight:850}.banner{border-radius:15px;background:#f9f6ec;border-color:#e6d9bd;color:#526153}
+.panel{border-color:#e3eae5;box-shadow:0 12px 38px #2b4d3411;border-radius:18px;background:#fffefd}
+.panel-h h2{font-size:20px}.tag{background:#e8f1e9;color:#376b4f}
+.tool{border-color:#d6e4dc;border-radius:12px;background:#fffefd;box-shadow:0 2px 5px #203e3210}
+.tool.primary{background:#315e49;border-color:#315e49}.tool.active{background:#e0f1e9;border-color:#79ad8e;color:#315e49}
+#designerPanel .panel-h{padding:18px 16px 14px;background:linear-gradient(125deg,#eaf2e8,#fff9ef 70%);border-bottom:1px solid #e6e7da}
+#designerPanel .panel-h h2{font-size:22px;color:#223e34;line-height:1.18}
+#designerPanel .panel-h p{color:#5a7167;font-size:13px}
+#designerPanel .panel-h .tag{background:#426d52;color:#fff}
+#designerPanel .d2-hint{margin:13px 13px 0!important;background:#fffaf0;border-color:#efe2bf;font-size:12px}
+.d2-presets{gap:9px;padding:14px 12px 8px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.d2-presets button{overflow:hidden;position:relative;display:flex;flex-direction:column;gap:2px;text-align:left;background:#fff;border-color:#dbe3dc;border-radius:14px;padding:7px;min-height:120px;box-shadow:0 4px 12px #1f432a0c;color:#2a4238;transition:box-shadow .18s,transform .18s}
+.d2-presets button.selected{color:#2f5d47;background:#eef6ef;border:2px solid #638e73;box-shadow:0 0 0 3px #d4e6d4}
+.d2-presets button.selected .d2-pill{color:#587060}
+.d2-presets button .d2-pill{color:#7f8c83;font-size:10px;font-weight:550}
+.d2-preview{width:100%;height:91px;object-fit:cover;border-radius:9px;background:#f0f1e8;border:1px solid #dfe5db;display:block}
+.d2-preview img{width:100%;height:100%;object-fit:cover;display:block}
+.d2-preset-name{font-size:12px;font-weight:850;line-height:1.12;margin:3px 2px 1px}
+.d2-presets button.selected .d2-preset-name{color:#315f49}
+.d2-furniture{z-index:5}
+.d2-obj{border:0;border-radius:10px;background:transparent!important;box-shadow:none;overflow:visible;isolation:isolate}
+.d2-obj .d2-art{position:absolute;inset:0;display:block;filter:drop-shadow(0 5px 5px #233d3533);border-radius:8px;pointer-events:none}
+.d2-obj .d2-art svg{width:100%;height:100%;display:block;pointer-events:none}
+.d2-obj .d2-object-size{position:absolute;bottom:-15px;left:50%;transform:translateX(-50%);display:block;white-space:nowrap;padding:4px 7px;border-radius:99px;color:#3c6550;background:#fdfefdeb;border:1px solid #d5e4da;box-shadow:0 2px 5px #18352320;font-size:10px;font-weight:800;text-shadow:none;line-height:1.2}
+.d2-obj:not(.is-selected) .d2-object-size{opacity:.85}
+.d2-obj.is-selected{border:0!important;box-shadow:0 0 0 5px #f1b962,0 0 0 8px #fff6dc,0 5px 17px #1b282b45;border-radius:14px}
+.d2-obj.is-bad:not(.is-selected){outline:3px dashed #df755c;outline-offset:2px}
+.d2-obj:active{cursor:grabbing}
+#d2-library{max-height:390px}.d2-add{border:1px solid #dbe6df;background:linear-gradient(135deg,#fffefa,#f5f8f2);border-radius:12px;min-height:74px}
+.d2-add:hover{border-color:#9bbba2}.d2-add strong{font-size:12px;color:#2a4a3b}.d2-add small{font-size:11px;color:#718778}
+.d2-section h3{color:#2b4a3d;font-size:16px}
+.d2-section{border-color:#e9eee8}
+.d2-tag{background:#eff3e9;color:#526b54}
+.d2-status{background:#eef6ef;color:#3f7650}
+.d2-quick{position:absolute;z-index:10;top:10px;left:10px;right:10px;display:flex;align-items:center;gap:6px;justify-content:space-between;pointer-events:none}
+.d2-quick>div{display:flex;gap:5px;pointer-events:auto;padding:5px;background:#fffdf7e8;border:1px solid #e3e5d9;border-radius:13px;box-shadow:0 7px 20px #123d2b30;backdrop-filter:blur(9px)}
+.d2-quick button{min-width:36px;min-height:38px;border:0;border-radius:9px;background:transparent;color:#35604b;font-size:12px;font-weight:850;padding:6px 9px}
+.d2-quick button.active{background:#3e765b;color:#fff}.d2-quick button.add{background:#3e765b;color:white}
+.d2-drawer{position:absolute;z-index:12;bottom:14px;left:10px;right:10px;max-height:65%;overflow-y:auto;background:#fffefa;box-shadow:0 12px 35px #183e2b63;border:1px solid #d3e1d5;border-radius:18px;padding:12px;display:none}
+.d2-drawer.open{display:block}.d2-drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;color:#234935;font-weight:850;font-size:14px}
+.d2-drawer-head button{border:0;border-radius:9px;background:#eef3ec;color:#345943;min-width:40px;min-height:38px;font-weight:800}
+.d2-drawer-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.d2-drawer-grid button{min-height:75px;border:1px solid #e1e6d9;background:#f9faf5;border-radius:10px;padding:6px;font-size:11px;font-weight:750;color:#385949;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px}
+.d2-drawer-grid button .tiny-art{width:53px;height:42px}.d2-drawer-grid button .tiny-art svg{width:100%;height:100%}
+.d2-floating{font-size:10px;background:#305d47dc;border-radius:9px;max-width:65%}
+.stage{background:repeating-conic-gradient(#f5f7f1 0% 25%,#eef2e9 0% 50%) 50% / 22px 22px;min-height:400px;height:min(67dvh,700px)}
+#d2-quality{margin:8px 12px;padding:9px 12px;border-radius:11px;background:#edf4ec;font-size:12px;line-height:1.5;color:#43614d;border:1px solid #d7e6d6}
+@media(max-width:520px){
+ .stage{min-height:420px;height:63dvh}
+ .d2-presets button{min-height:105px;padding:5px}
+ .d2-preview{height:64px}
+ .d2-preset-name{font-size:11px}
+ .d2-drawer-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .d2-quick button{min-width:33px;padding:5px 7px}
+ .d2-quick>div{gap:2px;padding:4px}
+ .d2-obj .d2-object-size{font-size:9px}
+}
+
 </style>
 </head>
 <body>
@@ -95,10 +158,11 @@ main{padding:16px 12px 60px}.banner{background:#e7f4f4;border:1px solid #b4dddb;
 <section class="panel" id="designerPanel">
  <div class="panel-h"><span class="tag">GIAI ĐOẠN 2 · ĐANG THIẾT KẾ</span><h2>🛋️ Kéo thả đồ trực tiếp trên mặt bằng</h2><p>Chạm món đồ để chọn, kéo để di chuyển. Vuốt vùng trống để xem sơ đồ. Giữ nền khóa; tất cả đồ là một lớp độc lập có thể xóa.</p></div>
  <div class="d2-hint" style="margin:10px 12px 0"><strong>⚠️ Chưa đo thực tế.</strong> Kích thước món đồ hiển thị bằng cm nhưng tỷ lệ quy đổi trên ảnh chỉ là <strong>ước lượng</strong>. Không đặt mua đồ theo hình này khi chưa đo cửa và tường.</div>
+ <div id="d2-quality">✨ <strong>Chế độ nội thất minh họa cao cấp:</strong> đồ được vẽ theo góc nhìn từ trên xuống với gối, chăn, màn hình PC, tủ, bàn, cây… Ảnh sơ đồ gốc vẫn giữ nguyên. Chạm một mẫu để xem toàn cảnh.</div>
  <div class="d2-presets" id="d2-presets">
-  <button data-preset="A" type="button">A · Tiết kiệm<span class="d2-pill">Nệm gấp, ít đồ</span></button>
-  <button data-preset="B" type="button">B · Lưu trữ<span class="d2-pill">Tủ, góc PC</span></button>
-  <button data-preset="C" type="button">C · Có em bé<span class="d2-pill">Chỗ ngủ riêng</span></button>
+  <button data-preset="A" type="button"><span class="d2-preview" id="d2-preview-A"></span><span class="d2-preset-name">A · Tiết kiệm</span><span class="d2-pill">Nệm gấp · ít đồ</span></button>
+  <button data-preset="B" type="button"><span class="d2-preview" id="d2-preview-B"></span><span class="d2-preset-name">B · Lưu trữ</span><span class="d2-pill">Tủ · góc PC</span></button>
+  <button data-preset="C" type="button"><span class="d2-preview" id="d2-preview-C"></span><span class="d2-preset-name">C · Gia đình</span><span class="d2-pill">Không gian em bé</span></button>
  </div>
  <div class="d2-actions">
   <button class="tool" id="d2-undo" type="button">↶ Hoàn tác</button>
@@ -287,7 +351,7 @@ const float=document.createElement('div');float.className='d2-floating';float.te
 const list=()=>plans[current];
 const get=()=>list().find(o=>o.id===selected);
 const before=()=>JSON.stringify(list());
-function record(prev){if(prev!==JSON.stringify(list())){const h=history[current];h.u.push(prev);if(h.u.length>45)h.u.shift();h.r=[];save();}render();}
+function record(prev){if(prev!==JSON.stringify(list())){const h=history[current];h.u.push(prev);if(h.u.length>45)h.u.shift();h.r=[];save();schedulePreviews();}render();}
 function change(fn){const b=before();fn();record(b);}
 function poly(o){
  const a=(o.rot||0)*Math.PI/180,c=Math.cos(a),s=Math.sin(a),hw=o.w*PX/2,hh=o.h*PX/2;
@@ -307,18 +371,76 @@ function warnings(){
  }
  return {errors:[...new Set(errors)],bad};
 }
+
+/* Self-contained top-view detailed furniture drawings. No external images/APIs. */
+function furnitureSvg(type){
+ const line='#70887a',wood='#d9b88b',w2='#efd9ad',cream='#fdf9ed',soft='#e1ede4',dark='#294b43';
+ const bg=(fill='#ebebe5')=>'<rect x="5" y="5" width="210" height="170" rx="17" fill="'+fill+'" stroke="#718675" stroke-width="4"/>';
+ const lineH=(y,color='#b7cabe')=>'<path d="M15 '+y+' H205" stroke="'+color+'" stroke-width="2" />';
+ const pillows='<rect x="26" y="23" width="73" height="35" rx="10" fill="#fffdf7" stroke="#cfd8ce" stroke-width="3"/><rect x="121" y="23" width="73" height="35" rx="10" fill="#fffdf7" stroke="#cfd8ce" stroke-width="3"/><path d="M37 48 Q62 53 89 46 M132 47 Q158 53 184 47" fill="none" stroke="#e0e8df" stroke-width="3"/>';
+ const linen='<rect x="15" y="71" width="190" height="88" rx="12" fill="#8eaba0"/><path d="M19 86 Q105 109 200 84 L200 157 Q111 165 18 156Z" fill="#e6eee8"/><path d="M23 107 Q111 122 199 105" fill="none" stroke="#b4c8bd" stroke-width="3"/><path d="M34 148 H186" stroke="#cadbd2" stroke-width="2"/>';
+ const draw={
+ fold:bg('#e7dfd0')+pillows+linen+'<path d="M14 70 H206 M14 121 H206" stroke="#7a9285" stroke-width="3" stroke-dasharray="10 7"/>',
+ mat:bg('#dfd8cc')+'<rect x="12" y="12" width="196" height="156" rx="14" fill="#f0f0e8" stroke="#b6bbb1" stroke-width="3"/>'+pillows+linen,
+ baby:bg('#ddb988')+'<rect x="18" y="18" width="184" height="144" rx="12" fill="#fcf9ee" stroke="#b18f63" stroke-width="7"/><rect x="35" y="37" width="150" height="106" rx="13" fill="#f0f4eb" stroke="#d4dfcc" stroke-width="3"/><path d="M29 22 V158 M191 22 V158" stroke="#b68e61" stroke-width="8" stroke-dasharray="8 14"/><path d="M40 32 H181 M40 150 H181" stroke="#b98e5e" stroke-width="5" stroke-dasharray="15 8"/>',
+ desk:bg('#ceaa78')+'<rect x="15" y="16" width="190" height="150" rx="13" fill="'+wood+'" stroke="#ab8054" stroke-width="3"/><path d="M23 58 H196 M23 123 H196" stroke="#b8915f" opacity=".45" stroke-width="2"/><rect x="47" y="25" width="126" height="80" rx="8" fill="'+dark+'" stroke="#152a27" stroke-width="5"/><rect x="53" y="31" width="114" height="68" rx="4" fill="#d3e7e3"/><path d="M62 84 L95 55 L120 76 L158 44" fill="none" stroke="#79a09a" stroke-width="5"/><rect x="74" y="113" width="85" height="23" rx="5" fill="#f7f4ed" stroke="#708982" stroke-width="3"/><path d="M81 120 H152 M81 127 H152" stroke="#c4d2cd" stroke-dasharray="6 3" stroke-width="3"/><ellipse cx="179" cy="127" rx="8" ry="12" fill="#faf9f2" stroke="#95aaa0" stroke-width="2"/><rect x="13" y="141" width="40" height="19" rx="4" fill="#38585b" stroke="#c4d5c7" stroke-width="3"/>',
+ chair:'<ellipse cx="110" cy="90" rx="91" ry="77" fill="#dee2db" stroke="#63796f" stroke-width="7"/><rect x="30" y="21" width="160" height="35" rx="18" fill="#516b65" stroke="#2f5149" stroke-width="5"/><ellipse cx="110" cy="101" rx="61" ry="51" fill="#8aada0" stroke="#57756b" stroke-width="7"/><ellipse cx="110" cy="90" rx="43" ry="28" fill="#afcabc" opacity=".7"/><rect x="25" y="70" width="22" height="71" rx="10" fill="#506e64"/><rect x="173" y="70" width="22" height="71" rx="10" fill="#506e64"/>',
+ fridge:bg('#e4ece9')+'<rect x="14" y="14" width="192" height="152" rx="13" fill="#fafcf9" stroke="#b4c4c2" stroke-width="4"/><path d="M20 104 H200" stroke="#bac7c3" stroke-width="5"/><rect x="175" y="35" width="7" height="42" rx="3" fill="#a1b9b1"/><rect x="175" y="121" width="7" height="28" rx="3" fill="#a1b9b1"/><rect x="27" y="29" width="105" height="54" rx="8" fill="#f2f6f4" opacity=".8"/>',
+ microwave:bg('#e3cba7')+'<rect x="23" y="20" width="174" height="111" rx="9" fill="#f7f3eb" stroke="#8a988c" stroke-width="5"/><rect x="38" y="32" width="129" height="85" rx="6" fill="#b6c8c9" stroke="#5d7374" stroke-width="5"/><path d="M55 94 L140 41" stroke="#e4f3f1" opacity=".65" stroke-width="7"/><circle cx="184" cy="57" r="8" fill="#5b766d"/><circle cx="184" cy="89" r="8" fill="#5b766d"/><rect x="25" y="136" width="170" height="27" rx="4" fill="#c6a477"/><circle cx="110" cy="148" r="6" fill="#e9dfce"/>',
+ table:bg('#d2b088')+'<rect x="15" y="14" width="190" height="152" rx="19" fill="#e8cda4" stroke="#b1895b" stroke-width="5"/><path d="M24 37 Q110 44 192 38 M27 147 Q108 139 195 150" stroke="#c4a273" fill="none" stroke-width="3"/><circle cx="64" cy="82" r="32" fill="#f9faf5" stroke="#bac9bb" stroke-width="4"/><circle cx="153" cy="87" r="31" fill="#f9faf5" stroke="#bac9bb" stroke-width="4"/><circle cx="64" cy="82" r="21" fill="#f3efe0"/><circle cx="153" cy="87" r="21" fill="#f3efe0"/><rect x="106" y="23" width="9" height="28" rx="4" fill="#d8a86c"/><path d="M108 132 h12" stroke="#9c7859" stroke-width="8"/>',
+ rack:bg('#dbbc90')+'<rect x="16" y="24" width="188" height="128" rx="7" fill="#ecd2ac" stroke="#a9865c" stroke-width="5"/><path d="M79 27 V149 M143 27 V149" stroke="#bda079" stroke-width="4"/><rect x="27" y="37" width="42" height="96" rx="4" fill="#f6e7ca"/><rect x="90" y="36" width="42" height="96" rx="4" fill="#eadabf"/><rect x="152" y="36" width="42" height="96" rx="4" fill="#f9efda"/><path d="M45 55 V112 M110 55 V112 M173 55 V112" stroke="#bd9e73" stroke-width="4" stroke-linecap="round"/>',
+ wardrobe:bg('#e1bd8c')+'<rect x="15" y="15" width="190" height="150" rx="7" fill="#e4c59a" stroke="#9b7851" stroke-width="6"/><path d="M111 15 V165 M22 40 H199 M22 139 H199" stroke="#b79469" stroke-width="4"/><path d="M99 73 V108 M122 73 V108" stroke="#9c7c52" stroke-width="5" stroke-linecap="round"/><path d="M40 20 V160 M184 20 V160" stroke="#f8e1b6" opacity=".6" stroke-width="5"/>',
+ dry:'<rect x="16" y="24" width="188" height="131" rx="8" fill="#e1f2f0aa" stroke="#7da69d" stroke-width="5"/><path d="M26 36 H194 M26 79 H194 M26 124 H194" stroke="#587f78" stroke-width="6"/><path d="M48 43 V68 M90 43 V68 M140 86 V113 M178 86 V113" stroke="#7b998b" stroke-width="4"/><path d="M42 50 L53 45 L64 52 L64 65 L42 65Z M84 49 L100 46 L110 55 L110 67 L82 67Z" fill="#f5e3be" stroke="#d0ad7f" stroke-width="2"/><path d="M135 93 L150 87 L167 94 L167 113 L135 113Z" fill="#d0dfe9" stroke="#93afb8" stroke-width="2"/>',
+ curtain:'<rect x="10" y="30" width="200" height="120" rx="4" fill="#f2efed" stroke="#b7b0b4" stroke-width="3"/><path d="M25 35 Q34 82 25 146 M55 35 Q64 82 55 146 M85 35 Q94 82 85 146 M115 35 Q124 82 115 146 M145 35 Q154 82 145 146 M175 35 Q184 82 175 146" stroke="#cabdc8" stroke-width="7" opacity=".7" fill="none"/><path d="M10 32 H210" stroke="#7f8782" stroke-width="7"/>',
+ shelf:bg('#d5ad7f')+'<rect x="15" y="18" width="190" height="144" rx="7" fill="#f0d7b4" stroke="#a98257" stroke-width="5"/><path d="M20 84 H200" stroke="#b89875" stroke-width="5"/><circle cx="58" cy="48" r="23" fill="#fbf8ee" stroke="#9aaca1" stroke-width="4"/><circle cx="58" cy="48" r="15" fill="#b3d5ba"/><circle cx="134" cy="52" r="22" fill="#cfb3a5" stroke="#815f54" stroke-width="4"/><rect x="30" y="105" width="47" height="39" rx="6" fill="#f1f0e7" stroke="#abb7a6" stroke-width="4"/><rect x="94" y="100" width="25" height="42" rx="6" fill="#d5dba7"/><rect x="135" y="98" width="34" height="46" rx="6" fill="#a8bfa7"/>',
+ drawers:bg('#e2c5a0')+'<rect x="15" y="15" width="190" height="150" rx="9" fill="#e8d0ae" stroke="#a38668" stroke-width="6"/><path d="M20 66 H200 M20 114 H200" stroke="#ae9071" stroke-width="5"/><path d="M96 38 H122 M96 86 H122 M96 137 H122" stroke="#9d846d" stroke-width="7" stroke-linecap="round"/>',
+ playmat:bg('#dce7cf')+'<rect x="14" y="14" width="192" height="152" rx="12" fill="#f3ebd5" stroke="#d0d6be" stroke-width="4"/><rect x="25" y="25" width="80" height="62" fill="#cee0d1" rx="7"/><rect x="113" y="25" width="79" height="62" fill="#ebdfbe" rx="7"/><rect x="25" y="96" width="80" height="58" fill="#e3d6cf" rx="7"/><rect x="113" y="96" width="79" height="58" fill="#d4dde7" rx="7"/><path d="M61 49 h15 v15 H61Z M140 52 L155 43 L170 52 L162 64 L145 64Z" fill="#fff9e9" stroke="#c7c3a7" stroke-width="2"/><circle cx="66" cy="123" r="14" fill="#f8f2de"/><path d="M138 134 Q153 107 177 134" fill="none" stroke="#f8f2de" stroke-width="6"/>',
+ babycart:'<rect x="35" y="15" width="150" height="150" rx="20" fill="#b6c7b6" stroke="#7c9884" stroke-width="5"/><rect x="48" y="28" width="124" height="125" rx="13" fill="#e7f0e3"/><circle cx="77" cy="65" r="21" fill="#f8f5e4" stroke="#a9bfa9" stroke-width="3"/><rect x="114" y="43" width="32" height="49" rx="8" fill="#eccdb0" stroke="#b49b82" stroke-width="3"/><rect x="60" y="109" width="104" height="22" rx="8" fill="#b3c8b1"/>',
+ plant:'<circle cx="110" cy="90" r="76" fill="#bb9b77" stroke="#7d6e52" stroke-width="6"/><circle cx="110" cy="90" r="61" fill="#5c6950"/><ellipse cx="87" cy="70" rx="32" ry="57" fill="#6c986d" transform="rotate(-36 87 70)"/><ellipse cx="130" cy="70" rx="32" ry="55" fill="#86aa74" transform="rotate(32 130 70)"/><ellipse cx="94" cy="118" rx="30" ry="52" fill="#426f54" transform="rotate(42 94 118)"/><ellipse cx="140" cy="116" rx="27" ry="45" fill="#a1b77c" transform="rotate(-39 140 116)"/><circle cx="113" cy="95" r="9" fill="#dbe3ab"/>',
+ washer:bg('#e4ebe7')+'<rect x="19" y="18" width="182" height="144" rx="10" fill="#fafdf9" stroke="#9eaaa5" stroke-width="5"/><circle cx="110" cy="98" r="57" fill="#e0e8e5" stroke="#6b8b83" stroke-width="8"/><circle cx="110" cy="98" r="40" fill="#a5c2bf"/><path d="M79 109 Q104 78 141 111 M77 122 Q114 86 148 124" fill="none" stroke="#e7f4ec" stroke-width="8"/><circle cx="41" cy="34" r="7" fill="#7a9b91"/><rect x="158" y="29" width="25" height="10" rx="4" fill="#99b3a6"/>'
+ };
+ return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 180" preserveAspectRatio="none" aria-hidden="true">'
+ +'<rect x="2" y="3" width="216" height="174" rx="18" fill="#708777" opacity=".10"/>'
+ +(draw[type]||bg())+'</svg>';
+}
+function artElement(type){const art=document.createElement('div');art.className='d2-art';art.innerHTML=furnitureSvg(type);return art;}
+function asSvgImg(type){return new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>resolve(image);image.onerror=reject;image.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(furnitureSvg(type));});}
+const artCache=new Map();
+function artImage(type){if(!artCache.has(type))artCache.set(type,asSvgImg(type));return artCache.get(type);}
+function drawDecorObject(cx,o,img){
+ cx.save();cx.translate(o.x,o.y);cx.rotate(o.rot*Math.PI/180);
+ cx.drawImage(img,-o.w*PX/2,-o.h*PX/2,o.w*PX,o.h*PX);cx.restore();
+}
+async function drawDecorSet(cx,items){await Promise.all(items.map(async o=>{try{const img=await artImage(o.type);return {o,img}}catch(e){return null}})).then(arr=>{for(const a of arr){if(a)drawDecorObject(cx,a.o,a.img)}})}
+let previewsPending=false;
+async function refreshPreviews(){
+ if(previewsPending)return;previewsPending=true;
+ try{
+  const source=E('floorplan');if(!source.complete||!source.naturalWidth){await new Promise(resolve=>{source.addEventListener('load',resolve,{once:true});setTimeout(resolve,4000)})}
+  for(const key of ['A','B','C']){
+    const root=E('d2-preview-'+key);if(!root)continue;
+    const c=document.createElement('canvas');c.width=280;c.height=194;
+    const cx=c.getContext('2d');cx.fillStyle='#f6f3eb';cx.fillRect(0,0,c.width,c.height);
+    cx.save();cx.scale(c.width/W,c.height/H);if(source.complete&&source.naturalWidth)cx.drawImage(source,0,0,W,H);
+    await drawDecorSet(cx,plans[key]);
+    cx.restore();
+    root.replaceChildren(c);
+    c.style.width='100%';c.style.height='100%';c.style.objectFit='cover';
+  }
+ }finally{previewsPending=false;}
+}
+let previewTimer=null;
+function schedulePreviews(){if(previewTimer)clearTimeout(previewTimer);previewTimer=setTimeout(refreshPreviews,130);}
+
 function itemRender(o,bad){
- const c=catalog[o.type];const el=document.createElement('div');el.className='d2-obj'+(selected===o.id?' is-selected':'')+(bad.has(o.id)?' is-bad':'');el.dataset.obj=o.id;
- const info=E('viewport').getBoundingClientRect(); // reserved for consistent Android layout
+ const c=catalog[o.type],el=document.createElement('div');
+ el.className='d2-obj'+(selected===o.id?' is-selected':'')+(bad.has(o.id)?' is-bad':'');el.dataset.obj=o.id;
  el.style.left=(o.x-o.w*PX/2)+'px';el.style.top=(o.y-o.h*PX/2)+'px';
  el.style.width=(o.w*PX)+'px';el.style.height=(o.h*PX)+'px';el.style.transform='rotate('+o.rot+'deg)';
- el.style.background=c.color;el.style.zIndex=selected===o.id?'99':'7';
- const ic=document.createElement('span');ic.className='f-icon';ic.textContent=c.i;
- const nm=document.createElement('span');nm.className='f-name';nm.textContent=c.n;
- const sz=document.createElement('span');sz.className='f-size';sz.textContent=o.w+'×'+o.h+' cm';
- el.append(ic,nm,sz);if(Math.min(o.w,o.h)<45){nm.style.display='none';sz.style.display='none';ic.style.fontSize='20px';}
- el.addEventListener('pointerdown',startObject);
- return el;
+ el.style.zIndex=selected===o.id?'99':'7';el.title=c.n+' · '+o.w+' × '+o.h+' cm (ước lượng)';
+ el.appendChild(artElement(o.type));
+ const dim=document.createElement('span');dim.className='d2-object-size';dim.textContent=o.w+' × '+o.h+' cm';el.appendChild(dim);
+ el.addEventListener('pointerdown',startObject);return el;
 }
 function render(){
  const check=warnings();layer.replaceChildren(...list().map(o=>itemRender(o,check.bad)));
@@ -335,6 +457,7 @@ function render(){
  E('d2-suit').textContent=rows[current].suit;
  E('d2-analysis').innerHTML='<strong>Ưu điểm:</strong> '+rows[current].pros+'<p><strong>Nhược điểm:</strong> '+rows[current].cons+'</p><p><strong>Khi có bé:</strong> '+rows[current].baby+'</p><p><strong>Ẩm / tiếng ồn / lối đi:</strong> '+rows[current].risk+'</p>';
  E('d2-snap').textContent=snap?'▦ Căn nhẹ: bật':'▦ Căn nhẹ: tắt';
+ document.querySelectorAll('[data-quick-preset]').forEach(b=>b.classList.toggle('active',b.dataset.quickPreset===current));
 }
 let dragging=null;
 function startObject(e){
@@ -387,22 +510,43 @@ E('d2-file').onchange=async function(e){const file=e.target.files&&e.target.file
  }));
  plans=parsed;current=['A','B','C'].includes(data.current)?data.current:'A';selected=null;for(const h of Object.values(history)){h.u=[];h.r=[];}save();render();
  }catch(err){alert('Không thể đọc bản thiết kế: '+err.message)}finally{this.value=''}};
-E('d2-png').onclick=()=>{
+E('d2-png').onclick=async()=>{
+ const button=E('d2-png');button.disabled=true;button.textContent='Đang dựng ảnh đẹp...';
+ try{
  const out=document.createElement('canvas');out.width=W;out.height=H;const cx=out.getContext('2d');
- try{cx.drawImage(E('floorplan'),0,0,W,H)}catch(err){alert('Chưa thể xuất ảnh. Hãy chọn “Ảnh gốc” rồi thử lại.');return;}
- list().forEach(o=>{
- const c=catalog[o.type];cx.save();cx.translate(o.x,o.y);cx.rotate(o.rot*Math.PI/180);
- cx.fillStyle=c.color;cx.strokeStyle='#254f5b';cx.lineWidth=4;
- cx.beginPath();cx.roundRect(-o.w*PX/2,-o.h*PX/2,o.w*PX,o.h*PX,10);cx.fill();cx.stroke();
- cx.rotate(-o.rot*Math.PI/180);cx.textAlign='center';cx.textBaseline='middle';
- cx.fillStyle='#17323d';cx.font='bold 17px Arial,sans-serif';cx.fillText(c.n,0,-10,Math.max(80,o.w*PX-15));
- cx.font='14px Arial,sans-serif';cx.fillText(o.w+'×'+o.h+' cm*',0,14);
- cx.restore();
- });
- cx.fillStyle='#ffffffed';cx.fillRect(24,18,488,62);cx.fillStyle='#1e4754';cx.font='bold 21px Arial';cx.fillText('Sano Mansion — Mẫu '+current+' / '+rows[current].title,40,44);
- cx.font='16px Arial';cx.fillText('* Kích thước vị trí trên sơ đồ chưa xác minh',40,69);
- out.toBlob(blob=>blob?saveBlob('sano-mansion-mau-'+current+'.png',blob):alert('Xuất PNG không thành công'),'image/png');
+ if(!E('floorplan').complete||!E('floorplan').naturalWidth)throw new Error('Sơ đồ nền chưa sẵn sàng');
+ cx.drawImage(E('floorplan'),0,0,W,H);
+ await drawDecorSet(cx,list());
+ cx.fillStyle='#fffffff0';cx.fillRect(22,13,610,66);
+ cx.fillStyle='#345b45';cx.font='bold 23px Arial';cx.fillText('SANO MANSION · PHƯƠNG ÁN '+current,36,41);
+ cx.fillStyle='#6b786d';cx.font='16px Arial';cx.fillText('Bản minh họa 2D · tỉ lệ nội thất chưa đo thực tế',36,67);
+ out.toBlob(blob=>blob?saveBlob('sano-mansion-mau-'+current+'-2D-dep.png',blob):alert('Không thể xuất PNG'),'image/png');
+ }catch(e){alert('Không thể xuất ảnh: '+e.message)}finally{button.disabled=false;button.textContent='↓ Xuất PNG có đồ';}
 };
+
+/* Floating quick-edit palette remains visible while viewing the floorplan. */
+const quick=document.createElement('div');quick.className='d2-quick';
+quick.innerHTML='<div><button type="button" data-quick-preset="A">A</button><button type="button" data-quick-preset="B">B</button><button type="button" data-quick-preset="C">C</button></div><div><button type="button" class="add" id="d2-openPalette">＋ Thêm đồ</button></div>';
+E('viewport').appendChild(quick);
+quick.querySelectorAll('[data-quick-preset]').forEach(b=>b.onclick=()=>{const target=document.querySelector('[data-preset="'+b.dataset.quickPreset+'"]');if(target)target.click()});
+const drawer=document.createElement('div');drawer.className='d2-drawer';drawer.innerHTML='<div class="d2-drawer-head"><span>🪄 Thêm đồ vào căn hộ</span><button type="button" id="d2-closePalette" aria-label="Đóng danh sách đồ">✕</button></div><div class="d2-drawer-grid"></div>';E('viewport').appendChild(drawer);
+Object.keys(catalog).forEach((type,i)=>{
+const c=catalog[type];const b=document.createElement('button');b.type='button';
+const art=document.createElement('span');art.className='tiny-art';art.innerHTML=furnitureSvg(type);
+const textSpan=document.createElement('span');textSpan.textContent=c.n;b.append(art,textSpan);
+b.onclick=()=>{const src=E('d2-library').children[i];if(src)src.click();drawer.classList.remove('open')};drawer.querySelector('.d2-drawer-grid').appendChild(b);
+});
+E('d2-openPalette').onclick=()=>drawer.classList.toggle('open');
+E('d2-closePalette').onclick=()=>drawer.classList.remove('open');
+E('viewport').addEventListener('pointerdown',e=>{if(!drawer.contains(e.target)&&!quick.contains(e.target))drawer.classList.remove('open')});
+document.querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click',schedulePreviews));
+E('d2-undo').addEventListener('click',schedulePreviews);
+E('d2-redo').addEventListener('click',schedulePreviews);
+E('d2-import').addEventListener('click',schedulePreviews);
+E('d2-reset').addEventListener('click',schedulePreviews);
+E('floorplan').addEventListener('load',schedulePreviews);
+schedulePreviews();
+
 E('savePngBtn').textContent='↓ PNG mặt bằng + đồ';E('savePngBtn').onclick=()=>E('d2-png').click();
 document.querySelector('.eyebrow').textContent='SANO MANSION · THIẾT KẾ NỘI THẤT 2D TƯƠNG TÁC';
 document.querySelector('h1').textContent='Thiết kế nội thất · Giai đoạn 2';
