@@ -279,6 +279,7 @@ try{const v=JSON.parse(localStorage.getItem(STORAGE)||'null');if(v&&v.version===
  w:Math.max(10,Math.min(400,+o.w||catalog[o.type].w)),h:Math.max(10,Math.min(400,+o.h||catalog[o.type].h)),
  rot:(+o.rot||0)%360
  }));}current=['A','B','C'].includes(v.current)?v.current:'A';}}catch(err){}
+nextId=Math.max(nextId,1+Math.max(0,...Object.values(plans).flat().map(o=>{const m=/^o(\d+)$/.exec(o.id);return m?Number(m[1]):0;})));
 const save=()=>{try{localStorage.setItem(STORAGE,JSON.stringify({version:2,plans,current})) ;E('d2-saveState').textContent='✓ Đã lưu tự động trên Chrome này. Xuất JSON để sao lưu và chuyển thiết bị.'}catch(e){E('d2-saveState').textContent='⚠️ Bộ nhớ trình duyệt không ghi được; hãy xuất JSON để giữ bản thiết kế.'}};
 const history={A:{u:[],r:[]},B:{u:[],r:[]},C:{u:[],r:[]}};
 const layer=document.createElement('div');layer.className='d2-furniture';layer.id='d2-layer';E('canvas').appendChild(layer);
