@@ -20,6 +20,51 @@ main{padding:16px 12px 60px}.banner{background:#e7f4f4;border:1px solid #b4dddb;
 @media(max-width:790px){main{padding:10px 8px 45px}.page-grid{grid-template-columns:1fr}.panel-h{padding:13px}.toolbar{padding:9px;gap:6px}.tool{padding:7px 10px}.stage{height:min(57vh,515px);min-height:340px}.photo-list{grid-template-columns:repeat(3,minmax(0,1fr))}.review{padding:12px}}
 @media(max-width:360px){.tool{font-size:12px;padding:7px 8px}.toolbar{gap:5px}.photo-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media print{header, .toolbar,.hintbar,.items,.review button,.footeractions{display:none}.stage{height:500px}.page-grid{display:block}.panel{box-shadow:none}}
+
+/* Phase 2 - independent mobile designer */
+#designerPanel{margin-top:13px}#designerPanel .panel-h{background:#f7fbfc}
+.d2-actions{display:flex;gap:7px;flex-wrap:wrap;padding:11px 12px;border-bottom:1px solid #e3eef1}
+.d2-actions .tool{font-size:12px;padding:8px 10px}
+.d2-presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:11px 12px 5px}
+.d2-presets button{min-height:50px;border-radius:11px;border:1px solid #cddfe4;background:#fff;padding:6px 5px;font-weight:760;color:#35515e;font-size:12px}
+.d2-presets button.selected{background:#137e91;color:#fff;border-color:#137e91}
+.d2-pill{font-size:11px;color:#5e7380;display:block;margin-top:3px;font-weight:500}
+.d2-presets button.selected .d2-pill{color:#e4fbff}
+.d2-section{padding:12px;border-bottom:1px solid #edf2f4}
+.d2-section h3{font-size:15px;margin:0 0 8px}
+.d2-section p{font-size:12px;color:#587080;line-height:1.55;margin:6px 0 10px}
+.d2-hint{padding:10px 12px;background:#fff8e8;color:#7b561d;border:1px solid #f1deaf;border-radius:9px;font-size:12px;line-height:1.6}
+.d2-library{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;max-height:355px;overflow-y:auto}
+.d2-add{border:1px solid #dae6e9;border-radius:10px;background:white;min-height:65px;text-align:left;padding:8px 10px;font-size:12px;color:#264651}
+.d2-add strong,.d2-add small{display:block}.d2-add small{margin-top:4px;color:#73838a}
+.d2-fields{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:9px 0}
+.d2-fields label{display:flex;flex-direction:column;gap:5px;font-size:12px;color:#5e7380}
+.d2-fields input,.d2-fields select{min-height:42px;max-width:100%;font-size:15px;padding:8px;border:1px solid #c9dadd;border-radius:9px;background:white;color:#132f39}
+.d2-status{font-size:12px;background:#eaf7f3;border-radius:8px;padding:9px;line-height:1.55;color:#216253}
+.d2-alerts{padding:10px 12px 11px;display:grid;gap:6px}
+.d2-alert{background:#fff0ec;border:1px solid #f2c3b7;color:#803e2b;border-radius:8px;padding:9px 10px;font-size:12px;line-height:1.5}
+.d2-score{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:9px 0}
+.d2-tag{background:#edf4f6;color:#355765;border-radius:6px;padding:6px 8px;font-size:11px}
+.d2-reco{font-size:12px;line-height:1.62;color:#385461}
+.d2-reco strong{color:#173941}
+.d2-furniture{position:absolute;inset:0;pointer-events:none;z-index:5}
+.d2-obj{position:absolute;display:flex;align-items:center;justify-content:center;flex-direction:column;border:2.5px solid #2f5560;box-shadow:0 3px 10px #0e25273a;border-radius:8px;color:#172f3b;touch-action:none;pointer-events:auto;user-select:none;cursor:grab;overflow:visible}
+.d2-obj span{display:block;text-align:center;line-height:1.12;max-width:95%;word-wrap:break-word;pointer-events:none;text-shadow:0 1px #ffffffae}
+.d2-obj .f-icon{font-size:27px;line-height:1.25}
+.d2-obj .f-name{font-size:12px;font-weight:800}
+.d2-obj .f-size{font-size:10px;background:#fffffff0;padding:2px 4px;border-radius:4px;margin-top:3px;font-variant-numeric:tabular-nums}
+.d2-obj.is-selected{border:4px solid #ff941c;box-shadow:0 0 0 6px #ffcf8b9e,0 5px 12px #1b282b45;z-index:99!important}
+.d2-obj.is-bad{border-color:#d54737}
+.d2-obj:active{cursor:grabbing}
+.d2-object-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.d2-object-list button{border:1px solid #d9e5e8;padding:7px 8px;min-height:36px;border-radius:8px;background:white;font-size:11px;color:#3b5b68}
+.d2-object-list button.sel{border-color:#e69222;background:#fff5e3;color:#8a5a0a}
+#d2-inspector[hidden]{display:none}
+.d2-floating{position:absolute;bottom:12px;left:10px;z-index:8;background:#082f3edc;color:#fff;padding:8px 10px;border-radius:9px;font-size:11px;pointer-events:none;max-width:85%}
+.d2-swatches{font-size:11px;letter-spacing:.01em;color:#516c79;margin-top:8px}
+.d2-note{font-size:11px;color:#637b87;padding:0 12px 13px}
+@media(max-width:790px){#designerPanel{margin-top:12px}.d2-add{min-height:66px}.d2-presets button{min-height:56px}#viewport{height:min(60dvh,570px)}}
+
 </style>
 </head>
 <body>
@@ -46,6 +91,67 @@ main{padding:16px 12px 60px}.banner{background:#e7f4f4;border:1px solid #b4dddb;
 </div>
 <div class="hintbar"><span>🔎 <strong id="zoomLabel">100%</strong> so với tỷ lệ ảnh vừa màn hình</span><span class="kbd">Lưới chỉ để định hướng, không tương ứng cm</span></div>
 </section>
+
+<section class="panel" id="designerPanel">
+ <div class="panel-h"><span class="tag">GIAI ĐOẠN 2 · ĐANG THIẾT KẾ</span><h2>🛋️ Kéo thả đồ trực tiếp trên mặt bằng</h2><p>Chạm món đồ để chọn, kéo để di chuyển. Vuốt vùng trống để xem sơ đồ. Giữ nền khóa; tất cả đồ là một lớp độc lập có thể xóa.</p></div>
+ <div class="d2-hint" style="margin:10px 12px 0"><strong>⚠️ Chưa đo thực tế.</strong> Kích thước món đồ hiển thị bằng cm nhưng tỷ lệ quy đổi trên ảnh chỉ là <strong>ước lượng</strong>. Không đặt mua đồ theo hình này khi chưa đo cửa và tường.</div>
+ <div class="d2-presets" id="d2-presets">
+  <button data-preset="A" type="button">A · Tiết kiệm<span class="d2-pill">Nệm gấp, ít đồ</span></button>
+  <button data-preset="B" type="button">B · Lưu trữ<span class="d2-pill">Tủ, góc PC</span></button>
+  <button data-preset="C" type="button">C · Có em bé<span class="d2-pill">Chỗ ngủ riêng</span></button>
+ </div>
+ <div class="d2-actions">
+  <button class="tool" id="d2-undo" type="button">↶ Hoàn tác</button>
+  <button class="tool" id="d2-redo" type="button">↷ Làm lại</button>
+  <button class="tool" id="d2-reset" type="button">↺ Đặt lại mẫu</button>
+  <button class="tool" id="d2-snap" type="button">▦ Căn nhẹ: tắt</button>
+ </div>
+ <div class="d2-section">
+  <h3>➕ Thêm nội thất</h3>
+  <div class="d2-library" id="d2-library"></div>
+  <p>Nhấn món đồ để thêm vào giữa khu phòng phù hợp. Sau đó kéo trên ảnh, chọn và chỉnh kích thước bên dưới.</p>
+ </div>
+ <div class="d2-section" id="d2-inspector" hidden>
+   <h3>🖐️ Món đang chọn: <span id="d2-selname"></span></h3>
+   <div class="d2-fields">
+    <label>Rộng (cm, ước lượng)<input type="number" id="d2-w" min="10" max="400" step="5" inputmode="numeric"></label>
+    <label>Dài / sâu (cm, ước lượng)<input type="number" id="d2-h" min="10" max="400" step="5" inputmode="numeric"></label>
+   </div>
+   <div class="d2-actions" style="padding:0 0 8px;border:none">
+    <button class="tool" id="d2-rotm" type="button">⟲ −90°</button>
+    <button class="tool" id="d2-rotp" type="button">⟳ +90°</button>
+    <button class="tool" id="d2-copy" type="button">⧉ Sao chép</button>
+    <button class="tool warn" id="d2-delete" type="button">✕ Xóa</button>
+   </div>
+   <p id="d2-spotinfo"></p>
+  </div>
+ <div class="d2-section">
+  <h3>Đồ đang có trong mẫu <span id="d2-currentLabel">A</span> · <span id="d2-count">0</span> món</h3>
+  <div class="d2-object-list" id="d2-objectList"></div>
+ </div>
+ <div class="d2-section">
+   <h3>📋 Đánh giá phương án</h3>
+   <div class="d2-score"><span class="d2-tag" id="d2-total"></span><span class="d2-tag" id="d2-suit"></span></div>
+   <div id="d2-analysis" class="d2-reco"></div>
+   <p class="d2-swatches">Chi phí là khoảng tham khảo tại Nhật (¥), không phải báo giá. Chưa gồm vận chuyển/lắp đặt và đồ cố định của nhà.</p>
+ </div>
+ <div class="d2-section">
+  <h3>🚧 Cảnh báo bố trí <span id="d2-warningCount"></span></h3>
+  <div id="d2-warnings" class="d2-alerts"></div>
+  <p>Kiểm tra chồng lấn theo hình học, vùng cửa và bếp chỉ là <b>gợi ý</b> vì chưa có kích thước tường/cửa thực. Không xác nhận lối thoát hiểm đạt chuẩn.</p>
+ </div>
+ <div class="d2-section">
+  <h3>💾 Lưu và chia sẻ</h3>
+  <div class="d2-actions" style="padding:0;border:0">
+   <button class="tool primary" id="d2-png" type="button">↓ Xuất PNG có đồ</button>
+   <button class="tool" id="d2-export" type="button">↓ Lưu 3 mẫu (JSON)</button>
+   <button class="tool" id="d2-import" type="button">↑ Mở bản đã lưu</button>
+   <input type="file" id="d2-file" accept=".json,application/json" hidden>
+  </div>
+  <p id="d2-saveState" class="d2-status">Các thay đổi lưu tự động trên trình duyệt hiện tại. Xuất JSON để chuyển sang máy khác hoặc tránh mất dữ liệu khi xóa cache.</p>
+ </div>
+</section>
+
 <section class="panel" style="margin-top:13px"><div class="panel-h"><h2>Ảnh thực tế HOME’S để đối chiếu</h2><p>9 ảnh cắt từ các ảnh chụp màn hình bạn gửi. Chỉ dùng tham khảo; góc máy và phối cảnh không dùng làm thước đo.</p></div><div class="photo-list" id="photos"></div></section>
 <section class="panel" style="margin-top:13px"><details class="extra"><summary>📏 Nhập số đo thật (không bắt buộc)</summary><p style="font-size:12px;color:#69818b;margin:5px 0">Để trống nếu chưa đo. Mọi số đo nhập thủ công chỉ được xem là xác minh nếu bạn đã đo trực tiếp hoặc được môi giới cung cấp.</p><div class="fields" id="measureFields"></div></details></section>
 </div>
@@ -118,4 +224,191 @@ $('reportBtn').onclick=()=>{const payload={version:'sano-phase1-v1',createdAt:ne
 $('copyBtn').onclick=async()=>{try{await navigator.clipboard.writeText(reportText());alert('Đã sao chép nội dung. Dán vào cuộc trò chuyện ChatGPT để duyệt Giai đoạn 1.')}catch(e){const ta=document.createElement('textarea');ta.value=reportText();document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();if(ok)alert('Đã sao chép nội dung kiểm tra.');else download('Sano-Mansion-nhan-xet.txt',new Blob([reportText()],{type:'text/plain;charset=utf-8'}))}};
 window.addEventListener('resize',()=>{const ratio=scale/fitScale;fit();if(ratio>1.01){const r=viewport.getBoundingClientRect();zoomAt(Math.min(9,ratio),r.width/2,r.height/2)}});
 spots();setPhotoList();loadImage(originalSrc,W,H);select('bed');
+</script><script>
+(function(){
+'use strict';
+const D={};
+const E=id=>document.getElementById(id);
+const cloned=o=>JSON.parse(JSON.stringify(o));
+const STORAGE='sano-stage2-plans-v2';
+const PX=1.65; // purely visual tentative scale: 1 cm = 1.65 image px
+const zones={bedroom:{x:528,y:39,w:707,h:435},ldk:{x:188,y:516,w:1047,h:428},balcony:{x:1290,y:505,w:145,h:334}};
+const exclusions=[
+ {name:'khu bếp cố định',x:395,y:831,w:402,h:132},
+ {name:'cửa chính / genkan',x:176,y:805,w:190,h:154},
+ {name:'cửa phòng ngủ / lối thông',x:494,y:395,w:177,h:199},
+ {name:'cửa WC',x:317,y:474,w:174,h:160},
+ {name:'lối ra ban công',x:1195,y:570,w:144,h:275},
+ {name:'khu máy giặt cố định',x:1290,y:835,w:151,h:130},
+ {name:'tủ âm tường CL',x:339,y:43,w:184,h:220}
+];
+const catalog={
+ fold:{n:'Nệm đôi gấp',i:'🛏️',w:140,h:200,price:21000,color:'#dbe7fb',place:'bedroom'},
+ mat:{n:'Nệm đôi dày',i:'🛌',w:140,h:200,price:33000,color:'#dbe7fb',place:'bedroom'},
+ baby:{n:'Cũi / chỗ ngủ bé',i:'👶',w:65,h:110,price:17000,color:'#fff0d6',place:'bedroom'},
+ desk:{n:'Bàn PC',i:'🖥️',w:110,h:55,price:12000,color:'#d3edf1',place:'ldk'},
+ chair:{n:'Ghế PC',i:'🪑',w:55,h:55,price:7000,color:'#e0eced',place:'ldk'},
+ fridge:{n:'Tủ lạnh',i:'❄️',w:60,h:60,price:35000,color:'#dbe7e5',place:'ldk'},
+ microwave:{n:'Kệ lò vi sóng',i:'♨️',w:60,h:45,price:7000,color:'#f3e0cc',place:'ldk'},
+ table:{n:'Bàn ăn gấp',i:'🍽️',w:85,h:55,price:6500,color:'#f6e6ce',place:'ldk'},
+ rack:{n:'Kệ đồ thấp',i:'🗄️',w:80,h:35,price:6500,color:'#f1deb4',place:'ldk'},
+ wardrobe:{n:'Tủ quần áo tháo lắp',i:'👚',w:85,h:45,price:13500,color:'#efe2cf',place:'bedroom'},
+ dry:{n:'Giàn phơi trong nhà',i:'👕',w:100,h:55,price:5000,color:'#d0e8e0',place:'ldk'},
+ curtain:{n:'Rèm/vách nhẹ',i:'🪟',w:110,h:12,price:4000,color:'#f7eef6',place:'ldk'},
+ shelf:{n:'Kệ bếp',i:'🍳',w:75,h:40,price:6500,color:'#f6e4ce',place:'ldk'},
+ drawers:{n:'Tủ ngăn kéo',i:'🧺',w:70,h:45,price:8500,color:'#ebddd0',place:'ldk'},
+ playmat:{n:'Thảm chơi cho bé',i:'🧸',w:140,h:140,price:6500,color:'#e8f3cc',place:'ldk'},
+ babycart:{n:'Xe đẩy đồ chăm bé',i:'🧴',w:43,h:35,price:4500,color:'#d5edf7',place:'ldk'},
+ plant:{n:'Chậu cây nhỏ',i:'🪴',w:28,h:28,price:1200,color:'#d9f5da',place:'balcony'},
+ washer:{n:'Máy giặt (tham chiếu)',i:'🧼',w:55,h:55,price:0,color:'#dce6ec',place:'balcony'}
+};
+const rows={
+ A:{title:'Tiết kiệm',suit:'2 người · đồ cơ bản',pros:'Ít mua mới, không cần sofa lớn; nệm gấp và bàn ăn đa năng giúp lấy lại mặt sàn.',cons:'Chỗ lưu trữ phụ thuộc tủ CL; mỗi ngày cần gấp và hong nệm; góc PC cạnh LDK có thể vướng sinh hoạt.',baby:'Chưa phù hợp trẻ sơ sinh: phải bổ sung chỗ ngủ riêng và xử lý dây PC.',risk:'Cửa ban công/phơi đồ dễ tăng ẩm; không kê nệm sát tường lạnh. Tránh kéo ghế PC vào giờ đêm.',items:[
+ ['fold',907,251,90],['desk',494,723,0],['chair',498,629,0],['fridge',841,879,0],['microwave',947,868,0],['table',837,665,0],['dry',1082,763,0],['plant',1370,640,0]]},
+ B:{title:'Tối ưu lưu trữ',suit:'2 người · nhiều đồ',pros:'Có bàn PC riêng, thêm tủ thấp và kệ chia theo chức năng; phần lớn là đồ tháo lắp.',cons:'Nhiều tủ làm tăng chi phí và bụi bám; nếu không đo thực tế, nguy cơ vướng cửa và lối đi cao.',baby:'Có thể chuyển các tủ nhỏ ra ngoài, nhưng cần neo chống đổ theo phương án không khoan được chủ nhà chấp thuận.',risk:'Tủ áp sát tường ngoài dễ mốc; quạt PC và đồ cứng tựa vách có thể truyền rung/ồn.',items:[
+ ['mat',899,250,90],['wardrobe',612,246,90],['desk',508,736,0],['chair',512,629,0],['fridge',848,876,0],['microwave',957,867,0],['rack',1096,870,0],['table',826,654,0],['dry',1109,746,0],['curtain',1171,640,90],['drawers',1150,559,0],['plant',1370,639,0]]},
+ C:{title:'Gia đình có em bé',suit:'2 người + 1 bé · linh hoạt',pros:'Có chỗ ngủ riêng an toàn cho bé; ưu tiên sàn trống, đồ thấp, ít góc nhọn và dễ chuyển chỗ.',cons:'Không đủ diện tích cho mọi đồ cùng lúc; cần giảm tủ, dàn PC và thảm chơi tùy giai đoạn của bé.',baby:'Cũi là vị trí đề xuất, không phải xác nhận an toàn: cần kiểm tra khoảng cách, thông gió, tiêu chuẩn sản phẩm và bỏ gối/chăn/đồ mềm khỏi chỗ ngủ bé.',risk:'Không đặt cũi sát cửa sổ, rèm, máy sưởi hoặc dây điện. Giữ sàn khô và phơi đồ tách khỏi chỗ chơi.',items:[
+ ['mat',977,255,90],['baby',612,245,0],['desk',508,723,0],['chair',508,625,0],['fridge',847,880,0],['microwave',956,865,0],['table',798,638,0],['playmat',984,711,0],['babycart',1147,884,0],['dry',1130,573,0],['plant',1370,636,0]]}
+};
+let nextId=1;
+function make(type,x,y,rot){const c=catalog[type];return{id:'o'+(nextId++),type,x,y,w:c.w,h:c.h,rot:rot||0};}
+function defaults(){const r={};Object.keys(rows).forEach(k=>r[k]=rows[k].items.map(a=>make(...a)));return r;}
+let plans=defaults(),current='A',selected=null,snap=false;
+try{const v=JSON.parse(localStorage.getItem(STORAGE)||'null');if(v&&v.version===2&&v.plans&&['A','B','C'].every(k=>Array.isArray(v.plans[k]))){for(const k of ['A','B','C']){const ar=v.plans[k];plans[k]=ar.slice(0,100).filter(o=>catalog[o.type]&&Number.isFinite(+o.x)&&Number.isFinite(+o.y)).map(o=>({
+ id:String(o.id||'o'+nextId++),type:o.type,x:Math.max(0,Math.min(W,+o.x)),y:Math.max(0,Math.min(H,+o.y)),
+ w:Math.max(10,Math.min(400,+o.w||catalog[o.type].w)),h:Math.max(10,Math.min(400,+o.h||catalog[o.type].h)),
+ rot:(+o.rot||0)%360
+ }));}current=['A','B','C'].includes(v.current)?v.current:'A';}}catch(err){}
+const save=()=>{try{localStorage.setItem(STORAGE,JSON.stringify({version:2,plans,current})) ;E('d2-saveState').textContent='✓ Đã lưu tự động trên Chrome này. Xuất JSON để sao lưu và chuyển thiết bị.'}catch(e){E('d2-saveState').textContent='⚠️ Bộ nhớ trình duyệt không ghi được; hãy xuất JSON để giữ bản thiết kế.'}};
+const history={A:{u:[],r:[]},B:{u:[],r:[]},C:{u:[],r:[]}};
+const layer=document.createElement('div');layer.className='d2-furniture';layer.id='d2-layer';E('canvas').appendChild(layer);
+const float=document.createElement('div');float.className='d2-floating';float.textContent='Vuốt vùng trống: di chuyển sơ đồ · Chạm đồ: chọn & kéo';E('viewport').appendChild(float);
+const list=()=>plans[current];
+const get=()=>list().find(o=>o.id===selected);
+const before=()=>JSON.stringify(list());
+function record(prev){if(prev!==JSON.stringify(list())){const h=history[current];h.u.push(prev);if(h.u.length>45)h.u.shift();h.r=[];save();}render();}
+function change(fn){const b=before();fn();record(b);}
+function poly(o){
+ const a=(o.rot||0)*Math.PI/180,c=Math.cos(a),s=Math.sin(a),hw=o.w*PX/2,hh=o.h*PX/2;
+ return [[-hw,-hh],[hw,-hh],[hw,hh],[-hw,hh]].map(p=>({x:o.x+p[0]*c-p[1]*s,y:o.y+p[0]*s+p[1]*c}));
+}
+const rectPoly=(r)=>[{x:r.x,y:r.y},{x:r.x+r.w,y:r.y},{x:r.x+r.w,y:r.y+r.h},{x:r.x,y:r.y+r.h}];
+function SAT(a,b){for(const p of [a,b])for(let i=0;i<p.length;i++){const p1=p[i],p2=p[(i+1)%p.length],ax=-(p2.y-p1.y),ay=(p2.x-p1.x);const A=a.map(q=>q.x*ax+q.y*ay),B=b.map(q=>q.x*ax+q.y*ay);if(Math.max(...A)<=Math.min(...B)+0.8||Math.max(...B)<=Math.min(...A)+0.8)return false;}return true;}
+const inside=(p,r)=>p.x>=r.x&&p.x<=r.x+r.w&&p.y>=r.y&&p.y<=r.y+r.h;
+function warnings(){
+ const errors=[],bad=new Set(),a=list();
+ for(let i=0;i<a.length;i++){const o=a[i],p=poly(o),label=catalog[o.type].n,zone=o.type==='plant'||o.type==='washer'?zones.balcony:null;
+  if(!p.every(c=>Object.values(zones).some(r=>inside(c,r)))){errors.push(label+': đang nằm ngoài vùng phòng ước lượng.');bad.add(o.id)}
+  if(zone&&!p.every(q=>inside(q,zone))){errors.push(label+': lệch khỏi ban công ước lượng.');bad.add(o.id)}
+  if(!zone&&p.some(q=>inside(q,zones.balcony))){errors.push(label+': đồ trong nhà lấn ra ban công.');bad.add(o.id)}
+  for(const ex of exclusions){if(o.type==='washer'&&ex.name==='khu máy giặt cố định')continue;if(SAT(p,rectPoly(ex))){errors.push(label+': có thể vướng '+ex.name+'.');bad.add(o.id)}}
+  for(let j=i+1;j<a.length;j++)if(SAT(p,poly(a[j]))){errors.push(label+' chồng lên '+catalog[a[j].type].n+'.');bad.add(o.id);bad.add(a[j].id)}
+ }
+ return {errors:[...new Set(errors)],bad};
+}
+function itemRender(o,bad){
+ const c=catalog[o.type];const el=document.createElement('div');el.className='d2-obj'+(selected===o.id?' is-selected':'')+(bad.has(o.id)?' is-bad':'');el.dataset.obj=o.id;
+ const info=E('viewport').getBoundingClientRect(); // reserved for consistent Android layout
+ el.style.left=(o.x-o.w*PX/2)+'px';el.style.top=(o.y-o.h*PX/2)+'px';
+ el.style.width=(o.w*PX)+'px';el.style.height=(o.h*PX)+'px';el.style.transform='rotate('+o.rot+'deg)';
+ el.style.background=c.color;el.style.zIndex=selected===o.id?'99':'7';
+ const ic=document.createElement('span');ic.className='f-icon';ic.textContent=c.i;
+ const nm=document.createElement('span');nm.className='f-name';nm.textContent=c.n;
+ const sz=document.createElement('span');sz.className='f-size';sz.textContent=o.w+'×'+o.h+' cm';
+ el.append(ic,nm,sz);if(Math.min(o.w,o.h)<45){nm.style.display='none';sz.style.display='none';ic.style.fontSize='20px';}
+ el.addEventListener('pointerdown',startObject);
+ return el;
+}
+function render(){
+ const check=warnings();layer.replaceChildren(...list().map(o=>itemRender(o,check.bad)));
+ E('d2-count').textContent=list().length;E('d2-currentLabel').textContent=current;
+ document.querySelectorAll('[data-preset]').forEach(b=>b.classList.toggle('selected',b.dataset.preset===current));
+ E('d2-undo').disabled=!history[current].u.length;E('d2-redo').disabled=!history[current].r.length;
+ const picked=get();E('d2-inspector').hidden=!picked;
+ if(picked){E('d2-selname').textContent=catalog[picked.type].n;E('d2-w').value=picked.w;E('d2-h').value=picked.h;E('d2-spotinfo').textContent='Góc xoay: '+picked.rot+'° · Tọa độ ảnh không phải kích thước thật.';}
+ E('d2-objectList').replaceChildren(...list().map(o=>{const b=document.createElement('button');b.type='button';b.textContent=catalog[o.type].i+' '+catalog[o.type].n;b.className=selected===o.id?'sel':'';b.onclick=()=>{selected=o.id;render()};return b}));
+ E('d2-warningCount').textContent='('+check.errors.length+')';
+ E('d2-warnings').replaceChildren(...(check.errors.length?check.errors.slice(0,16).map(t=>{const el=document.createElement('div');el.className='d2-alert';el.textContent='⚠ '+t;return el;}):[(()=>{const d=document.createElement('div');d.className='d2-status';d.textContent='Không phát hiện chồng lấn trong mô hình hình học ước lượng. Vẫn phải kiểm tra cửa, lối đi và số đo thực.';return d;})()]));
+ const total=list().reduce((sum,o)=>sum+catalog[o.type].price,0);
+ E('d2-total').textContent='Đồ dự kiến ≈ ¥'+total.toLocaleString('ja-JP');
+ E('d2-suit').textContent=rows[current].suit;
+ E('d2-analysis').innerHTML='<strong>Ưu điểm:</strong> '+rows[current].pros+'<p><strong>Nhược điểm:</strong> '+rows[current].cons+'</p><p><strong>Khi có bé:</strong> '+rows[current].baby+'</p><p><strong>Ẩm / tiếng ồn / lối đi:</strong> '+rows[current].risk+'</p>';
+ E('d2-snap').textContent=snap?'▦ Căn nhẹ: bật':'▦ Căn nhẹ: tắt';
+}
+let dragging=null;
+function startObject(e){
+ if(e.button!==undefined&&e.button!==0)return;
+ e.stopPropagation();e.preventDefault();const id=e.currentTarget.dataset.obj;
+ selected=id;const obj=get();if(!obj)return;const el=e.currentTarget;
+ for(const n of layer.children)n.classList.toggle('is-selected',n.dataset.obj===id);
+ const inspector=E('d2-inspector');inspector.hidden=false;E('d2-selname').textContent=catalog[obj.type].n;E('d2-w').value=obj.w;E('d2-h').value=obj.h;
+ dragging={id,el,sx:e.clientX,sy:e.clientY,x:obj.x,y:obj.y,prev:before()};
+ try{el.setPointerCapture(e.pointerId)}catch(err){}
+ el.addEventListener('pointermove',moveObject);el.addEventListener('pointerup',endObject);el.addEventListener('pointercancel',endObject);
+}
+function moveObject(e){
+ e.stopPropagation();if(!dragging)return;
+ const ob=get();if(!ob)return;
+ ob.x=Math.max(0,Math.min(W,dragging.x+(e.clientX-dragging.sx)/scale));
+ ob.y=Math.max(0,Math.min(H,dragging.y+(e.clientY-dragging.sy)/scale));
+ if(snap){ob.x=Math.round(ob.x/10)*10;ob.y=Math.round(ob.y/10)*10}
+ dragging.el.style.left=(ob.x-ob.w*PX/2)+'px';dragging.el.style.top=(ob.y-ob.h*PX/2)+'px';
+}
+function endObject(e){e.stopPropagation();if(!dragging)return;const d=dragging;dragging=null;d.el.removeEventListener('pointermove',moveObject);d.el.removeEventListener('pointerup',endObject);d.el.removeEventListener('pointercancel',endObject);record(d.prev);}
+function focusRoom(place){return place==='bedroom'?[891,270]:place==='balcony'?[1368,680]:[897,700]}
+E('d2-library').replaceChildren(...Object.entries(catalog).map(([type,c])=>{
+ const b=document.createElement('button');b.className='d2-add';b.type='button';
+ const t=document.createElement('strong');t.textContent=c.i+' '+c.n;
+ const sm=document.createElement('small');sm.textContent=c.w+' × '+c.h+' cm · '+(c.price?'~¥'+c.price.toLocaleString('ja-JP'):'Vị trí cố định');
+ b.append(t,sm);b.onclick=()=>change(()=>{if(list().length>=60){alert('Tối đa 60 món/mẫu để giữ ứng dụng mượt.');return;}const p=focusRoom(c.place);const o=make(type,p[0],p[1],0);o.x+=((list().length%5)-2)*19;o.y+=((list().length%3)-1)*16;list().push(o);selected=o.id;});
+ return b;
+}));
+document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>{current=b.dataset.preset;selected=null;save();render()});
+E('d2-w').addEventListener('change',e=>{const v=+e.target.value;if(!Number.isFinite(v))return;change(()=>{const o=get();if(o)o.w=Math.max(10,Math.min(400,Math.round(v)))})});
+E('d2-h').addEventListener('change',e=>{const v=+e.target.value;if(!Number.isFinite(v))return;change(()=>{const o=get();if(o)o.h=Math.max(10,Math.min(400,Math.round(v)))})});
+E('d2-rotm').onclick=()=>change(()=>{const o=get();if(o)o.rot=(o.rot+270)%360});
+E('d2-rotp').onclick=()=>change(()=>{const o=get();if(o)o.rot=(o.rot+90)%360});
+E('d2-copy').onclick=()=>change(()=>{const o=get();if(o){const n=cloned(o);n.id='o'+nextId++;n.x+=28;n.y+=28;list().push(n);selected=n.id;}});
+E('d2-delete').onclick=()=>change(()=>{plans[current]=list().filter(o=>o.id!==selected);selected=null});
+E('d2-undo').onclick=()=>{const h=history[current];if(!h.u.length)return;h.r.push(before());plans[current]=JSON.parse(h.u.pop());selected=null;save();render()};
+E('d2-redo').onclick=()=>{const h=history[current];if(!h.r.length)return;h.u.push(before());plans[current]=JSON.parse(h.r.pop());selected=null;save();render()};
+E('d2-reset').onclick=()=>{if(!confirm('Đặt lại mẫu '+current+'? Các chỉnh sửa hiện tại của mẫu này sẽ bị xóa (vẫn có thể Hoàn tác).'))return;change(()=>{plans[current]=rows[current].items.map(a=>make(...a));selected=null})};
+E('d2-snap').onclick=()=>{snap=!snap;render()};
+function saveBlob(name,blob){const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=name;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);}
+E('d2-export').onclick=()=>saveBlob('sano-mansion-3-mau.json',new Blob([JSON.stringify({app:'sano-mansion-stage2',version:2,createdAt:new Date().toISOString(),background:'original-chintai-ex-embedded',scaleApproxPxPerCm:PX,scaleVerified:false,current,plans},null,2)],{type:'application/json'}));
+E('d2-import').onclick=()=>E('d2-file').click();
+E('d2-file').onchange=async function(e){const file=e.target.files&&e.target.files[0];if(!file)return;try{
+ const data=JSON.parse(await file.text());if(data.app!=='sano-mansion-stage2'||data.version!==2||!data.plans||!['A','B','C'].every(k=>Array.isArray(data.plans[k])))throw Error('Không đúng định dạng ứng dụng');
+ if(!confirm('Mở bản sao lưu sẽ thay thế cả 3 mẫu hiện tại. Tiếp tục?'))return;
+ const parsed={};for(const k of ['A','B','C'])parsed[k]=data.plans[k].slice(0,60).filter(o=>catalog[o.type]&&Number.isFinite(+o.x)&&Number.isFinite(+o.y)).map(o=>({
+ id:'o'+nextId++,type:o.type,x:Math.max(0,Math.min(W,+o.x)),y:Math.max(0,Math.min(H,+o.y)),
+ w:Math.max(10,Math.min(400,+o.w||catalog[o.type].w)),h:Math.max(10,Math.min(400,+o.h||catalog[o.type].h)),rot:(+o.rot||0)%360
+ }));
+ plans=parsed;current=['A','B','C'].includes(data.current)?data.current:'A';selected=null;for(const h of Object.values(history)){h.u=[];h.r=[];}save();render();
+ }catch(err){alert('Không thể đọc bản thiết kế: '+err.message)}finally{this.value=''}};
+E('d2-png').onclick=()=>{
+ const out=document.createElement('canvas');out.width=W;out.height=H;const cx=out.getContext('2d');
+ try{cx.drawImage(E('floorplan'),0,0,W,H)}catch(err){alert('Chưa thể xuất ảnh. Hãy chọn “Ảnh gốc” rồi thử lại.');return;}
+ list().forEach(o=>{
+ const c=catalog[o.type];cx.save();cx.translate(o.x,o.y);cx.rotate(o.rot*Math.PI/180);
+ cx.fillStyle=c.color;cx.strokeStyle='#254f5b';cx.lineWidth=4;
+ cx.beginPath();cx.roundRect(-o.w*PX/2,-o.h*PX/2,o.w*PX,o.h*PX,10);cx.fill();cx.stroke();
+ cx.rotate(-o.rot*Math.PI/180);cx.textAlign='center';cx.textBaseline='middle';
+ cx.fillStyle='#17323d';cx.font='bold 17px Arial,sans-serif';cx.fillText(c.n,0,-10,Math.max(80,o.w*PX-15));
+ cx.font='14px Arial,sans-serif';cx.fillText(o.w+'×'+o.h+' cm*',0,14);
+ cx.restore();
+ });
+ cx.fillStyle='#ffffffed';cx.fillRect(24,18,488,62);cx.fillStyle='#1e4754';cx.font='bold 21px Arial';cx.fillText('Sano Mansion — Mẫu '+current+' / '+rows[current].title,40,44);
+ cx.font='16px Arial';cx.fillText('* Kích thước vị trí trên sơ đồ chưa xác minh',40,69);
+ out.toBlob(blob=>blob?saveBlob('sano-mansion-mau-'+current+'.png',blob):alert('Xuất PNG không thành công'),'image/png');
+};
+E('savePngBtn').textContent='↓ PNG mặt bằng + đồ';E('savePngBtn').onclick=()=>E('d2-png').click();
+document.querySelector('.eyebrow').textContent='SANO MANSION · THIẾT KẾ NỘI THẤT 2D TƯƠNG TÁC';
+document.querySelector('h1').textContent='Thiết kế nội thất · Giai đoạn 2';
+document.querySelector('header p').textContent='3 phương án A/B/C · Kéo thả, xoay, thay kích thước và lưu trực tiếp trong Chrome Android.';
+document.querySelector('.banner').innerHTML='<strong>Sơ đồ gốc được giữ làm nền.</strong> Nội thất là lớp phía trên có thể sửa/xóa. 18 chiếu × khoảng 1,62 m²/chiếu ≈ 29,16 m², gần bằng diện tích đăng tin 29,81 m² mà chưa tính WC/phòng tắm — thông số diện tích cần kiểm tra với môi giới.';
+const lastSection=document.querySelector('#reportBtn').closest('section');lastSection.querySelector('p').textContent='Biên bản kiểm tra mặt bằng vẫn dùng được. Các mẫu kéo thả nằm ở bảng Thiết kế Giai đoạn 2 phía dưới sơ đồ.';
+showMarkers=false;E('markBtn').textContent='○ Nhãn: tắt';E('markBtn').classList.remove('active');paintStatuses();
+save();render();
+})();
 </script></body></html>
